@@ -23,6 +23,7 @@
 		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
 		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
 		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
+		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		3424FE2C19C80928003C3BEE /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		3424FE2D19C80928003C3BEE /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		34DF551519C80CBB00D9BBFB /* mesh_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_logo.png; sourceTree = "<group>"; };
+		34E3D77519C8CFA70063A4F4 /* i_icon_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = i_icon_large.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				34DF551519C80CBB00D9BBFB /* mesh_logo.png */,
+				34E3D77519C8CFA70063A4F4 /* i_icon_large.png */,
 				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
 				3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */,
 				3424FE0919C806BA003C3BEE /* Main.storyboard */,
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3424FE1019C806BA003C3BEE /* Images.xcassets in Resources */,
+				34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */,
 				34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */,
 				3424FE0219C806BA003C3BEE /* InfoPlist.strings in Resources */,
 				3424FE0B19C806BA003C3BEE /* Main.storyboard in Resources */,

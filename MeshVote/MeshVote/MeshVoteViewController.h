@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameInput;
 - (IBAction)joinSession:(id)sender;
 - (IBAction)createSession:(id)sender;
+- (IBAction)showAbout:(id)sender;
 
 @end

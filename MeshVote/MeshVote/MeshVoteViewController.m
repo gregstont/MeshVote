@@ -49,4 +49,12 @@
 - (IBAction)createSession:(id)sender {
     NSLog(@"createSession");
 }
+
+- (IBAction)showAbout:(id)sender {
+    NSLog(@"showAbout");
+    CAGradientLayer *bgLayer = [BackgroundLayer blueGradient];
+    bgLayer.frame = self.view.bounds;
+    [self.view.layer insertSublayer:bgLayer atIndex:0];
+    
+}
 @end
