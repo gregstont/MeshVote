@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF719C806BA003C3BEE /* Foundation.framework */; };
+		3424FDFA19C806BA003C3BEE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF919C806BA003C3BEE /* CoreGraphics.framework */; };
+		3424FDFC19C806BA003C3BEE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDFB19C806BA003C3BEE /* UIKit.framework */; };
+		3424FE0219C806BA003C3BEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE0019C806BA003C3BEE /* InfoPlist.strings */; };
+		3424FE0419C806BA003C3BEE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE0319C806BA003C3BEE /* main.m */; };
+		3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */; };
+		3424FE0B19C806BA003C3BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE0919C806BA003C3BEE /* Main.storyboard */; };
+		3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE0D19C806BA003C3BEE /* MeshVoteViewController.m */; };
+		3424FE1019C806BA003C3BEE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE0F19C806BA003C3BEE /* Images.xcassets */; };
+		3424FE1719C806BA003C3BEE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FE1619C806BA003C3BEE /* XCTest.framework */; };
+		3424FE1819C806BA003C3BEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF719C806BA003C3BEE /* Foundation.framework */; };
+		3424FE1919C806BA003C3BEE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDFB19C806BA003C3BEE /* UIKit.framework */; };
+		3424FE2119C806BA003C3BEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE1F19C806BA003C3BEE /* InfoPlist.strings */; };
+		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3424FE1A19C806BA003C3BEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3424FDEC19C806BA003C3BEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3424FDF319C806BA003C3BEE;
+			remoteInfo = MeshVote;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3424FDF419C806BA003C3BEE /* MeshVote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeshVote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3424FDF719C806BA003C3BEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3424FDF919C806BA003C3BEE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3424FDFB19C806BA003C3BEE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3424FDFF19C806BA003C3BEE /* MeshVote-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MeshVote-Info.plist"; sourceTree = "<group>"; };
+		3424FE0119C806BA003C3BEE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3424FE0319C806BA003C3BEE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3424FE0519C806BA003C3BEE /* MeshVote-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MeshVote-Prefix.pch"; sourceTree = "<group>"; };
+		3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshVoteAppDelegate.h; sourceTree = "<group>"; };
+		3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteAppDelegate.m; sourceTree = "<group>"; };
+		3424FE0A19C806BA003C3BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3424FE0C19C806BA003C3BEE /* MeshVoteViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshVoteViewController.h; sourceTree = "<group>"; };
+		3424FE0D19C806BA003C3BEE /* MeshVoteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteViewController.m; sourceTree = "<group>"; };
+		3424FE0F19C806BA003C3BEE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3424FE1519C806BA003C3BEE /* MeshVoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeshVoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3424FE1619C806BA003C3BEE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3424FE1E19C806BA003C3BEE /* MeshVoteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MeshVoteTests-Info.plist"; sourceTree = "<group>"; };
+		3424FE2019C806BA003C3BEE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3424FE2219C806BA003C3BEE /* MeshVoteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3424FDF119C806BA003C3BEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3424FDFA19C806BA003C3BEE /* CoreGraphics.framework in Frameworks */,
+				3424FDFC19C806BA003C3BEE /* UIKit.framework in Frameworks */,
+				3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3424FE1219C806BA003C3BEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3424FE1719C806BA003C3BEE /* XCTest.framework in Frameworks */,
+				3424FE1919C806BA003C3BEE /* UIKit.framework in Frameworks */,
+				3424FE1819C806BA003C3BEE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3424FDEB19C806BA003C3BEE = {
+			isa = PBXGroup;
+			children = (
+				3424FDFD19C806BA003C3BEE /* MeshVote */,
+				3424FE1C19C806BA003C3BEE /* MeshVoteTests */,
+				3424FDF619C806BA003C3BEE /* Frameworks */,
+				3424FDF519C806BA003C3BEE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3424FDF519C806BA003C3BEE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3424FDF419C806BA003C3BEE /* MeshVote.app */,
+				3424FE1519C806BA003C3BEE /* MeshVoteTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3424FDF619C806BA003C3BEE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3424FDF719C806BA003C3BEE /* Foundation.framework */,
+				3424FDF919C806BA003C3BEE /* CoreGraphics.framework */,
+				3424FDFB19C806BA003C3BEE /* UIKit.framework */,
+				3424FE1619C806BA003C3BEE /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3424FDFD19C806BA003C3BEE /* MeshVote */ = {
+			isa = PBXGroup;
+			children = (
+				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
+				3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */,
+				3424FE0919C806BA003C3BEE /* Main.storyboard */,
+				3424FE0C19C806BA003C3BEE /* MeshVoteViewController.h */,
+				3424FE0D19C806BA003C3BEE /* MeshVoteViewController.m */,
+				3424FE0F19C806BA003C3BEE /* Images.xcassets */,
+				3424FDFE19C806BA003C3BEE /* Supporting Files */,
+			);
+			path = MeshVote;
+			sourceTree = "<group>";
+		};
+		3424FDFE19C806BA003C3BEE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3424FDFF19C806BA003C3BEE /* MeshVote-Info.plist */,
+				3424FE0019C806BA003C3BEE /* InfoPlist.strings */,
+				3424FE0319C806BA003C3BEE /* main.m */,
+				3424FE0519C806BA003C3BEE /* MeshVote-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3424FE1C19C806BA003C3BEE /* MeshVoteTests */ = {
+			isa = PBXGroup;
+			children = (
+				3424FE2219C806BA003C3BEE /* MeshVoteTests.m */,
+				3424FE1D19C806BA003C3BEE /* Supporting Files */,
+			);
+			path = MeshVoteTests;
+			sourceTree = "<group>";
+		};
+		3424FE1D19C806BA003C3BEE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3424FE1E19C806BA003C3BEE /* MeshVoteTests-Info.plist */,
+				3424FE1F19C806BA003C3BEE /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3424FDF319C806BA003C3BEE /* MeshVote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3424FE2619C806BA003C3BEE /* Build configuration list for PBXNativeTarget "MeshVote" */;
+			buildPhases = (
+				3424FDF019C806BA003C3BEE /* Sources */,
+				3424FDF119C806BA003C3BEE /* Frameworks */,
+				3424FDF219C806BA003C3BEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeshVote;
+			productName = MeshVote;
+			productReference = 3424FDF419C806BA003C3BEE /* MeshVote.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3424FE1419C806BA003C3BEE /* MeshVoteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3424FE2919C806BA003C3BEE /* Build configuration list for PBXNativeTarget "MeshVoteTests" */;
+			buildPhases = (
+				3424FE1119C806BA003C3BEE /* Sources */,
+				3424FE1219C806BA003C3BEE /* Frameworks */,
+				3424FE1319C806BA003C3BEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3424FE1B19C806BA003C3BEE /* PBXTargetDependency */,
+			);
+			name = MeshVoteTests;
+			productName = MeshVoteTests;
+			productReference = 3424FE1519C806BA003C3BEE /* MeshVoteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3424FDEC19C806BA003C3BEE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MeshVote;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Taylor Gregston";
+				TargetAttributes = {
+					3424FE1419C806BA003C3BEE = {
+						TestTargetID = 3424FDF319C806BA003C3BEE;
+					};
+				};
+			};
+			buildConfigurationList = 3424FDEF19C806BA003C3BEE /* Build configuration list for PBXProject "MeshVote" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3424FDEB19C806BA003C3BEE;
+			productRefGroup = 3424FDF519C806BA003C3BEE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3424FDF319C806BA003C3BEE /* MeshVote */,
+				3424FE1419C806BA003C3BEE /* MeshVoteTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3424FDF219C806BA003C3BEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3424FE1019C806BA003C3BEE /* Images.xcassets in Resources */,
+				3424FE0219C806BA003C3BEE /* InfoPlist.strings in Resources */,
+				3424FE0B19C806BA003C3BEE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3424FE1319C806BA003C3BEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3424FE2119C806BA003C3BEE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3424FDF019C806BA003C3BEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3424FE0419C806BA003C3BEE /* main.m in Sources */,
+				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
+				3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3424FE1119C806BA003C3BEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3424FE1B19C806BA003C3BEE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3424FDF319C806BA003C3BEE /* MeshVote */;
+			targetProxy = 3424FE1A19C806BA003C3BEE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3424FE0019C806BA003C3BEE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3424FE0119C806BA003C3BEE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3424FE0919C806BA003C3BEE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3424FE0A19C806BA003C3BEE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3424FE1F19C806BA003C3BEE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3424FE2019C806BA003C3BEE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3424FE2419C806BA003C3BEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3424FE2519C806BA003C3BEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3424FE2719C806BA003C3BEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeshVote/MeshVote-Prefix.pch";
+				INFOPLIST_FILE = "MeshVote/MeshVote-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3424FE2819C806BA003C3BEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeshVote/MeshVote-Prefix.pch";
+				INFOPLIST_FILE = "MeshVote/MeshVote-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3424FE2A19C806BA003C3BEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MeshVote.app/MeshVote";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeshVote/MeshVote-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MeshVoteTests/MeshVoteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		3424FE2B19C806BA003C3BEE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MeshVote.app/MeshVote";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeshVote/MeshVote-Prefix.pch";
+				INFOPLIST_FILE = "MeshVoteTests/MeshVoteTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3424FDEF19C806BA003C3BEE /* Build configuration list for PBXProject "MeshVote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3424FE2419C806BA003C3BEE /* Debug */,
+				3424FE2519C806BA003C3BEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3424FE2619C806BA003C3BEE /* Build configuration list for PBXNativeTarget "MeshVote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3424FE2719C806BA003C3BEE /* Debug */,
+				3424FE2819C806BA003C3BEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3424FE2919C806BA003C3BEE /* Build configuration list for PBXNativeTarget "MeshVoteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3424FE2A19C806BA003C3BEE /* Debug */,
+				3424FE2B19C806BA003C3BEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3424FDEC19C806BA003C3BEE /* Project object */;
+}
