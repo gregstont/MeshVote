@@ -21,6 +21,8 @@
 		3424FE1919C806BA003C3BEE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDFB19C806BA003C3BEE /* UIKit.framework */; };
 		3424FE2119C806BA003C3BEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE1F19C806BA003C3BEE /* InfoPlist.strings */; };
 		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
+		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
+		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,9 @@
 		3424FE1E19C806BA003C3BEE /* MeshVoteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MeshVoteTests-Info.plist"; sourceTree = "<group>"; };
 		3424FE2019C806BA003C3BEE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3424FE2219C806BA003C3BEE /* MeshVoteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteTests.m; sourceTree = "<group>"; };
+		3424FE2C19C80928003C3BEE /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
+		3424FE2D19C80928003C3BEE /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		34DF551519C80CBB00D9BBFB /* mesh_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +117,7 @@
 		3424FDFD19C806BA003C3BEE /* MeshVote */ = {
 			isa = PBXGroup;
 			children = (
+				34DF551519C80CBB00D9BBFB /* mesh_logo.png */,
 				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
 				3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */,
 				3424FE0919C806BA003C3BEE /* Main.storyboard */,
@@ -119,6 +125,8 @@
 				3424FE0D19C806BA003C3BEE /* MeshVoteViewController.m */,
 				3424FE0F19C806BA003C3BEE /* Images.xcassets */,
 				3424FDFE19C806BA003C3BEE /* Supporting Files */,
+				3424FE2C19C80928003C3BEE /* BackgroundLayer.h */,
+				3424FE2D19C80928003C3BEE /* BackgroundLayer.m */,
 			);
 			path = MeshVote;
 			sourceTree = "<group>";
@@ -230,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3424FE1019C806BA003C3BEE /* Images.xcassets in Resources */,
+				34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */,
 				3424FE0219C806BA003C3BEE /* InfoPlist.strings in Resources */,
 				3424FE0B19C806BA003C3BEE /* Main.storyboard in Resources */,
 			);
@@ -251,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3424FE0419C806BA003C3BEE /* main.m in Sources */,
+				3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */,
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
 				3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */,
 			);
@@ -457,6 +467,7 @@
 				3424FE2819C806BA003C3BEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3424FE2919C806BA003C3BEE /* Build configuration list for PBXNativeTarget "MeshVoteTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +476,7 @@
 				3424FE2B19C806BA003C3BEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

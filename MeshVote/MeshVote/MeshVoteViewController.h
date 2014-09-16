@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MeshVoteViewController : UIViewController
+@interface MeshVoteViewController : UIViewController <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *nameInput;
+- (IBAction)joinSession:(id)sender;
+- (IBAction)createSession:(id)sender;
 
 @end
