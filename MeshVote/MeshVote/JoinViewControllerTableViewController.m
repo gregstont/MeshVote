@@ -40,11 +40,20 @@
     // Set ourselves as the MCSessionDelegate
     mySession.delegate = self;
     
-    MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
-    myAssist.delegate = self;
-    [myAssist start];
+    //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
+    //myAssist.delegate = self;
+    //[myAssist start];
+    
+    MCNearbyServiceAdvertiser *myAdvertise = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
+    myAdvertise.delegate = self;
+    [myAdvertise startAdvertisingPeer];
     
     NSLog(@"end of JOIN viewDidLoad");
+}
+
+//for advertiser delegate
+- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
+    NSLog(@"recieved invite");
 }
 
 - (void)didReceiveMemoryWarning

@@ -49,11 +49,23 @@
     mySession.delegate = self;
     // Create the advertiser assistant for managing incoming invitation
     //_advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:serviceType discoveryInfo:nil session:_session];
+    //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
+    //myAssist.delegate = self;
+    //[myAssist start];
     
-    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"MeshVote"];
+    MCNearbyServiceAdvertiser *myAdvertise = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
+    myAdvertise.delegate = self;
+    [myAdvertise startAdvertisingPeer];
+    
+    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
     
+}
+
+//for advertiser delegate
+- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
+    NSLog(@"recieved invite");
 }
 
 -(void)dealloc {
