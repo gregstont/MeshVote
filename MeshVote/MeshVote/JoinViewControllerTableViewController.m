@@ -1,26 +1,24 @@
 //
-//  QuestionViewControllerTableViewController.m
+//  JoinViewControllerTableViewController.m
 //  MeshVote
 //
-//  Created by Taylor Gregston on 9/16/14.
+//  Created by Taylor Gregston on 9/17/14.
 //  Copyright (c) 2014 Taylor Gregston. All rights reserved.
 //
 
-#import "QuestionViewControllerTableViewController.h"
+#import "JoinViewControllerTableViewController.h"
 
-@interface QuestionViewControllerTableViewController ()
+@interface JoinViewControllerTableViewController ()
 
 @end
 
-@implementation QuestionViewControllerTableViewController
+@implementation JoinViewControllerTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        NSLog(@"in init question view!");
-        
     }
     return self;
 }
@@ -29,60 +27,30 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"in JOIN viewDidLoad");
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    _questions = [[NSMutableArray alloc] init];
-    
-    [_questions addObject:@"first!"];
-    [_questions addObject:@"second!"];
-    [_questions addObject:@"third!"];
-    
-    NSLog(@"question viewdidload");
-
-    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
+    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
     MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     // Set ourselves as the MCSessionDelegate
     mySession.delegate = self;
-    // Create the advertiser assistant for managing incoming invitation
-    //_advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:serviceType discoveryInfo:nil session:_session];
     
-    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"MeshVote"];
-    _browser.delegate = self;
-    [_browser startBrowsingForPeers];
+    MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
+    myAssist.delegate = self;
+    [myAssist start];
     
+    NSLog(@"end of JOIN viewDidLoad");
 }
-
--(void)dealloc {
-    NSLog(@"dealloc");
-}
-
-
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    exit(0);
-    NSLog(@"FOUND PEER!!");
-    
-}
-
-// A nearby peer has stopped advertising
-- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
-    NSLog(@"LOST PEER!!");
-}
-
-//@optional
-// Browsing did not start due to an error
-- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
-    NSLog(@"error starting browser");
 }
 
 #pragma mark - Table view data source
@@ -91,57 +59,26 @@
 {
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [_questions count];
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid"]; //forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
     // Configure the cell...
-    if (cell == nil) {
-        //NSLog(@"Shouldnt be here!!!!!!!!!!!");
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellid"];
-    }
-    cell.textLabel.text = [_questions objectAtIndex:indexPath.row];
     
     return cell;
 }
-
-
-// Remote peer changed state
-- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
-    
-}
-
-// Received data from remote peer
-- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
-    
-}
-
-// Received a byte stream from remote peer
-- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID {
-    
-}
-
-// Start receiving a resource from remote peer
-- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress {
-    
-}
-
-// Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
-- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
-    
-}
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -191,5 +128,30 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+// Remote peer changed state
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+    
+}
+
+// Received data from remote peer
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    
+}
+
+// Received a byte stream from remote peer
+- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID {
+    
+}
+
+// Start receiving a resource from remote peer
+- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress {
+    
+}
+
+// Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
+- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
+    
+}
 
 @end

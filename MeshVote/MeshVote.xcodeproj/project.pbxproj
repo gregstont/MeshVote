@@ -25,7 +25,7 @@
 		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
 		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
 		34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */; };
-		34E3D77C19C948C80063A4F4 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D77B19C948C80063A4F4 /* Question.m */; };
+		34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +64,8 @@
 		34E3D77519C8CFA70063A4F4 /* i_icon_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = i_icon_large.png; sourceTree = "<group>"; };
 		34E3D77719C942010063A4F4 /* QuestionViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewControllerTableViewController.h; sourceTree = "<group>"; };
 		34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewControllerTableViewController.m; sourceTree = "<group>"; };
-		34E3D77A19C948C80063A4F4 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
-		34E3D77B19C948C80063A4F4 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
+		34E3D78019C956300063A4F4 /* JoinViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinViewControllerTableViewController.h; sourceTree = "<group>"; };
+		34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinViewControllerTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,8 +138,8 @@
 				3424FE2D19C80928003C3BEE /* BackgroundLayer.m */,
 				34E3D77719C942010063A4F4 /* QuestionViewControllerTableViewController.h */,
 				34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */,
-				34E3D77A19C948C80063A4F4 /* Question.h */,
-				34E3D77B19C948C80063A4F4 /* Question.m */,
+				34E3D78019C956300063A4F4 /* JoinViewControllerTableViewController.h */,
+				34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */,
 			);
 			path = MeshVote;
 			sourceTree = "<group>";
@@ -276,8 +276,8 @@
 				3424FE0419C806BA003C3BEE /* main.m in Sources */,
 				3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */,
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
-				34E3D77C19C948C80063A4F4 /* Question.m in Sources */,
 				34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */,
+				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

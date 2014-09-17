@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MultipeerConnectivity/MCNearbyServiceBrowser.h"
+//#import "MultipeerConnectivity/MC
 
-@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+//#import <MultipeerConnectivity/MCNearbyServiceBrowser.h>
+#import "MultipeerConnectivity/MCPeerID.h"
+#import "MultipeerConnectivity/MCSession.h"
 
+@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate>
+
+//TODO: need to be private
 @property (nonatomic, strong) NSMutableArray *questions; //change this later
+@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
+
 
 @end
