@@ -34,7 +34,7 @@
     
 }
 
-//Blue gradient background
+//Blue gradient background -> actually now grey
 + (CAGradientLayer*) blueGradient {
     
     UIColor *colorOne = [UIColor colorWithRed:(74/255.0) green:(74/255.0) blue:(74/255.0) alpha:1.0];
