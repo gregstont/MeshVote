@@ -14,4 +14,7 @@
 
 @interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate, MCAdvertiserAssistantDelegate, MCNearbyServiceAdvertiserDelegate>
 
+@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
+
 @end

@@ -36,17 +36,17 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
-    MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
+    _session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     // Set ourselves as the MCSessionDelegate
-    mySession.delegate = self;
+    _session.delegate = self;
     
     //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
     //myAssist.delegate = self;
     //[myAssist start];
     
-    MCNearbyServiceAdvertiser *myAdvertise = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
-    myAdvertise.delegate = self;
-    [myAdvertise startAdvertisingPeer];
+    _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
+    _advertiser.delegate = self;
+    [_advertiser startAdvertisingPeer];
     
     NSLog(@"end of JOIN viewDidLoad");
 }

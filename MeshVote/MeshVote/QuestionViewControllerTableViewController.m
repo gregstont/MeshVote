@@ -44,18 +44,20 @@
     NSLog(@"question viewdidload");
 
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
-    MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
+    //MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
+    _session = [[MCSession alloc] initWithPeer:me];
+    //MCSession *mySession = [[MCSession alloc] initWithPeer:me];
     // Set ourselves as the MCSessionDelegate
-    mySession.delegate = self;
+    _session.delegate = self;
     // Create the advertiser assistant for managing incoming invitation
     //_advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:serviceType discoveryInfo:nil session:_session];
     //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
     //myAssist.delegate = self;
     //[myAssist start];
     
-    MCNearbyServiceAdvertiser *myAdvertise = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
-    myAdvertise.delegate = self;
-    [myAdvertise startAdvertisingPeer];
+    //MCNearbyServiceAdvertiser *myAdvertise = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
+    //myAdvertise.delegate = self;
+    //[myAdvertise startAdvertisingPeer];
     
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
     _browser.delegate = self;
@@ -81,7 +83,7 @@
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    exit(0);
+    
     NSLog(@"FOUND PEER!!");
     
 }
