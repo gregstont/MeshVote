@@ -85,6 +85,7 @@
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     
     NSLog(@"FOUND PEER!!");
+    [_browser invitePeer:peerID toSession:_session withContext:nil timeout:10];
     
 }
 
@@ -133,6 +134,24 @@
 
 // Remote peer changed state
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+
+    NSLog(@"peer changed state:");
+    
+    if(state == MCSessionStateConnected) {
+        NSLog(@"  connected!");
+        NSString *helloString = @"Hello connected!";
+        NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSError *error;
+        
+        NSMutableArray *peers = [[NSMutableArray alloc] init];
+        [peers addObject:peerID];
+        [_session sendData:helloMessage toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+        
+        if(error) {
+            NSLog(@"Error sending data");
+        }
+    }
     
 }
 

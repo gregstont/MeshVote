@@ -54,6 +54,7 @@
 //for advertiser delegate
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
     NSLog(@"recieved invite");
+    invitationHandler([@YES boolValue], _session);
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,6 +146,11 @@
 
 // Received data from remote peer
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    NSLog(@"recieved data!");
+    
+    NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"  message:%@", message);
     
 }
 
