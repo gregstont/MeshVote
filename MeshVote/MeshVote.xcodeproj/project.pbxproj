@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 340200FD19CBF5A4005ADAE6 /* EditQuestionViewController.m */; };
 		3405169D19CBE094004360E8 /* QuestionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169C19CBE094004360E8 /* QuestionSet.m */; };
 		340516A019CBE1B0004360E8 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169F19CBE1B0004360E8 /* Question.m */; };
 		3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF719C806BA003C3BEE /* Foundation.framework */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		340200FC19CBF5A4005ADAE6 /* EditQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditQuestionViewController.h; sourceTree = "<group>"; };
+		340200FD19CBF5A4005ADAE6 /* EditQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditQuestionViewController.m; sourceTree = "<group>"; };
 		3405169B19CBE094004360E8 /* QuestionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionSet.h; sourceTree = "<group>"; };
 		3405169C19CBE094004360E8 /* QuestionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionSet.m; sourceTree = "<group>"; };
 		3405169E19CBE1B0004360E8 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 				3424FDFE19C806BA003C3BEE /* Supporting Files */,
 				34E3D77719C942010063A4F4 /* QuestionViewControllerTableViewController.h */,
 				34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */,
+				340200FC19CBF5A4005ADAE6 /* EditQuestionViewController.h */,
+				340200FD19CBF5A4005ADAE6 /* EditQuestionViewController.m */,
 				3405169B19CBE094004360E8 /* QuestionSet.h */,
 				3405169C19CBE094004360E8 /* QuestionSet.m */,
 				3405169E19CBE1B0004360E8 /* Question.h */,
@@ -283,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */,
 				3424FE0419C806BA003C3BEE /* main.m in Sources */,
 				3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */,
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,

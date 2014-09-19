@@ -15,8 +15,9 @@
 //#import <MultipeerConnectivity/MCNearbyServiceBrowser.h>
 #import "MultipeerConnectivity/MCPeerID.h"
 #import "MultipeerConnectivity/MCSession.h"
+#import "EditQuestionViewController.h"
 
-@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate>
+@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate>
 
 
 @end

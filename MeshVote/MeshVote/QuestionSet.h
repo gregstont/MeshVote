@@ -21,4 +21,6 @@
 
 -(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex;
 
+-(int)getAnswerCountAtIndex:(int)index;
+
 @end

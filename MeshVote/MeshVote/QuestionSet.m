@@ -52,12 +52,16 @@
 }
 
 -(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex {
-    
-    return nil;
+    Question *temp = [_questions objectAtIndex:index];
+    return [temp.answerText objectAtIndex:ansIndex];
     
 }
 
-
+-(int)getAnswerCountAtIndex:(int)index {
+    Question *temp = [_questions objectAtIndex:index];
+    
+    return [temp getAnswerCount];
+}
 
 
 @end

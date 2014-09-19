@@ -10,13 +10,14 @@
 #import "QuestionSet.h"
 #import "Question.h"
 
+
 @interface QuestionViewControllerTableViewController ()
 
 @property (nonatomic, strong) QuestionSet *questionSet; //change this later
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 
-
+@property (nonatomic) int selectedQuestion;
 
 @end
 
@@ -76,7 +77,11 @@
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
-    
+    /*
+    EditQuestionViewController *secondViewController = [[EditQuestionViewController alloc] init];
+    secondViewController.delegate = self;
+    [[self navigationController] pushViewController:secondViewController animated:YES];
+    */
 }
 
 
@@ -94,6 +99,28 @@
 }
 
 
+
+
+//
+//  EditQuestionViewControllerDelegate
+//
+
+-(NSString*)getQuestionTextAtIndex:(int)index {
+    return [_questionSet getQuestionTextAtIndex:index];
+}
+
+-(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex {
+    NSLog(@"getting answer text");
+    return [_questionSet getAnswerTextAtIndex:index andAnswerIndex:ansIndex];
+}
+
+-(int)getAnswerCountAtIndex:(int)index {
+    return [_questionSet getAnswerCountAtIndex:index];
+}
+
+-(int)getSelectedQuestion {
+    return _selectedQuestion;
+}
 
 
 
@@ -157,6 +184,15 @@
     cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    _selectedQuestion = (int)indexPath.row;
+    
+    //TODO: this
+    
+
 }
 
 
