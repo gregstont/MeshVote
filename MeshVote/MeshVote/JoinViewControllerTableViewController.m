@@ -10,6 +10,9 @@
 
 @interface JoinViewControllerTableViewController ()
 
+@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
+
 @end
 
 @implementation JoinViewControllerTableViewController

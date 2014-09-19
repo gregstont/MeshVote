@@ -7,12 +7,22 @@
 //
 
 #import "QuestionViewControllerTableViewController.h"
+#import "QuestionSet.h"
+#import "Question.h"
 
 @interface QuestionViewControllerTableViewController ()
 
+@property (nonatomic, strong) QuestionSet *questionSet; //change this later
+@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
+@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+
+
+
 @end
 
+
 @implementation QuestionViewControllerTableViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -20,6 +30,7 @@
     if (self) {
         // Custom initialization
         NSLog(@"in init question view!");
+        
         
     }
     return self;
@@ -33,31 +44,34 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    _questions = [[NSMutableArray alloc] init];
+    /*_questions = [[NSMutableArray alloc] init];
     
     [_questions addObject:@"first!"];
     [_questions addObject:@"second!"];
-    [_questions addObject:@"third!"];
+    [_questions addObject:@"third!"];*/
+    
+    
     
     NSLog(@"question viewdidload");
+    
+    _questionSet = [[QuestionSet alloc] init];
+    
+    Question *tempQuestion1 = [[Question alloc] init];
+    [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
+    [tempQuestion1 addAnswer:@"science"];
+    [tempQuestion1 addAnswer:@"flowers"];
+    [tempQuestion1 addAnswer:@"purple"];
+    [tempQuestion1 setTimeLimit:60];
+    
+    [_questionSet addQuestion:tempQuestion1];
 
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
     //MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     _session = [[MCSession alloc] initWithPeer:me];
-    //MCSession *mySession = [[MCSession alloc] initWithPeer:me];
-    // Set ourselves as the MCSessionDelegate
     _session.delegate = self;
-    // Create the advertiser assistant for managing incoming invitation
-    //_advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:serviceType discoveryInfo:nil session:_session];
-    //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
-    //myAssist.delegate = self;
-    //[myAssist start];
     
-    //MCNearbyServiceAdvertiser *myAdvertise = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
-    //myAdvertise.delegate = self;
-    //[myAdvertise startAdvertisingPeer];
     
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
     _browser.delegate = self;
@@ -65,12 +79,9 @@
     
 }
 
-//for advertiser delegate
-- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
-    NSLog(@"recieved invite");
-}
 
--(void)dealloc {
+
+- (void)dealloc {
     NSLog(@"dealloc");
 }
 
@@ -81,6 +92,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
+
+//
+//  MCNearbyServiceBrowserDelegate
+//
 
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     
@@ -100,6 +119,14 @@
     NSLog(@"error starting browser");
 }
 
+
+
+
+
+//
+//  UITableViewDataSource, UITableViewDelegate
+//
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -113,24 +140,31 @@
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [_questions count];
+    NSLog(@"number of rows:%d",[_questionSet getQuestionCount]);
+    return [_questionSet getQuestionCount];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid"]; //forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"qcellid"]; //forIndexPath:indexPath];
     
     // Configure the cell...
     if (cell == nil) {
         //NSLog(@"Shouldnt be here!!!!!!!!!!!");
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellid"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"qcellid"];
     }
-    cell.textLabel.text = [_questions objectAtIndex:indexPath.row];
+    cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
     
     return cell;
 }
 
+
+
+
+//
+//  MCSessionDelegate
+//
 
 // Remote peer changed state
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {

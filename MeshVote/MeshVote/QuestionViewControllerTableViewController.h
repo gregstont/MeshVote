@@ -18,10 +18,5 @@
 
 @interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate>
 
-//TODO: need to be private
-@property (nonatomic, strong) NSMutableArray *questions; //change this later
-@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
-@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
-
 
 @end
