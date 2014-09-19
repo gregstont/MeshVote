@@ -11,6 +11,7 @@
 #import <MultipeerConnectivity/MCAdvertiserAssistant.h>
 #import "MultipeerConnectivity/MCPeerID.h"
 #import "MultipeerConnectivity/MCSession.h"
+#import "Question.h"
 
 @interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate, MCAdvertiserAssistantDelegate, MCNearbyServiceAdvertiserDelegate>
 

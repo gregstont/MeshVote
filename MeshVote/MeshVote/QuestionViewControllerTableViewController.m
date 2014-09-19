@@ -66,7 +66,15 @@
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 setTimeLimit:60];
     
+    Question *tempQuestion2 = [[Question alloc] init];
+    [tempQuestion2 setQuestionText:@"Why is UT better than A&M?"];
+    [tempQuestion2 addAnswer:@"grapefruit"];
+    [tempQuestion2 addAnswer:@"tangerine"];
+    [tempQuestion2 addAnswer:@"orange"];
+    [tempQuestion2 setTimeLimit:60];
+    
     [_questionSet addQuestion:tempQuestion1];
+    [_questionSet addQuestion:tempQuestion2];
 
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
     //MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
@@ -188,7 +196,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    NSLog(@"didSelectRow: %d", (int)indexPath.row);
     _selectedQuestion = (int)indexPath.row;
+    
+    [self performSegueWithIdentifier:@"showQuestion" sender:self];
     
     //TODO: this
     
@@ -209,14 +220,14 @@
     
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected!");
-        NSString *helloString = @"Hello connected!";
-        NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
-        
+        //NSString *helloString = @"Hello connected!";
+        //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:[_questionSet getQuestionAtIndex:0]];
         NSError *error;
         
         NSMutableArray *peers = [[NSMutableArray alloc] init];
         [peers addObject:peerID];
-        [_session sendData:helloMessage toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+        [_session sendData:testQuestion toPeers:peers withMode:MCSessionSendDataReliable error:&error];
         
         if(error) {
             NSLog(@"Error sending data");

@@ -32,6 +32,11 @@
     
 }
 
+-(Question*)getQuestionAtIndex:(int)index {
+    NSLog(@"getQuestionAtIndex");
+    return [_questions objectAtIndex:index];
+}
+
 -(void)removeQuestionAtIndex:(int)index {
     
     [_questions removeObjectAtIndex:index];

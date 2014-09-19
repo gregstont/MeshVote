@@ -30,6 +30,29 @@
     return self;
 }
 
+//
+// NSCoding
+//
+
+- (id)initWithCoder:(NSCoder*)decoder {
+    self = [super init];
+    if(self) {
+        _questionText = [decoder decodeObjectForKey:@"questionText"];
+        _correctAnswer = [decoder decodeIntForKey:@"correctAnswer"];
+        _timeLimit = [decoder decodeIntForKey:@"timeLimit"];
+        _answerText = [decoder decodeObjectForKey:@"answerText"];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)encoder {
+    [encoder encodeObject:_questionText forKey:@"questionText"];
+    [encoder encodeObject:_answerText forKey:@"answerText"];
+    [encoder encodeInt:_correctAnswer forKey:@"correctAnswer"];
+    [encoder encodeInt:_timeLimit forKey:@"timeLimit"];
+    
+}
 -(void)addAnswer:(NSString*)text {
     [_answerText addObject:text];
 }

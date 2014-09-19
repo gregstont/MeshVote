@@ -28,10 +28,12 @@
     [super viewDidLoad];
     NSLog(@"in editQuestion view Controller");
     _delegate = [self.navigationController.viewControllers objectAtIndex:0];
-    [_questionTextLabel setText:[_delegate getQuestionTextAtIndex:0]];
+    [_questionTextLabel setText:[_delegate getQuestionTextAtIndex:[_delegate getSelectedQuestion]]];
     // Do any additional setup after loading the view.
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
+    
+    NSLog(@"selectedQuestion:%d", [_delegate getSelectedQuestion]);
 }
 
 - (void)didReceiveMemoryWarning

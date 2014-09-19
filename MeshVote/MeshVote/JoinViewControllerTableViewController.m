@@ -151,9 +151,10 @@
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data!");
     
-    NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"  message:%@", message);
+    //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSLog(@"  message:%@", recQuestion.questionText);
+          
     
 }
 

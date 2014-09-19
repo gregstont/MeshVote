@@ -13,6 +13,8 @@
 
 -(void)addQuestion:(Question*)question;
 
+-(Question*)getQuestionAtIndex:(int)index;
+
 -(void)removeQuestionAtIndex:(int)index; //Raises an NSRangeException if index is beyond the end of the array.
 
 -(int)getQuestionCount;
