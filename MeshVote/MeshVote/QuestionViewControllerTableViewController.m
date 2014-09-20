@@ -101,6 +101,8 @@
 
 - (void)dealloc {
     NSLog(@"dealloc");
+    [_browser stopBrowsingForPeers];
+    [_session disconnect];
 }
 
 

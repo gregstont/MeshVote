@@ -54,6 +54,12 @@
     NSLog(@"end of JOIN viewDidLoad");
 }
 
+- (void)dealloc {
+    NSLog(@"dealloc join");
+    [_advertiser stopAdvertisingPeer];
+    [_session disconnect];
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO];
 }
