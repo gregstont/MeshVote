@@ -126,7 +126,7 @@
 }
 
 -(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex {
-    NSLog(@"getting answer text");
+    //NSLog(@"getting answer text");
     return [_questionSet getAnswerTextAtIndex:index andAnswerIndex:ansIndex];
 }
 
@@ -136,6 +136,10 @@
 
 -(int)getSelectedQuestion {
     return _selectedQuestion;
+}
+
+-(Question*)getQuestionAtIndex:(int)index {
+    return  [_questionSet getQuestionAtIndex:index];
 }
 
 

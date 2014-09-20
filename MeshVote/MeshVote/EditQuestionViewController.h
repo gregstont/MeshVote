@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QuestionSet.h"
 
 @class EditQuestionViewController;
 @protocol EditQuestionViewControllerDelegate <NSObject>
+
+-(Question*)getQuestionAtIndex:(int)index;
 
 -(NSString*)getQuestionTextAtIndex:(int)index;
 
@@ -22,13 +25,14 @@
 @end
 
 
-@interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *questionTextLabel;
 @property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+- (IBAction)doneButtonPressed:(id)sender;
 
 
 @end

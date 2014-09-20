@@ -12,6 +12,8 @@
 
 @interface EditQuestionViewController ()
 
+@property (nonatomic, strong) Question* currentQuestion;
+
 @end
 
 @implementation EditQuestionViewController
@@ -47,20 +49,25 @@ NSArray *letters;
     _questionTextLabel.layer.cornerRadius = 10.0f;
     
     if([_delegate getSelectedQuestion] == -1) { //create new question
+        _currentQuestion = [[Question alloc] init];
         [_questionTextLabel setText:@"Question..."];
         //[_doneButton setHidden:NO];
-        [_doneButton setTitle:@"Done"];
+        [_doneButton setTitle:@"Save"];
         [_doneButton setEnabled:YES];
+        self.navigationItem.title = @"New question";
     }
     else { //edit existing question
-        [_questionTextLabel setText:[_delegate getQuestionTextAtIndex:[_delegate getSelectedQuestion]]];
+        _currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
+        [_questionTextLabel setText:_currentQuestion.questionText];
+        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
     }
     
     // Do any additional setup after loading the view.
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
     
-    self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
+    [_questionTextLabel setDelegate:self];
+    
     
     colors = [[NSMutableArray alloc] init];
     [colors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]]; //green
@@ -126,7 +133,9 @@ NSArray *letters;
     if(indexPath.row % 2 == 1) { //blank spacing cell
         UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid2"];
         [blankCell setHidden:YES];
+        [blankCell setUserInteractionEnabled:NO];
         if(blankCell == nil) {
+            NSLog(@"Shouldnt be here!!!!!!!!!!!");
             blankCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                            reuseIdentifier:@"eq_cellid2"];
             [blankCell.contentView setAlpha:0];
@@ -155,16 +164,7 @@ NSArray *letters;
     [cell.answerChoiceLetter setText:[letters objectAtIndex:indexPath.row/2]];
     
     [cell setHighlighted:YES   animated:YES];
-    /*NSLog(@"row over 2:%d", (int)indexPath.row/2);
-    if(indexPath.row/2 == 0)
-        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]; //green
-    else if(indexPath.row/2 == 1)
-        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]; //blue
-    else if(indexPath.row/2 == 2)
-        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]; //yello
-    else if(indexPath.row/2 == 3)
-        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]; //red
-    */
+
     cell.layer.cornerRadius = 10.0f;
     cell.clipsToBounds = YES;
     cell.textLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
@@ -174,17 +174,14 @@ NSArray *letters;
     if([_delegate getSelectedQuestion] == -1) { //add new question
         cell.textLabel.text = @"";
         cell.answerTextField.text = @"add answer";
-        //[cell.answerChoiceLetter setHidden:YES];
-        //cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:1 green:1 blue:1 alpha:0];
-        //[cell.answerChoiceLetter setText:@"+"];
+
     }
     else {
         [cell.answerTextField setEnabled:NO];
         cell.answerTextField.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];
-        cell.textLabel.text = @"";//[_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//
-    }//[_questions objectAtIndex:indexPath.row];
+        cell.textLabel.text = @"";
+    }
     
-    //NSLog(@" text:%@", [_delegate getAnswerTextAtIndex:0 andAnswerIndex:(int)indexPath.row]);
     return cell;
 }
 
@@ -213,4 +210,26 @@ NSArray *letters;
     return NO;
 }
 
+- (IBAction)doneButtonPressed:(id)sender {
+    if([_doneButton.title isEqualToString:@"Done"]) { //in edit text view
+        [self.view endEditing:YES];
+    }
+    else { //save/add new question
+        NSLog(@"submitted:%@", _currentQuestion.questionText);
+    }
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    [_doneButton setTitle:@"Done"];
+    if([_questionTextLabel.text isEqualToString:@"Question..."])
+        [_questionTextLabel setText:@""];
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    //if([textView. isEqualToString:@)
+    [_doneButton setTitle:@"Save"];
+    [_currentQuestion setQuestionText:textView.text];
+    //NSLog(@"submitted:%@", _currentQuestion.questionText);
+}
 @end

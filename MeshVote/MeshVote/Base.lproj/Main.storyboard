@@ -198,7 +198,11 @@
                         <color key="backgroundColor" red="0.84183673469387754" green="0.84183673469387754" blue="0.84183673469387754" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="T02-EE-Py7">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="IVB-9U-eRD"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="IVB-9U-eRD">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="9vv-Mo-udS" id="gFJ-lp-9x0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="doneButton" destination="IVB-9U-eRD" id="ZLG-BC-DKp"/>
