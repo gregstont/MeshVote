@@ -64,6 +64,7 @@
     [tempQuestion1 addAnswer:@"science"];
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
+    [tempQuestion1 addAnswer:@"stripes"];
     [tempQuestion1 setTimeLimit:60];
     
     

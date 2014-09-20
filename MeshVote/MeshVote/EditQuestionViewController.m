@@ -8,6 +8,7 @@
 
 #import "EditQuestionViewController.h"
 #import "BackgroundLayer.h"
+#import "SpacedUITableViewCell.h"
 
 @interface EditQuestionViewController ()
 
@@ -15,11 +16,15 @@
 
 @implementation EditQuestionViewController
 
+NSMutableArray *colors;
+NSArray *letters;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -50,6 +55,14 @@
     [_tableView setDelegate:self];
     
     self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
+    
+    colors = [[NSMutableArray alloc] init];
+    [colors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]]; //green
+    [colors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]]; //blue
+    [colors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]]; //yellow
+    [colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
+    
+    letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];//[NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G" count:7];
 
     //NSLog(@"selectedQuestion:%d", temp);
 }
@@ -95,7 +108,7 @@
 {
     if (indexPath.row % 2 == 1)
         return 10;
-    return 32;
+    return 34;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,19 +129,33 @@
     }
     
     //NSLog(@"cellForRow");
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid"]; //forIndexPath:indexPath];
-[cell setHidden:NO];
+    SpacedUITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid"]; //forIndexPath:indexPath];
+    [cell setHidden:NO];
     // Configure the cell...
     if (cell == nil) {
         NSLog(@"Shouldnt be here!!!!!!!!!!!");
 
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"eq_cellid"];
+        cell = [[SpacedUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"eq_cellid"];
 
     }
     
+    cell.answerChoiceLetter.layer.cornerRadius = 10.0f;
+    
+    cell.answerChoiceLetter.backgroundColor = [colors objectAtIndex:indexPath.row/2];
+    [cell.answerChoiceLetter setText:[letters objectAtIndex:indexPath.row/2]];
+    /*NSLog(@"row over 2:%d", (int)indexPath.row/2);
+    if(indexPath.row/2 == 0)
+        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]; //green
+    else if(indexPath.row/2 == 1)
+        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]; //blue
+    else if(indexPath.row/2 == 2)
+        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]; //yello
+    else if(indexPath.row/2 == 3)
+        cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]; //red
+    */
     cell.layer.cornerRadius = 10.0f;
     cell.clipsToBounds = YES;
-    cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+    cell.textLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
