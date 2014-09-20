@@ -7,6 +7,7 @@
 //
 
 #import "EditQuestionViewController.h"
+#import "BackgroundLayer.h"
 
 @interface EditQuestionViewController ()
 
@@ -27,8 +28,23 @@
 {
     [super viewDidLoad];
     NSLog(@"in editQuestion view Controller");
-    _delegate = [self.navigationController.viewControllers objectAtIndex:0];
-    [_questionTextLabel setText:[_delegate getQuestionTextAtIndex:[_delegate getSelectedQuestion]]];
+    
+    CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
+    //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
+    bgLayer.frame = self.view.bounds;
+    [self.view.layer insertSublayer:bgLayer atIndex:0];
+    _delegate = [self.navigationController.viewControllers objectAtIndex:1];
+    
+    _questionTextLabel.clipsToBounds = YES;
+    _questionTextLabel.layer.cornerRadius = 10.0f;
+    
+    if([_delegate getSelectedQuestion] == -1) { //create new question
+        [_questionTextLabel setText:@"Question..."];
+    }
+    else { //edit existing question
+        [_questionTextLabel setText:[_delegate getQuestionTextAtIndex:[_delegate getSelectedQuestion]]];
+    }
+    
     // Do any additional setup after loading the view.
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
@@ -66,7 +82,11 @@
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
     
     //NSLog(@" and:%d", [_delegate getAnswerCountAtIndex:0]);
-    return [_delegate getAnswerCountAtIndex:[_delegate getSelectedQuestion]]; //TODO: change this
+    if([_delegate getSelectedQuestion] == -1) {
+        return 0;
+    }
+    else
+        return [_delegate getAnswerCountAtIndex:[_delegate getSelectedQuestion]]; //TODO: change this
 }
 
 
@@ -74,11 +94,24 @@
 {
     //NSLog(@"cellForRow");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid"]; //forIndexPath:indexPath];
+
+    
+    cell.layer.cornerRadius = 10.0f;
+    cell.clipsToBounds = YES;
+    
+    //cell.layer.frame = CGRectOffset(cell.frame, 10, 10);
+    //cell.frame = CGRectOffset(cell.frame, 10, 10);
+    
+    //cell.frame = CGRectOffset(cell.frame, 100, 100);
+    
+    //cell.frame.size.height -= (2 * 4);
     
     // Configure the cell...
     if (cell == nil) {
         //NSLog(@"Shouldnt be here!!!!!!!!!!!");
+
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"eq_cellid"];
+
     }
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
     cell.textLabel.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
@@ -103,5 +136,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(BOOL)automaticallyAdjustsScrollViewInsets {
+    return NO;
+}
 
 @end

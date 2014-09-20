@@ -13,5 +13,6 @@
 
 +(CAGradientLayer*) greyGradient;
 +(CAGradientLayer*) blueGradient;
++(CAGradientLayer*) lightBlueGradient;
 
 @end

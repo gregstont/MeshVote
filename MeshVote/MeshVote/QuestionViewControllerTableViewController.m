@@ -313,4 +313,7 @@
 }
 */
 
+- (IBAction)addNewQuestion:(id)sender {
+    _selectedQuestion = -1;
+}
 @end

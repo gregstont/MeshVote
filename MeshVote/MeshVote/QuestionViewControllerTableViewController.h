@@ -19,5 +19,7 @@
 
 @interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate>
 
+- (IBAction)addNewQuestion:(id)sender;
+
 
 @end
