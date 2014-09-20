@@ -10,6 +10,7 @@
 #import "QuestionSet.h"
 #import "Question.h"
 
+//#import <malloc/malloc.h> //TODO: remove on release
 
 @interface QuestionViewControllerTableViewController ()
 
@@ -45,14 +46,13 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     /*_questions = [[NSMutableArray alloc] init];
     
     [_questions addObject:@"first!"];
     [_questions addObject:@"second!"];
     [_questions addObject:@"third!"];*/
-    
     
     
     NSLog(@"question viewdidload");
@@ -65,6 +65,7 @@
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 setTimeLimit:60];
+    
     
     Question *tempQuestion2 = [[Question alloc] init];
     [tempQuestion2 setQuestionText:@"Why is UT better than A&M?"];
@@ -90,6 +91,10 @@
     secondViewController.delegate = self;
     [[self navigationController] pushViewController:secondViewController animated:YES];
     */
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 
@@ -224,6 +229,8 @@
         //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
         NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:[_questionSet getQuestionAtIndex:0]];
         NSError *error;
+        
+        //NSLog(@"size of myObject: %zd", malloc_size((__bridge const void *)(testQuestion)));
         
         NSMutableArray *peers = [[NSMutableArray alloc] init];
         [peers addObject:peerID];

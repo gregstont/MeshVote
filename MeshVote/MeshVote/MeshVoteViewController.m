@@ -27,6 +27,12 @@
     
     //for keyboard exit
     [self.nameInput setDelegate:self];
+    
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
