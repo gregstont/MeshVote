@@ -115,10 +115,11 @@ NSArray *letters;
 {
     
     if(indexPath.row % 2 == 1) { //blank spacing cell
-        UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid"];
+        UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid2"];
+        [blankCell setHidden:YES];
         if(blankCell == nil) {
             blankCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                           reuseIdentifier:@"eq_cellid"];
+                                           reuseIdentifier:@"eq_cellid2"];
             [blankCell.contentView setAlpha:0];
             [blankCell setAlpha:0];
             [blankCell setHidden:YES];
@@ -139,10 +140,12 @@ NSArray *letters;
 
     }
     
-    cell.answerChoiceLetter.layer.cornerRadius = 10.0f;
+    cell.answerChoiceLetter.layer.cornerRadius = 7.0f;
     
     cell.answerChoiceLetter.backgroundColor = [colors objectAtIndex:indexPath.row/2];
     [cell.answerChoiceLetter setText:[letters objectAtIndex:indexPath.row/2]];
+    
+    [cell setHighlighted:YES   animated:YES];
     /*NSLog(@"row over 2:%d", (int)indexPath.row/2);
     if(indexPath.row/2 == 0)
         cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]; //green
@@ -166,6 +169,8 @@ NSArray *letters;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    
     
 }
 
