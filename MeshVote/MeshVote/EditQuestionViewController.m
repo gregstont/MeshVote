@@ -86,35 +86,51 @@
         return 0;
     }
     else
-        return [_delegate getAnswerCountAtIndex:[_delegate getSelectedQuestion]]; //TODO: change this
+        return [_delegate getAnswerCountAtIndex:[_delegate getSelectedQuestion]] * 2 - 1; //TODO: change this
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row % 2 == 1)
+        return 10;
+    return 32;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if(indexPath.row % 2 == 1) { //blank spacing cell
+        UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid"];
+        if(blankCell == nil) {
+            blankCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                           reuseIdentifier:@"eq_cellid"];
+            [blankCell.contentView setAlpha:0];
+            [blankCell setAlpha:0];
+            [blankCell setHidden:YES];
+            blankCell.clipsToBounds = YES;
+            [blankCell setUserInteractionEnabled:NO];
+        }
+        return blankCell;
+    }
+    
     //NSLog(@"cellForRow");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid"]; //forIndexPath:indexPath];
-
-    
-    cell.layer.cornerRadius = 10.0f;
-    cell.clipsToBounds = YES;
-    
-    //cell.layer.frame = CGRectOffset(cell.frame, 10, 10);
-    //cell.frame = CGRectOffset(cell.frame, 10, 10);
-    
-    //cell.frame = CGRectOffset(cell.frame, 100, 100);
-    
-    //cell.frame.size.height -= (2 * 4);
-    
+[cell setHidden:NO];
     // Configure the cell...
     if (cell == nil) {
-        //NSLog(@"Shouldnt be here!!!!!!!!!!!");
+        NSLog(@"Shouldnt be here!!!!!!!!!!!");
 
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"eq_cellid"];
 
     }
+    
+    cell.layer.cornerRadius = 10.0f;
+    cell.clipsToBounds = YES;
+    cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+    //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
+    
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
-    cell.textLabel.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
+    cell.textLabel.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
     
     //NSLog(@" text:%@", [_delegate getAnswerTextAtIndex:0 andAnswerIndex:(int)indexPath.row]);
     return cell;
