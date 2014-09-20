@@ -49,7 +49,9 @@
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
     
-    NSLog(@"selectedQuestion:%d", [_delegate getSelectedQuestion]);
+    self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
+
+    //NSLog(@"selectedQuestion:%d", temp);
 }
 
 - (void)didReceiveMemoryWarning
