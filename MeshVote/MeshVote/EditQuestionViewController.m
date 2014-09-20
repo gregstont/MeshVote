@@ -179,6 +179,7 @@ NSArray *letters;
         //[cell.answerChoiceLetter setText:@"+"];
     }
     else {
+        [cell.answerTextField setEnabled:NO];
         cell.answerTextField.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];
         cell.textLabel.text = @"";//[_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//
     }//[_questions objectAtIndex:indexPath.row];
