@@ -10,5 +10,6 @@
 
 @interface SpacedUITableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *answerChoiceLetter;
+@property (weak, nonatomic) IBOutlet UITextField *answerTextField;
 
 @end

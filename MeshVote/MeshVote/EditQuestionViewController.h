@@ -28,5 +28,7 @@
 @property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+
 
 @end

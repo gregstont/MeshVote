@@ -33,6 +33,9 @@ NSArray *letters;
 {
     [super viewDidLoad];
     NSLog(@"in editQuestion view Controller");
+    [_doneButton setTitle:@""];
+    [_doneButton setEnabled:NO];
+    //[_doneButton setHidden:YES];
     
     CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
     //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
@@ -45,6 +48,9 @@ NSArray *letters;
     
     if([_delegate getSelectedQuestion] == -1) { //create new question
         [_questionTextLabel setText:@"Question..."];
+        //[_doneButton setHidden:NO];
+        [_doneButton setTitle:@"Done"];
+        [_doneButton setEnabled:YES];
     }
     else { //edit existing question
         [_questionTextLabel setText:[_delegate getQuestionTextAtIndex:[_delegate getSelectedQuestion]]];
@@ -98,7 +104,7 @@ NSArray *letters;
     
     //NSLog(@" and:%d", [_delegate getAnswerCountAtIndex:0]);
     if([_delegate getSelectedQuestion] == -1) {
-        return 0;
+        return 1;
     }
     else
         return [_delegate getAnswerCountAtIndex:[_delegate getSelectedQuestion]] * 2 - 1; //TODO: change this
@@ -113,6 +119,9 @@ NSArray *letters;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if([_delegate getSelectedQuestion] == -1) { //add new question
+        
+    }
     
     if(indexPath.row % 2 == 1) { //blank spacing cell
         UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid2"];
@@ -162,13 +171,25 @@ NSArray *letters;
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
-    cell.textLabel.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
+    if([_delegate getSelectedQuestion] == -1) { //add new question
+        cell.textLabel.text = @"";
+        cell.answerTextField.text = @"add answer";
+        //[cell.answerChoiceLetter setHidden:YES];
+        //cell.answerChoiceLetter.backgroundColor = [[UIColor alloc] initWithRed:1 green:1 blue:1 alpha:0];
+        //[cell.answerChoiceLetter setText:@"+"];
+    }
+    else {
+        cell.answerTextField.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];
+        cell.textLabel.text = @"";//[_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];//@"d";//[_questionSet getQuestionTextAtIndex:(int)indexPath.row];//
+    }//[_questions objectAtIndex:indexPath.row];
     
     //NSLog(@" text:%@", [_delegate getAnswerTextAtIndex:0 andAnswerIndex:(int)indexPath.row]);
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+   
 
     
     
