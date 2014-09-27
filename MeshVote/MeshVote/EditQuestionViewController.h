@@ -18,6 +18,8 @@
 
 -(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex;
 
+-(void)addQuestionToSet:(Question*)question;
+
 -(int)getAnswerCountAtIndex:(int)index;
 
 -(int)getSelectedQuestion;
@@ -25,7 +27,7 @@
 @end
 
 
-@interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
+@interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *questionTextLabel;
 @property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;

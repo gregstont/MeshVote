@@ -96,6 +96,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO];
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 
@@ -140,6 +141,10 @@
 
 -(Question*)getQuestionAtIndex:(int)index {
     return  [_questionSet getQuestionAtIndex:index];
+}
+
+-(void)addQuestionToSet:(Question*)question {
+    [_questionSet addQuestion:question];
 }
 
 

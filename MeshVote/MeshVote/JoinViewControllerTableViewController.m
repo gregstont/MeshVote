@@ -64,7 +64,12 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
-//for advertiser delegate
+
+
+//
+// for advertiser delegate
+//
+
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
     NSLog(@"recieved invite");
     invitationHandler([@YES boolValue], _session);

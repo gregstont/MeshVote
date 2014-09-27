@@ -28,6 +28,7 @@
 -(void)addQuestion:(Question*)question {
     NSLog(@"adding question");
     [_questions addObject:question];
+    NSLog(@"new question count:%d", self.getQuestionCount);
     //++_numberOfQuestions;
     
 }

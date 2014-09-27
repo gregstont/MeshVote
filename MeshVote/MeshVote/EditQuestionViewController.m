@@ -13,6 +13,7 @@
 @interface EditQuestionViewController ()
 
 @property (nonatomic, strong) Question* currentQuestion;
+@property (nonatomic) BOOL isAddingNewAnswer;
 
 @end
 
@@ -111,10 +112,10 @@ NSArray *letters;
     
     //NSLog(@" and:%d", [_delegate getAnswerCountAtIndex:0]);
     if([_delegate getSelectedQuestion] == -1) {
-        return 1;
+        return MAX(1, [_currentQuestion getAnswerCount] * 2 + 1);
     }
     else
-        return [_delegate getAnswerCountAtIndex:[_delegate getSelectedQuestion]] * 2 - 1; //TODO: change this
+        return [_currentQuestion getAnswerCount] * 2 - 1; //TODO: change this
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,12 +169,29 @@ NSArray *letters;
     cell.layer.cornerRadius = 10.0f;
     cell.clipsToBounds = YES;
     cell.textLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+    
+    cell.answerTextField.delegate = self;
+    
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
     if([_delegate getSelectedQuestion] == -1) { //add new question
-        cell.textLabel.text = @"";
-        cell.answerTextField.text = @"add answer";
+        if([_currentQuestion getAnswerCount] > (int)indexPath.row/2) {
+            cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
+        }
+        else {
+            cell.textLabel.text = @"";
+            cell.answerTextField.text = @"add answer";
+        }
+        /*
+        if([_currentQuestion getAnswerCount] == 0) { //no answers yet
+            cell.textLabel.text = @"";
+            cell.answerTextField.text = @"add answer";
+        }
+        else {
+            cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
+        }
+         */
 
     }
     else {
@@ -216,8 +234,16 @@ NSArray *letters;
     }
     else { //save/add new question
         NSLog(@"submitted:%@", _currentQuestion.questionText);
+        [self.delegate addQuestionToSet:_currentQuestion];
+        [self.navigationController popViewControllerAnimated:YES];
+        
     }
 }
+
+
+//
+//  TextViewDelegate, for question
+//
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [_doneButton setTitle:@"Done"];
@@ -231,5 +257,45 @@ NSArray *letters;
     [_doneButton setTitle:@"Save"];
     [_currentQuestion setQuestionText:textView.text];
     //NSLog(@"submitted:%@", _currentQuestion.questionText);
+}
+
+
+//
+//  TextFieldDelegate, for answers
+//
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    // Indicate we're done with the keyboard. Make it go away.
+    [textField resignFirstResponder];
+    return YES;
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    [_doneButton setTitle:@"Done"];
+    if([textField.text isEqualToString:@"add answer"]) {
+        [self setIsAddingNewAnswer:YES];
+        textField.text = @"";
+    }
+    else {
+        [self setIsAddingNewAnswer:NO];
+    }
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    //if([textView. isEqualToString:@)
+    [_doneButton setTitle:@"Save"];
+    NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
+    if(self.isAddingNewAnswer && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
+        [_currentQuestion addAnswer:textField.text];
+    }
+    else { //editing an existing answer
+        
+    }
+    
+    //[_currentQuestion setQuestionText:textView.text];
+    NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
+    NSLog(@"added answer:%@", textField.text);
+    //[self.tableView reloadData];
+    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 @end
