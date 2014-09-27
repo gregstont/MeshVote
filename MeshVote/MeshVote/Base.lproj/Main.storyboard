@@ -31,7 +31,7 @@
                                 </state>
                                 <connections>
                                     <action selector="joinSession:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Zdx-vc-UW5"/>
-                                    <segue destination="NBT-UQ-8Wk" kind="push" id="Cit-qf-nE7"/>
+                                    <segue destination="NBT-UQ-8Wk" kind="push" identifier="joinSessionSegue" id="Cit-qf-nE7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYx-7J-NNh">
@@ -44,7 +44,7 @@
                                 </state>
                                 <connections>
                                     <action selector="createSession:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rr9-EH-zum"/>
-                                    <segue destination="Fb5-mu-rlG" kind="push" id="qPS-IC-LHZ"/>
+                                    <segue destination="Fb5-mu-rlG" kind="push" identifier="createSessionSeque" id="qPS-IC-LHZ"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mesh_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Izv-U5-VBX">

@@ -8,6 +8,8 @@
 
 #import "MeshVoteViewController.h"
 #import "BackgroundLayer.h"
+#import "QuestionViewControllerTableViewController.h"
+#import "JoinViewControllerTableViewController.h"
 
 @interface MeshVoteViewController ()
 
@@ -49,6 +51,15 @@
     [textField resignFirstResponder];
     return YES;
 }
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if([textField.text isEqualToString:@"Name"]) {
+        textField.text = @"";
+    }
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    //if([textView. isEqualToString:@)
+}
 
 - (IBAction)joinSession:(id)sender {
     NSLog(@"joinSession");
@@ -62,5 +73,19 @@
     NSLog(@"showAbout");
 
     
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"createSessionSeque"]){
+        //NSLog(@"prepareForSegue");
+        QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
+        controller.userName = _nameInput.text;
+    }
+    else if([segue.identifier isEqualToString:@"joinSessionSeque"]){
+        NSLog(@"prepareForSegue");
+        JoinViewControllerTableViewController *controller = (JoinViewControllerTableViewController *)segue.destinationViewController;
+        controller.userName = _nameInput.text;
+    }
 }
 @end

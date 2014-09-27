@@ -25,7 +25,13 @@
 
 @implementation QuestionViewControllerTableViewController
 
-
+- (id)init {
+    self = [super init];
+    if(self) {
+        NSLog(@"in init question view!");
+    }
+    return self;
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -55,7 +61,7 @@
     [_questions addObject:@"third!"];*/
     
     
-    NSLog(@"question viewdidload");
+    NSLog(@"question viewdidload, userName:%@", self.userName);
     
     _questionSet = [[QuestionSet alloc] init];
     

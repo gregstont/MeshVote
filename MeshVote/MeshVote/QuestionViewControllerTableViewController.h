@@ -21,5 +21,7 @@
 
 - (IBAction)addNewQuestion:(id)sender;
 
+@property (nonatomic, strong) NSString* userName;
+
 
 @end

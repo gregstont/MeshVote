@@ -15,4 +15,7 @@
 
 @interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate, MCAdvertiserAssistantDelegate, MCNearbyServiceAdvertiserDelegate>
 
+@property (nonatomic, strong) NSString* userName;
+
+
 @end
