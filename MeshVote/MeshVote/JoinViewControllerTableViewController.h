@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MCNearbyServiceAdvertiser.h>
+#import <MultipeerConnectivity/MCNearbyServiceBrowser.h>
 #import <MultipeerConnectivity/MCAdvertiserAssistant.h>
 #import "MultipeerConnectivity/MCPeerID.h"
 #import "MultipeerConnectivity/MCSession.h"
 #import "Question.h"
 
-@interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate, MCAdvertiserAssistantDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, MCNearbyServiceBrowserDelegate>
 
 @property (nonatomic, strong) NSString* userName;
 

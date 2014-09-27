@@ -17,7 +17,7 @@
 #import "MultipeerConnectivity/MCSession.h"
 #import "EditQuestionViewController.h"
 
-@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate>
+@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate, MCNearbyServiceAdvertiserDelegate>
 
 - (IBAction)addNewQuestion:(id)sender;
 

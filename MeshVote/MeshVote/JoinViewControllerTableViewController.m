@@ -12,6 +12,9 @@
 
 @property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
+@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
+
+@property (nonatomic, strong) NSMutableArray* sessionList;
 
 @end
 
@@ -38,6 +41,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    _sessionList = [[NSMutableArray alloc] init];
+    
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
     _session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     // Set ourselves as the MCSessionDelegate
@@ -46,6 +51,11 @@
     //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
     //myAssist.delegate = self;
     //[myAssist start];
+    
+    //start browsing for open sessions to join
+    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
+    _browser.delegate = self;
+    [_browser startBrowsingForPeers];
     
     _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
     _advertiser.delegate = self;
@@ -87,26 +97,32 @@
 {
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return _sessionList.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCell" forIndexPath:indexPath];
+    
+    if(cell == nil) {
+        NSLog(@"nil sessionNameCell");
+    }
+    
+    cell.textLabel.text = [_sessionList objectAtIndex:indexPath.row];
     
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -186,6 +202,34 @@
 // Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
     
+}
+
+
+
+//
+//  MCNearbyServiceBrowserDelegate
+//
+
+- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
+    
+    NSString* n = [info objectForKey:@"name"];
+    NSLog(@"FOUND PEER: %@", n);
+    
+    [_sessionList addObject:n];
+    [self.tableView reloadData];
+    //[_browser invitePeer:peerID toSession:_session withContext:nil timeout:10];
+    
+}
+
+// A nearby peer has stopped advertising
+- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
+    NSLog(@"LOST PEER!!");
+}
+
+//@optional
+// Browsing did not start due to an error
+- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
+    NSLog(@"error starting browser");
 }
 
 @end

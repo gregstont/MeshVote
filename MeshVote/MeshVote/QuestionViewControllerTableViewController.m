@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) QuestionSet *questionSet; //change this later
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
+@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 
 @property (nonatomic) int selectedQuestion;
@@ -90,7 +91,14 @@
     _session.delegate = self;
     
     
-    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
+    //advertise on the main channel our new session name
+    NSDictionary *temp = [[NSDictionary alloc] initWithObjects:@[self.userName] forKeys:@[@"name"]];
+    _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:temp serviceType:@"mesh-vote"];
+    _advertiser.delegate = self;
+    [_advertiser startAdvertisingPeer];
+    
+    
+    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:self.userName];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
     /*
@@ -335,5 +343,15 @@
 
 - (IBAction)addNewQuestion:(id)sender {
     _selectedQuestion = -1;
+}
+
+
+//
+//  MCNearbyServiceAdvertiser
+//
+
+- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
+    NSLog(@"recieved invite");
+    //invitationHandler([@YES boolValue], _session);
 }
 @end
