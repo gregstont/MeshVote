@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Message.h"
 
-@interface Question : NSObject <NSCoding>
+@interface Question : Message <NSCoding>
 
 //@property (nonatomic, assign) int questionNumber;
 @property (nonatomic, strong) NSString *questionText;

@@ -7,6 +7,13 @@
 //
 
 #import "ConnectingViewController.h"
+#import "Message.h"
+
+#define ACTION_REWIND   0
+#define ACTION_PLAY     1
+#define ACTION_PAUSE    2
+#define ACTION_FORWARD  3
+#define ACTION_DONE     4
 
 @interface ConnectingViewController ()
 
@@ -80,10 +87,41 @@
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data!");
+    Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString *messageType = message.messageType;
+    NSLog(@"type:%@", messageType);
+    if([messageType isEqualToString:@"question"]) {
+        Question *recQuestion = (Question*)message;
+        NSLog(@"  question message:%@", recQuestion.questionText);
+    }
     
+    else if([messageType isEqualToString:@"answer-ack"]) {
+        NSLog(@"  answer-ack");
+    }
+    else if([messageType isEqualToString:@"action"]) {
+        NSLog(@"  action:%d",message.actionType);
+        if(message.actionType == ACTION_REWIND) {
+            
+        }
+        else if(message.actionType == ACTION_PLAY) {
+            
+        }
+        else if(message.actionType == ACTION_PAUSE) {
+            
+        }
+        else if(message.actionType == ACTION_FORWARD) {
+            
+        }
+        else if(message.actionType == ACTION_DONE) { //poll is over
+            
+        }
+    }
+    else {
+        NSLog(@"received invalid message");
+    }
     //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSLog(@"  message:%@", recQuestion.questionText);
+    //Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    //NSLog(@"  message:%@", recQuestion.questionText);
     
     
 }

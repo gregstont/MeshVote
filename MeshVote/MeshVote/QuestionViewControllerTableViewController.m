@@ -281,7 +281,10 @@
         NSLog(@"  connected!");
         //NSString *helloString = @"Hello connected!";
         //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
-        NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:[_questionSet getQuestionAtIndex:0]];
+        
+        Question* questionMessage = [_questionSet getQuestionAtIndex:0];
+        questionMessage.messageType = @"question";
+        NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
         NSError *error;
         
         //NSLog(@"size of myObject: %zd", malloc_size((__bridge const void *)(testQuestion)));
@@ -290,6 +293,17 @@
         [peers addObject:peerID];
         [_session sendData:testQuestion toPeers:peers withMode:MCSessionSendDataReliable error:&error];
         
+        
+        if(error) {
+            NSLog(@"Error sending data");
+        }
+        
+        Message *tempMessage = [[Message alloc] init];
+        tempMessage.questionNumber = 2;
+        tempMessage.answerNumber = 6;
+        tempMessage.messageType = @"answer-ack";
+        NSData *testAck = [NSKeyedArchiver archivedDataWithRootObject:tempMessage];
+        [_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
         if(error) {
             NSLog(@"Error sending data");
         }

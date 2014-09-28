@@ -220,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2139" y="844"/>
+            <point key="canvasLocation" x="2176" y="844"/>
         </scene>
         <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
@@ -338,7 +338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7J4-eu-qPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2139" y="1547"/>
+            <point key="canvasLocation" x="2176" y="1545"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5X-sh-eJD">
@@ -508,6 +508,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pkq-jV-hku"/>
+        <segue reference="rVa-Vp-ZND"/>
     </inferredMetricsTieBreakers>
 </document>
