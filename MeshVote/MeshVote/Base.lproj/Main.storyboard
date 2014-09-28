@@ -127,7 +127,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="addNewQuestion:" destination="Fb5-mu-rlG" eventType="touchUpInside" id="6Wb-NQ-4SK"/>
-                                    <segue destination="9vv-Mo-udS" kind="push" id="rVa-Vp-ZND"/>
+                                    <segue destination="9vv-Mo-udS" kind="push" identifier="addNewQuestionSegue" id="rVa-Vp-ZND"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -220,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2176" y="844"/>
+            <point key="canvasLocation" x="2538" y="844"/>
         </scene>
         <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
@@ -491,6 +491,7 @@
                     <navigationItem key="navigationItem" id="Yll-1X-bsb"/>
                     <connections>
                         <outlet property="statusLabel" destination="EOf-uv-SsE" id="TSD-NO-h2s"/>
+                        <segue destination="9vv-Mo-udS" kind="push" identifier="startTakingPollSegue" id="xDm-yi-HV8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKf-nY-giq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -508,6 +509,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rVa-Vp-ZND"/>
+        <segue reference="xDm-yi-HV8"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
+#import "MultipeerConnectivity/MCPeerID.h"
+#import "MultipeerConnectivity/MCSession.h"
 
 
-@interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate>
 
 - (NSString*)timeAsString:(int)time;
 -(void)nextQuestion;
 
 @property (nonatomic, strong) QuestionSet* questionSet;
+@property (nonatomic, strong) MCSession* session;
 
 - (IBAction)rewindPressed:(UIButton *)sender;
 - (IBAction)playPressed:(UIButton *)sender;

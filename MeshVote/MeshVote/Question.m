@@ -42,6 +42,7 @@
         _correctAnswer = [decoder decodeIntForKey:@"correctAnswer"];
         _timeLimit = [decoder decodeIntForKey:@"timeLimit"];
         _answerText = [decoder decodeObjectForKey:@"answerText"];
+        _questionNum = [decoder decodeIntForKey:@"questionNum"];
     }
     
     return self;
@@ -54,6 +55,7 @@
     [encoder encodeObject:_answerText forKey:@"answerText"];
     [encoder encodeInt:_correctAnswer forKey:@"correctAnswer"];
     [encoder encodeInt:_timeLimit forKey:@"timeLimit"];
+    [encoder encodeInt:_questionNum forKey:@"questionNum"];
     
 }
 -(void)addAnswer:(NSString*)text {

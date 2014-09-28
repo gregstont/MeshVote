@@ -8,17 +8,15 @@
 
 #import "ConnectingViewController.h"
 #import "Message.h"
-
-#define ACTION_REWIND   0
-#define ACTION_PLAY     1
-#define ACTION_PAUSE    2
-#define ACTION_FORWARD  3
-#define ACTION_DONE     4
+#import "EditQuestionViewController.h"
 
 @interface ConnectingViewController ()
 
 @property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
+
+@property (nonatomic, strong) Question* tempQuestion;
+@property (nonatomic, strong) MCPeerID* host;
 
 
 @end
@@ -48,6 +46,7 @@
     _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:_sessionName];
     _advertiser.delegate = self;
     [_advertiser startAdvertisingPeer];
+    
 }
 
 - (void)dealloc {
@@ -74,8 +73,23 @@
 }
 */
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"startTakingPollSegue"]){
+        //NSLog(@"prepareForSegue");
+        //EditQuestionViewController *controller =
+        EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
+        controller.viewMode = VIEWMODE_ASK_QUESTION;
+        controller.currentQuestion = _tempQuestion;
+        controller.session = _session;
+        controller.host = _host;
+        //controller.userName = _nameInput.text;
+    }
+}
+
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
     NSLog(@"recieved invite");
+    _host = peerID;
     invitationHandler([@YES boolValue], _session);
 }
 
@@ -86,13 +100,33 @@
 //
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
-    NSLog(@"recieved data!");
+    NSLog(@"recieved data in connecting view!");
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     NSString *messageType = message.messageType;
     NSLog(@"type:%@", messageType);
     if([messageType isEqualToString:@"question"]) {
-        Question *recQuestion = (Question*)message;
-        NSLog(@"  question message:%@", recQuestion.questionText);
+        
+        //received new question, ready to begin
+        _tempQuestion = (Question*)message;
+        //Question *recQuestion = (Question*)message;
+        NSLog(@"  question message:%@", _tempQuestion.questionText);
+        //[_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+        
+        
+        //send question-ack to host
+        NSLog(@"send question-ack to host...");
+        Message *questionAck = [[Message alloc] init];
+        questionAck.messageType = @"question-ack";
+        questionAck.questionNumber = _tempQuestion.questionNum;
+        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:questionAck];
+        NSError *error;
+        
+        
+        
+        [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }
     }
     
     else if([messageType isEqualToString:@"answer-ack"]) {
@@ -104,6 +138,14 @@
             
         }
         else if(message.actionType == ACTION_PLAY) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                // GUI thread
+                //NSLog(@"GUI thread 1");
+                // update label 1 text
+                [self performSegueWithIdentifier:@"startTakingPollSegue" sender:self];
+            });
+            
             
         }
         else if(message.actionType == ACTION_PAUSE) {

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSMutableArray *colors;
 
 @property (nonatomic) int timeRemaining;
+@property (nonatomic) BOOL hasBegunPoll;
 
 @end
 
@@ -42,6 +43,7 @@
 {
     [super viewDidLoad];
     
+    _hasBegunPoll = NO;
     
     //TODO: make this global or typedef or something
     _colors = [[NSMutableArray alloc] init];
@@ -84,7 +86,23 @@
     //_timeRemainingLabel.text = [self timeAsString:_currentQuestion.timeLimit];//[NSString stringWithFormat:@"%d", _currentQuestion.timeLimit];
     NSLog(@"number of questions:%d", [_questionSet getQuestionCount]);
     
-    [self beginPoll];
+    
+    //send out the first question to all peers
+    Question* questionMessage = [_questionSet getQuestionAtIndex:0];
+    questionMessage.questionNum = 0;
+    questionMessage.messageType = @"question";
+    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
+    NSError *error;
+    
+    
+    _session.delegate = self;
+    [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+    
+    
+    if(error) {
+        NSLog(@"Error sending data");
+    }
+    //[self beginPoll];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,7 +113,18 @@
 
 -(void)beginPoll {
     NSLog(@"beginPoll, timeRem:%d", _timeRemaining);
+    //TODO: need to verify all peers have acknowledged the question
+    Message *beginMessage = [[Message alloc] init];
+    beginMessage.messageType = @"action";
+    beginMessage.actionType = ACTION_PLAY;
     
+    NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
+    NSError *error;
+    //[session connectedPeers]
+    [_session sendData:actionData toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+    if(error) {
+        NSLog(@"Error sending data");
+    }
     dispatch_async(dispatch_get_main_queue(), ^(void){
         self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
         self.pollQuestionText.text = _currentQuestion.questionText;
@@ -123,6 +152,7 @@
             //NSLog(@"times up");
         }
         NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+        [NSThread sleepForTimeInterval:3.0f];
         if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
             ++_currentQuestionNumber;
             _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
@@ -230,5 +260,95 @@
     
     
 }
+
+//
+//  MCSessionDelegate
+//
+
+// Remote peer changed state
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+    
+    NSLog(@"peer changed state:");
+    
+    if(state == MCSessionStateConnected) {
+        NSLog(@"  connected!");
+        
+    }
+    else if(state == MCSessionStateNotConnected) {
+        NSLog(@"  NOT connected!");
+    }
+    else if(state == MCSessionStateConnecting) {
+        NSLog(@"  connecting...");
+    }
+}
+
+// Received data from remote peer
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    NSLog(@"recieved data!");
+    Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString *messageType = message.messageType;
+    NSLog(@"type2:%@", messageType);
+    if([messageType isEqualToString:@"question-ack"]) {
+        
+        if(_hasBegunPoll == NO) {
+            [self beginPoll];
+            _hasBegunPoll = YES;
+        }
+        /*//TODO: need to verify all peers have acknowledged the question
+         Message *beginMessage = [[Message alloc] init];
+         beginMessage.messageType = @"action";
+         beginMessage.actionType = ACTION_PLAY;
+         
+         NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
+         NSError *error;
+         //[session connectedPeers]
+         [_session sendData:actionData toPeers:[session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+         if(error) {
+         NSLog(@"Error sending data");
+         }*/
+        
+        
+    }
+    if([messageType isEqualToString:@"action-ack"]) {
+        NSLog(@"in action-ack");
+        if(message.actionType == ACTION_PLAY) {
+            NSLog(@"action-play-ack: curQues:%d", _currentQuestionNumber);
+            
+            
+            //the peer has begun the next question, so they are ready to recieve a new question
+            if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+                Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
+                questionMessage.questionNum = _currentQuestionNumber + 1;
+                questionMessage.messageType = @"question";
+                NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
+                NSError *error;
+                
+                [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+                
+                
+                if(error) {
+                    NSLog(@"Error sending data");
+                }
+            }
+        }
+    }
+    
+}
+
+// Received a byte stream from remote peer
+- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID {
+    
+}
+
+// Start receiving a resource from remote peer
+- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress {
+    
+}
+
+// Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
+- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
+    
+}
+
 
 @end

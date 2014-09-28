@@ -74,7 +74,7 @@
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setTimeLimit:5];
+    [tempQuestion1 setTimeLimit:10];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -82,7 +82,7 @@
     [tempQuestion2 addAnswer:@"grapefruit"];
     [tempQuestion2 addAnswer:@"tangerine"];
     [tempQuestion2 addAnswer:@"orange"];
-    [tempQuestion2 setTimeLimit:10];
+    [tempQuestion2 setTimeLimit:15];
     
     [_questionSet addQuestion:tempQuestion1];
     [_questionSet addQuestion:tempQuestion2];
@@ -145,6 +145,7 @@
 - (IBAction)playPressed:(UIButton *)sender {
     NSLog(@"playPressed");
     [self performSegueWithIdentifier:@"startPollSegue" sender:self];
+    
 }
 
 
@@ -282,7 +283,8 @@
         //NSString *helloString = @"Hello connected!";
         //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
         
-        Question* questionMessage = [_questionSet getQuestionAtIndex:0];
+        /*Question* questionMessage = [_questionSet getQuestionAtIndex:0];
+        questionMessage.questionNum = 0;
         questionMessage.messageType = @"question";
         NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
         NSError *error;
@@ -296,17 +298,8 @@
         
         if(error) {
             NSLog(@"Error sending data");
-        }
+        }*/
         
-        Message *tempMessage = [[Message alloc] init];
-        tempMessage.questionNumber = 2;
-        tempMessage.answerNumber = 6;
-        tempMessage.messageType = @"answer-ack";
-        NSData *testAck = [NSKeyedArchiver archivedDataWithRootObject:tempMessage];
-        [_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected!");
@@ -318,6 +311,27 @@
 
 // Received data from remote peer
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    NSLog(@"recieved data!");
+    Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString *messageType = message.messageType;
+    NSLog(@"type:%@", messageType);
+    if([messageType isEqualToString:@"question-ack"]) {
+        
+        /*//TODO: need to verify all peers have acknowledged the question
+        Message *beginMessage = [[Message alloc] init];
+        beginMessage.messageType = @"action";
+        beginMessage.actionType = ACTION_PLAY;
+        
+        NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
+        NSError *error;
+        //[session connectedPeers]
+        [_session sendData:actionData toPeers:[session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }*/
+
+        
+    }
     
 }
 
@@ -391,7 +405,15 @@
         //NSLog(@"prepareForSegue");
         RunningPollViewController *controller = (RunningPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
+        controller.session = _session;
     }
+    if([segue.identifier isEqualToString:@"addNewQuestionSegue"]){
+        //NSLog(@"prepareForSegue");
+        EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
+        controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
+    }
+    
+    //addNewQuestionSegue
 }
 
 - (IBAction)addNewQuestion:(id)sender {

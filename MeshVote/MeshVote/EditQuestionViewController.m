@@ -12,8 +12,7 @@
 
 @interface EditQuestionViewController ()
 
-@property (nonatomic, strong) Question* currentQuestion;
-@property (nonatomic) BOOL isAddingNewAnswer;
+@property (atomic) int timeRemaining;
 
 @end
 
@@ -35,6 +34,7 @@ NSArray *letters;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     NSLog(@"in editQuestion view Controller");
     [_doneButton setTitle:@""];
     [_doneButton setEnabled:NO];
@@ -49,7 +49,7 @@ NSArray *letters;
     _questionTextLabel.clipsToBounds = YES;
     _questionTextLabel.layer.cornerRadius = 10.0f;
     
-    if([_delegate getSelectedQuestion] == -1) { //create new question
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //create new question
         _currentQuestion = [[Question alloc] init];
         [_questionTextLabel setText:@"Question..."];
         //[_doneButton setHidden:NO];
@@ -57,10 +57,47 @@ NSArray *letters;
         [_doneButton setEnabled:YES];
         self.navigationItem.title = @"New question";
     }
-    else { //edit existing question
+    else if(_viewMode == VIEWMODE_EDIT_QUESTION) { //edit existing question
         _currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
         [_questionTextLabel setText:_currentQuestion.questionText];
         self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
+    }
+    else { // VIEWMODE_ASK_QUESTION
+        
+        //send action-ack
+        Message *playAck = [[Message alloc] init];
+        playAck.messageType = @"action-ack";
+        playAck.actionType = ACTION_PLAY;
+        
+        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:playAck];
+        NSError *error;
+        
+        [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }
+        
+        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestion.questionNum + 1];
+        _questionTextLabel.text = _currentQuestion.questionText; //[NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];
+        //_currentQuestion.t
+        _timeRemaining = _currentQuestion.timeLimit;
+        [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+        
+        //start timer
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            while(_timeRemaining > 0) {
+                [NSThread sleepForTimeInterval:1.0f];
+                --_timeRemaining;
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    // GUI thread
+                    //NSLog(@"GUI thread 1");
+                    // update label 1 text
+                    [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+                });
+                //NSLog(@"times up");
+            }
+            //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+        });
     }
     
     // Do any additional setup after loading the view.
@@ -78,6 +115,8 @@ NSArray *letters;
     
     letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];//[NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G" count:7];
 
+    _session.delegate = self;
+    
     //NSLog(@"selectedQuestion:%d", temp);
 }
 
@@ -111,7 +150,7 @@ NSArray *letters;
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
     
     //NSLog(@" and:%d", [_delegate getAnswerCountAtIndex:0]);
-    if([_delegate getSelectedQuestion] == -1) {
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) {
         return MAX(1, [_currentQuestion getAnswerCount] * 2 + 1);
     }
     else
@@ -127,7 +166,7 @@ NSArray *letters;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([_delegate getSelectedQuestion] == -1) { //add new question
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //add new question
         
     }
     
@@ -175,7 +214,7 @@ NSArray *letters;
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
-    if([_delegate getSelectedQuestion] == -1) { //add new question
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //add new question
         if([_currentQuestion getAnswerCount] > (int)indexPath.row/2) {
             cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
         }
@@ -196,7 +235,7 @@ NSArray *letters;
     }
     else {
         [cell.answerTextField setEnabled:NO];
-        cell.answerTextField.text = [_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];
+        cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:indexPath.row/2];//[_delegate getAnswerTextAtIndex:[_delegate getSelectedQuestion] andAnswerIndex:(int)indexPath.row/2];
         cell.textLabel.text = @"";
     }
     
@@ -205,8 +244,61 @@ NSArray *letters;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if(_viewMode == VIEWMODE_ASK_QUESTION) { //submit answer
+        
+    }
    
 
+    
+    
+}
+
+-(void)moveToNextQuestion {
+    
+    _currentQuestion = _nextQuestion;
+    _timeRemaining = _currentQuestion.timeLimit;
+    //[_questionTextLabel setText:_currentQuestion.questionText];
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+
+        _questionTextLabel.text = _currentQuestion.questionText;
+        [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _currentQuestion.timeLimit / 60, _currentQuestion.timeLimit % 60]];
+        [self.tableView reloadData];
+    });
+    
+    //start the timer
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        // background thread
+        //NSLog(@"Background thread 1: waiting 5 seconds");
+        // wait 5 seconds
+        while(_timeRemaining > 0) {
+            [NSThread sleepForTimeInterval:1.0f];
+            --_timeRemaining;
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                // GUI thread
+                //NSLog(@"GUI thread 1");
+                // update label 1 text
+                [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+            });
+            //NSLog(@"times up");
+        }
+        //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+    });
+    
+    
+    //when we are done here, send the action-ack
+    
+    NSLog(@"sending action ack to host");
+    Message *playAck = [[Message alloc] init];
+    playAck.messageType = @"action-ack";
+    playAck.actionType = ACTION_PLAY;
+    
+    NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:playAck];
+    NSError *error;
+    
+    [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
+    if(error) {
+        NSLog(@"Error sending data");
+    }
     
     
 }
@@ -273,11 +365,11 @@ NSArray *letters;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     [_doneButton setTitle:@"Done"];
     if([textField.text isEqualToString:@"add answer"]) {
-        [self setIsAddingNewAnswer:YES];
+        [self setViewMode:VIEWMODE_ADD_NEW_QUESTION];
         textField.text = @"";
     }
     else {
-        [self setIsAddingNewAnswer:NO];
+        [self setViewMode:VIEWMODE_EDIT_QUESTION];
     }
     return YES;
 }
@@ -285,7 +377,7 @@ NSArray *letters;
     //if([textView. isEqualToString:@)
     [_doneButton setTitle:@"Save"];
     NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
-    if(self.isAddingNewAnswer && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
         [_currentQuestion addAnswer:textField.text];
     }
     else { //editing an existing answer
@@ -298,4 +390,94 @@ NSArray *letters;
     //[self.tableView reloadData];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
+
+//
+//  MCSession
+//
+
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+    NSLog(@"recieved data in EditQuest!");
+    Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString *messageType = message.messageType;
+    NSLog(@"type:%@", messageType);
+    if([messageType isEqualToString:@"question"]) {
+        
+        //received new question, ready to begin
+        _nextQuestion = (Question*)message;
+        //Question *recQuestion = (Question*)message;
+        NSLog(@"  question message:%@", _nextQuestion.questionText);
+        //[_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+        
+        //send question-ack to host
+        Message *questionAck = [[Message alloc] init];
+        questionAck.messageType = @"question-ack";
+        questionAck.questionNumber = _nextQuestion.questionNum;
+        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:questionAck];
+        NSError *error;
+        
+        [session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }
+    }
+    
+    else if([messageType isEqualToString:@"answer-ack"]) {
+        NSLog(@"  answer-ack");
+    }
+    else if([messageType isEqualToString:@"action"]) {
+        NSLog(@"  action:%d",message.actionType);
+        if(message.actionType == ACTION_REWIND) {
+            
+        }
+        else if(message.actionType == ACTION_PLAY) {
+            NSLog(@"  action play");
+            [self moveToNextQuestion];
+            
+            
+        }
+        else if(message.actionType == ACTION_PAUSE) {
+            
+        }
+        else if(message.actionType == ACTION_FORWARD) {
+            
+        }
+        else if(message.actionType == ACTION_DONE) { //poll is over
+            
+        }
+    }
+    else {
+        NSLog(@"received invalid message");
+    }
+    //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    //Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    //NSLog(@"  message:%@", recQuestion.questionText);
+    
+    
+}
+
+// Received a byte stream from remote peer
+- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID {
+    
+}
+
+// Start receiving a resource from remote peer
+- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress {
+    
+}
+
+// Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
+- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
+    
+}
+
+// Remote peer changed state
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+    
+    NSLog(@"peerDidChangeState");
+    if(state == MCSessionStateConnected) {
+        NSLog(@"connected1");
+    }
+
+}
+
 @end

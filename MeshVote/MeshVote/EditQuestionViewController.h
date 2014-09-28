@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
+#import "MultipeerConnectivity/MCSession.h"
+#import "MultipeerConnectivity/MCPeerID.h"
+
+
+#define VIEWMODE_ADD_NEW_QUESTION   0
+#define VIEWMODE_EDIT_QUESTION      1
+#define VIEWMODE_ASK_QUESTION       2
 
 @class EditQuestionViewController;
 @protocol EditQuestionViewControllerDelegate <NSObject>
@@ -24,17 +31,27 @@
 
 -(int)getSelectedQuestion;
 
+
 @end
 
 
-@interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UITextFieldDelegate>
+@interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UITextFieldDelegate, MCSessionDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *questionTextLabel;
 @property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+
+@property (nonatomic, strong) Question* currentQuestion;
+@property (nonatomic, strong) Question* nextQuestion; //for pre-loading when asking
+@property (nonatomic) int viewMode;
+
+@property (nonatomic, strong) MCSession *session;
+@property (nonatomic, strong) MCPeerID* host;
+
 - (IBAction)doneButtonPressed:(id)sender;
+-(void)moveToNextQuestion;
 
 
 @end

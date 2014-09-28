@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#define ACTION_REWIND   0
+#define ACTION_PLAY     1
+#define ACTION_PAUSE    2
+#define ACTION_FORWARD  3
+#define ACTION_DONE     4
+
 @interface Message : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString* messageType; //TODO: change to int
