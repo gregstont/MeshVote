@@ -21,6 +21,7 @@
 {
     NSLog(@"viewDidLoad - MeshVoteViewController");
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     CAGradientLayer *bgLayer = [BackgroundLayer blueGradient]; //actually grey
     //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
@@ -35,6 +36,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setToolbarHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning

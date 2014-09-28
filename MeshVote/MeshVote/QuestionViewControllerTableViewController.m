@@ -66,6 +66,7 @@
     
     _questionSet = [[QuestionSet alloc] init];
     
+    
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
     [tempQuestion1 addAnswer:@"science"];
@@ -106,10 +107,26 @@
     secondViewController.delegate = self;
     [[self navigationController] pushViewController:secondViewController animated:YES];
     */
+    
+    //create toolbar buttons
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(rewindPressed:)];
+    UIBarButtonItem *play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPressed:)];
+    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(forwardPressed:)];
+    forward.enabled = NO;
+    rewind.enabled = NO;
+    
+
+    
+    NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
+    self.toolbarItems = buttonItems;
+    //[self.toolbarItems ]
+    //[_toolbar setItems:buttonItems];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setToolbarHidden:NO];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
@@ -122,6 +139,16 @@
     [_session disconnect];
 }
 
+- (IBAction)rewindPressed:(UIButton *)sender {
+    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
+}
+- (IBAction)playPressed:(UIButton *)sender {
+    NSLog(@"playPressed");
+    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
+}
+- (IBAction)forwardPressed:(UIButton *)sender {
+    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
+}
 
 
 - (void)didReceiveMemoryWarning
