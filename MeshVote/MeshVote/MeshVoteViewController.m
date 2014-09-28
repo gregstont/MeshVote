@@ -82,7 +82,7 @@
         QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
         controller.userName = _nameInput.text;
     }
-    else if([segue.identifier isEqualToString:@"joinSessionSeque"]){
+    else if([segue.identifier isEqualToString:@"joinSessionSegue"]){
         NSLog(@"prepareForSegue");
         JoinViewControllerTableViewController *controller = (JoinViewControllerTableViewController *)segue.destinationViewController;
         controller.userName = _nameInput.text;

@@ -118,6 +118,7 @@
 - (void)dealloc {
     NSLog(@"dealloc");
     [_browser stopBrowsingForPeers];
+    [_advertiser stopAdvertisingPeer];
     [_session disconnect];
 }
 
@@ -268,7 +269,12 @@
             NSLog(@"Error sending data");
         }
     }
-    
+    else if(state == MCSessionStateNotConnected) {
+        NSLog(@"  NOT connected!");
+    }
+    else if(state == MCSessionStateConnecting) {
+        NSLog(@"  connecting...");
+    }
 }
 
 // Received data from remote peer

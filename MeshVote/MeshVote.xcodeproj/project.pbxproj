@@ -26,6 +26,7 @@
 		3424FE2119C806BA003C3BEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE1F19C806BA003C3BEE /* InfoPlist.strings */; };
 		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
 		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
+		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
 		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
 		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
 		34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */; };
@@ -72,6 +73,8 @@
 		3424FE2219C806BA003C3BEE /* MeshVoteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteTests.m; sourceTree = "<group>"; };
 		3424FE2C19C80928003C3BEE /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		3424FE2D19C80928003C3BEE /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectingViewController.h; sourceTree = "<group>"; };
+		34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectingViewController.m; sourceTree = "<group>"; };
 		34DF551519C80CBB00D9BBFB /* mesh_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_logo.png; sourceTree = "<group>"; };
 		34E3D77519C8CFA70063A4F4 /* i_icon_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = i_icon_large.png; sourceTree = "<group>"; };
 		34E3D77719C942010063A4F4 /* QuestionViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewControllerTableViewController.h; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				3405169F19CBE1B0004360E8 /* Question.m */,
 				34E3D78019C956300063A4F4 /* JoinViewControllerTableViewController.h */,
 				34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */,
+				34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */,
+				34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */,
 			);
 			path = MeshVote;
 			sourceTree = "<group>";
@@ -295,6 +300,7 @@
 			files = (
 				340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */,
 				3424FE0419C806BA003C3BEE /* main.m in Sources */,
+				34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */,
 				3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */,
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
 				34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */,

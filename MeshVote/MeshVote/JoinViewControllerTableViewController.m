@@ -57,15 +57,18 @@
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
     
-    _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
+    
+    /*_advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
     _advertiser.delegate = self;
     [_advertiser startAdvertisingPeer];
+     */
     
     NSLog(@"end of JOIN viewDidLoad");
 }
 
 - (void)dealloc {
     NSLog(@"dealloc join");
+    [_browser stopBrowsingForPeers];
     [_advertiser stopAdvertisingPeer];
     [_session disconnect];
 }
@@ -123,6 +126,26 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSLog(@"didSelectRow: %d", (int)indexPath.row);
+    NSLog(@"usrname:%@", self.userName);
+    //[_browser stopBrowsingForPeers];
+    //TODO: maybe use new peerid?
+    //MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi2"];
+    _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_browser.myPeerID discoveryInfo:nil serviceType:[_sessionList objectAtIndex:indexPath.row]];
+    _advertiser.delegate = self;
+    [_advertiser startAdvertisingPeer];
+    
+    //_selectedQuestion = (int)indexPath.row;
+    
+    //[self performSegueWithIdentifier:@"showQuestion" sender:self];
+    
+    //TODO: this
+    
+    
+}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -176,6 +199,10 @@
 // Remote peer changed state
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
     
+    NSLog(@"peerDidChangeState");
+    if(state == MCSessionStateConnected) {
+        
+    }
 }
 
 // Received data from remote peer
