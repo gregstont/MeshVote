@@ -74,7 +74,7 @@
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setTimeLimit:60];
+    [tempQuestion1 setTimeLimit:5];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -82,7 +82,7 @@
     [tempQuestion2 addAnswer:@"grapefruit"];
     [tempQuestion2 addAnswer:@"tangerine"];
     [tempQuestion2 addAnswer:@"orange"];
-    [tempQuestion2 setTimeLimit:60];
+    [tempQuestion2 setTimeLimit:10];
     
     [_questionSet addQuestion:tempQuestion1];
     [_questionSet addQuestion:tempQuestion2];
@@ -124,6 +124,7 @@
     //[self.toolbarItems ]
     //[_toolbar setItems:buttonItems];
 }
+
 
 -(void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:NO];

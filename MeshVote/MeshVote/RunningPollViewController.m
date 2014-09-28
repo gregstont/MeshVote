@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSArray* letters;
 @property (nonatomic, strong) NSMutableArray *colors;
 
+@property (nonatomic) int timeRemaining;
+
 @end
 
 @implementation RunningPollViewController
@@ -32,7 +34,10 @@
     }
     return self;
 }
-
+- (NSString*)timeAsString:(int)time {
+    return [NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,20 +68,71 @@
     UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(forwardPressed:)];
     forward.enabled = NO;
     
+    //[_currentQuestion.timeLimit ;
+    
+    
     
     
     NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
     self.toolbarItems = buttonItems;
+
     
     _currentQuestionNumber = 0;
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+    
+    _timeRemaining = _currentQuestion.timeLimit;
+    //_timeRemainingLabel.text = [self timeAsString:_currentQuestion.timeLimit];//[NSString stringWithFormat:@"%d", _currentQuestion.timeLimit];
     NSLog(@"number of questions:%d", [_questionSet getQuestionCount]);
+    
+    [self beginPoll];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)beginPoll {
+    NSLog(@"beginPoll, timeRem:%d", _timeRemaining);
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
+        self.pollQuestionText.text = _currentQuestion.questionText;
+        [self.answerTable reloadData];
+        //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    });
+    //self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
+    //self.pollQuestionText.text = _currentQuestion.questionText;
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        // background thread
+        //NSLog(@"Background thread 1: waiting 5 seconds");
+        // wait 5 seconds
+        while(_timeRemaining > 0) {
+            [NSThread sleepForTimeInterval:1.0f];
+            --_timeRemaining;
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                // GUI thread
+                //NSLog(@"GUI thread 1");
+                // update label 1 text
+                self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];//@"Done with Label 1";
+            });
+            //NSLog(@"times up");
+        }
+        NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+        if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+            ++_currentQuestionNumber;
+            _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+            _timeRemaining = _currentQuestion.timeLimit;
+            [self beginPoll];
+        }
+    });
+    //NSLog(@"times up");
+}
+
+-(void)nextQuestion {
+    
 }
 
 //

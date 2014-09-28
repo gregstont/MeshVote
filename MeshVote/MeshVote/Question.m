@@ -21,7 +21,7 @@
     if(self) {
         
         _correctAnswer = -1;
-        _timeLimit = -1;
+        _timeLimit = 5;
         //_questionNumber = -1;
         
         _answerText = [[NSMutableArray alloc] init];

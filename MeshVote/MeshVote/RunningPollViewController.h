@@ -12,14 +12,21 @@
 
 @interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+- (NSString*)timeAsString:(int)time;
+-(void)nextQuestion;
+
 @property (nonatomic, strong) QuestionSet* questionSet;
 
 - (IBAction)rewindPressed:(UIButton *)sender;
 - (IBAction)playPressed:(UIButton *)sender;
 - (IBAction)forwardPressed:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UITextView *pollQuestionText;
 @property (weak, nonatomic) IBOutlet UITableView *answerTable;
 @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *answerLetterLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *answerProgress;
+@property (weak, nonatomic) IBOutlet UILabel *votesReceivedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalConnectedLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *timeRemainingLabel;
 @end
