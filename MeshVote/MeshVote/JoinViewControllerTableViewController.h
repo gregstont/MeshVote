@@ -14,7 +14,7 @@
 #import "MultipeerConnectivity/MCSession.h"
 #import "Question.h"
 
-@interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, MCNearbyServiceBrowserDelegate>
+@interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate>
 
 @property (nonatomic, strong) NSString* userName;
 

@@ -7,11 +7,13 @@
 //
 
 #import "JoinViewControllerTableViewController.h"
+#import "ConnectingViewController.h"
+#import <UIKit/UITableViewCell.h>
 
 @interface JoinViewControllerTableViewController ()
 
-@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
-@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
+//@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+//@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
 
 @property (nonatomic, strong) NSMutableArray* sessionList;
@@ -44,9 +46,9 @@
     _sessionList = [[NSMutableArray alloc] init];
     
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
-    _session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
+    //_session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     // Set ourselves as the MCSessionDelegate
-    _session.delegate = self;
+    //_session.delegate = self;
     
     //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
     //myAssist.delegate = self;
@@ -69,8 +71,8 @@
 - (void)dealloc {
     NSLog(@"dealloc join");
     [_browser stopBrowsingForPeers];
-    [_advertiser stopAdvertisingPeer];
-    [_session disconnect];
+    //[_advertiser stopAdvertisingPeer];
+    //[_session disconnect];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -83,10 +85,7 @@
 // for advertiser delegate
 //
 
-- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
-    NSLog(@"recieved invite");
-    invitationHandler([@YES boolValue], _session);
-}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -129,13 +128,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
-    NSLog(@"usrname:%@", self.userName);
+    NSLog(@"usrname:%@", [_sessionList objectAtIndex:indexPath.row]);
+    //_selectedSessionName = [_sessionList objectAtIndex:indexPath.row];
+    //NSLog(@"selSesName: %@", _selectedSessionName);
+    
+
     //[_browser stopBrowsingForPeers];
     //TODO: maybe use new peerid?
     //MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi2"];
+    
+    
+    /*
     _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_browser.myPeerID discoveryInfo:nil serviceType:[_sessionList objectAtIndex:indexPath.row]];
     _advertiser.delegate = self;
     [_advertiser startAdvertisingPeer];
+     */
     
     //_selectedQuestion = (int)indexPath.row;
     
@@ -195,6 +202,21 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"selectedSessionSegue"]){
+        //NSLog(@"prepareForSegue:%@", _selectedSessionName);
+        
+        UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+        NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+
+        
+        ConnectingViewController *controller = (ConnectingViewController *)segue.destinationViewController;
+        controller.sessionName = [_sessionList objectAtIndex:clickedButtonPath.row];
+    }
+    
+}
 
 // Remote peer changed state
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
