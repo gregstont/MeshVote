@@ -35,7 +35,7 @@ NSArray *letters;
 {
     [super viewDidLoad];
     
-    NSLog(@"in editQuestion view Controller");
+    NSLog(@"in editQuestion view Controller, mode:%d",_viewMode);
     [_doneButton setTitle:@""];
     [_doneButton setEnabled:NO];
     //[_doneButton setHidden:YES];

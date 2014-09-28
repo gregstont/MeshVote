@@ -407,11 +407,17 @@
         controller.questionSet = _questionSet;
         controller.session = _session;
     }
-    if([segue.identifier isEqualToString:@"addNewQuestionSegue"]){
+    else if([segue.identifier isEqualToString:@"addNewQuestionSegue"]){
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
     }
+    else if([segue.identifier isEqualToString:@"showQuestion"]){
+        //NSLog(@"prepareForSegue");
+        EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
+        controller.viewMode = VIEWMODE_EDIT_QUESTION;
+    }
+    //showQuestion
     
     //addNewQuestionSegue
 }
