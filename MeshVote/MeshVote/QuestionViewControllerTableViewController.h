@@ -20,10 +20,7 @@
 @interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate, MCNearbyServiceAdvertiserDelegate>
 
 - (IBAction)addNewQuestion:(id)sender;
-- (IBAction)rewindPressed:(UIButton *)sender;
 - (IBAction)playPressed:(UIButton *)sender;
-- (IBAction)pausePressed:(UIButton *)sender;
-- (IBAction)forwardPressed:(UIButton *)sender;
 
 @property (nonatomic, strong) NSString* userName;
 

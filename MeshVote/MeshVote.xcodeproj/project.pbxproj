@@ -26,11 +26,13 @@
 		3424FE2119C806BA003C3BEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE1F19C806BA003C3BEE /* InfoPlist.strings */; };
 		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
 		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
+		34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BE302319D7D38700C9F149 /* RunningPollViewController.m */; };
 		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
 		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
 		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
 		34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */; };
 		34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */; };
+		34FEEE3919D7E0B0000E128F /* RunningAnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FEEE3819D7E0B0000E128F /* RunningAnswerTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		3424FE2219C806BA003C3BEE /* MeshVoteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteTests.m; sourceTree = "<group>"; };
 		3424FE2C19C80928003C3BEE /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		3424FE2D19C80928003C3BEE /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		34BE302219D7D38700C9F149 /* RunningPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningPollViewController.h; sourceTree = "<group>"; };
+		34BE302319D7D38700C9F149 /* RunningPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningPollViewController.m; sourceTree = "<group>"; };
 		34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectingViewController.h; sourceTree = "<group>"; };
 		34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectingViewController.m; sourceTree = "<group>"; };
 		34DF551519C80CBB00D9BBFB /* mesh_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_logo.png; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 		34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewControllerTableViewController.m; sourceTree = "<group>"; };
 		34E3D78019C956300063A4F4 /* JoinViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinViewControllerTableViewController.h; sourceTree = "<group>"; };
 		34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinViewControllerTableViewController.m; sourceTree = "<group>"; };
+		34FEEE3719D7E0B0000E128F /* RunningAnswerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningAnswerTableViewCell.h; sourceTree = "<group>"; };
+		34FEEE3819D7E0B0000E128F /* RunningAnswerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningAnswerTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +161,10 @@
 				3424FDFE19C806BA003C3BEE /* Supporting Files */,
 				34E3D77719C942010063A4F4 /* QuestionViewControllerTableViewController.h */,
 				34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */,
+				34BE302219D7D38700C9F149 /* RunningPollViewController.h */,
+				34BE302319D7D38700C9F149 /* RunningPollViewController.m */,
+				34FEEE3719D7E0B0000E128F /* RunningAnswerTableViewCell.h */,
+				34FEEE3819D7E0B0000E128F /* RunningAnswerTableViewCell.m */,
 				340200FC19CBF5A4005ADAE6 /* EditQuestionViewController.h */,
 				340200FD19CBF5A4005ADAE6 /* EditQuestionViewController.m */,
 				3405169B19CBE094004360E8 /* QuestionSet.h */,
@@ -299,11 +309,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */,
+				34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */,
 				3424FE0419C806BA003C3BEE /* main.m in Sources */,
 				34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */,
 				3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */,
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
 				34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */,
+				34FEEE3919D7E0B0000E128F /* RunningAnswerTableViewCell.m in Sources */,
 				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				340516A019CBE1B0004360E8 /* Question.m in Sources */,
 				3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */,

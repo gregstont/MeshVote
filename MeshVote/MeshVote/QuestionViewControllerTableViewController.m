@@ -9,6 +9,7 @@
 #import "QuestionViewControllerTableViewController.h"
 #import "QuestionSet.h"
 #import "Question.h"
+#import "RunningPollViewController.h"
 
 //#import <malloc/malloc.h> //TODO: remove on release
 
@@ -110,9 +111,9 @@
     
     //create toolbar buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(rewindPressed:)];
+    UIBarButtonItem *rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:nil];
     UIBarButtonItem *play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPressed:)];
-    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(forwardPressed:)];
+    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:nil];
     forward.enabled = NO;
     rewind.enabled = NO;
     
@@ -139,16 +140,12 @@
     [_session disconnect];
 }
 
-- (IBAction)rewindPressed:(UIButton *)sender {
-    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
-}
+
 - (IBAction)playPressed:(UIButton *)sender {
     NSLog(@"playPressed");
-    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
+    [self performSegueWithIdentifier:@"startPollSegue" sender:self];
 }
-- (IBAction)forwardPressed:(UIButton *)sender {
-    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
-}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -373,6 +370,14 @@
     // Pass the selected object to the new view controller.
 }
 */
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"startPollSegue"]){
+        //NSLog(@"prepareForSegue");
+        RunningPollViewController *controller = (RunningPollViewController *)segue.destinationViewController;
+        controller.questionSet = _questionSet;
+    }
+}
 
 - (IBAction)addNewQuestion:(id)sender {
     _selectedQuestion = -1;
