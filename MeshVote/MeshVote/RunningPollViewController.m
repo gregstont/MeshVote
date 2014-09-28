@@ -100,6 +100,8 @@
         self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
         self.pollQuestionText.text = _currentQuestion.questionText;
         [self.answerTable reloadData];
+        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
+
         //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     });
     //self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];

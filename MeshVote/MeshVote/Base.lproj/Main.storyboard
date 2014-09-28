@@ -222,7 +222,7 @@
             </objects>
             <point key="canvasLocation" x="2139" y="844"/>
         </scene>
-        <!--Running Poll View Controller-->
+        <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
             <objects>
                 <viewController id="kNH-1b-uJ6" customClass="RunningPollViewController" sceneMemberID="viewController">
@@ -327,7 +327,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.87968351403061229" green="0.87968351403061229" blue="0.87968351403061229" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="eSk-Fx-YJo"/>
+                    <navigationItem key="navigationItem" title="Question 1" id="eSk-Fx-YJo"/>
                     <connections>
                         <outlet property="answerTable" destination="85U-pG-tOO" id="I3W-Dj-2T8"/>
                         <outlet property="pollQuestionText" destination="YeE-HR-Kbg" id="7Ss-uV-zcZ"/>
