@@ -260,6 +260,7 @@ NSArray *letters;
     //[_questionTextLabel setText:_currentQuestion.questionText];
     dispatch_async(dispatch_get_main_queue(), ^(void){
 
+        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestion.questionNum + 1];
         _questionTextLabel.text = _currentQuestion.questionText;
         [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _currentQuestion.timeLimit / 60, _currentQuestion.timeLimit % 60]];
         [self.tableView reloadData];
