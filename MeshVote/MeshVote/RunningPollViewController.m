@@ -120,6 +120,15 @@
 -(void)beginPoll {
     NSLog(@"beginPoll, timeRem:%d", _timeRemaining);
     _voteCount = 0;
+    
+    //clear the answers for connected peers
+    for (NSString* key in _peerList) {
+        [_peerList setObject:[NSNumber numberWithInt:-1] forKey:key];
+        //id value = [xyz objectForKey:key];
+        // do stuff
+    }
+    
+    
     //TODO: need to verify all peers have acknowledged the question
     Message *beginMessage = [[Message alloc] init];
     beginMessage.messageType = @"action";
@@ -282,7 +291,7 @@
     
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected!");
-        [_peerList setObject:[NSNumber numberWithInt:0] forKey:peerID.displayName];
+        [_peerList setObject:[NSNumber numberWithInt:-1] forKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
@@ -352,8 +361,19 @@
     }
     else if([messageType isEqualToString:@"answer"]) {
         NSLog(@"received answer:%zd", message.answerNumber);
-        [_peerList setObject:[NSNumber numberWithInt:1] forKey:peerID.displayName];
-        ++_voteCount;
+        //if([_peerList ])
+        if([[_peerList objectForKey:peerID.displayName] isEqualToNumber:[NSNumber numberWithInt:-1]]) {
+            ++_voteCount;
+            [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
+        }
+        else {
+            NSNumber *oldAnswer = [_peerList objectForKey:peerID.displayName];
+            NSLog(@"old answer:%zd", [oldAnswer integerValue]);
+            [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
+
+        }
+        //[_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
+        //++_voteCount;
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
         });

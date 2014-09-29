@@ -284,7 +284,7 @@
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected!");
         
-        [_peerList setObject:[NSNumber numberWithInt:0] forKey:peerID.displayName];
+        [_peerList setObject:[NSNumber numberWithInt:-1] forKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         //NSString *helloString = @"Hello connected!";
         //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
