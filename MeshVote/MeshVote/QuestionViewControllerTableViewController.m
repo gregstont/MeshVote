@@ -20,6 +20,8 @@
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 
+@property (atomic, strong) NSMutableDictionary *peerList;
+
 @property (nonatomic) int selectedQuestion;
 
 @end
@@ -31,6 +33,7 @@
     self = [super init];
     if(self) {
         NSLog(@"in init question view!");
+        
     }
     return self;
 }
@@ -40,7 +43,7 @@
     if (self) {
         // Custom initialization
         NSLog(@"in init question view!");
-        
+        //_peerList = [[NSMutableDictionary alloc] init];
         
     }
     return self;
@@ -66,7 +69,7 @@
     NSLog(@"question viewdidload, userName:%@", self.userName);
     
     _questionSet = [[QuestionSet alloc] init];
-    
+    _peerList = [[NSMutableDictionary alloc] init];
     
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
@@ -280,6 +283,9 @@
     
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected!");
+        
+        [_peerList setObject:[NSNumber numberWithInt:0] forKey:peerID.displayName];
+        NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         //NSString *helloString = @"Hello connected!";
         //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -303,6 +309,8 @@
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected!");
+        [_peerList removeObjectForKey:peerID.displayName];
+        NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
     }
     else if(state == MCSessionStateConnecting) {
         NSLog(@"  connecting...");
@@ -406,6 +414,7 @@
         RunningPollViewController *controller = (RunningPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
         controller.session = _session;
+        controller.peerList = _peerList;
     }
     else if([segue.identifier isEqualToString:@"addNewQuestionSegue"]){
         //NSLog(@"prepareForSegue");

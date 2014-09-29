@@ -22,6 +22,8 @@
 @property (nonatomic) int timeRemaining;
 @property (nonatomic) BOOL hasBegunPoll;
 
+@property (nonatomic) int voteCount;
+
 @end
 
 @implementation RunningPollViewController
@@ -94,6 +96,10 @@
     NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
     NSError *error;
     
+    _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
+    _votesReceivedLabel.text = @"0";
+    _voteCount = 0;
+    
     
     _session.delegate = self;
     [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
@@ -113,6 +119,7 @@
 
 -(void)beginPoll {
     NSLog(@"beginPoll, timeRem:%d", _timeRemaining);
+    _voteCount = 0;
     //TODO: need to verify all peers have acknowledged the question
     Message *beginMessage = [[Message alloc] init];
     beginMessage.messageType = @"action";
@@ -126,6 +133,9 @@
         NSLog(@"Error sending data");
     }
     dispatch_async(dispatch_get_main_queue(), ^(void){
+        _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
+        _votesReceivedLabel.text = @"0";
+        
         self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
         self.pollQuestionText.text = _currentQuestion.questionText;
         [self.answerTable reloadData];
@@ -272,10 +282,20 @@
     
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected!");
+        [_peerList setObject:[NSNumber numberWithInt:0] forKey:peerID.displayName];
+        NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
+        });
         
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected!");
+        [_peerList removeObjectForKey:peerID.displayName];
+        NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
+        });
     }
     else if(state == MCSessionStateConnecting) {
         NSLog(@"  connecting...");
@@ -290,7 +310,7 @@
     NSLog(@"type2:%@", messageType);
     if([messageType isEqualToString:@"question-ack"]) {
         
-        if(_hasBegunPoll == NO) {
+        if(_hasBegunPoll == NO) { //TODO: check if all peers have question-acked here
             [self beginPoll];
             _hasBegunPoll = YES;
         }
@@ -306,10 +326,8 @@
          if(error) {
          NSLog(@"Error sending data");
          }*/
-        
-        
     }
-    if([messageType isEqualToString:@"action-ack"]) {
+    else if([messageType isEqualToString:@"action-ack"]) {
         NSLog(@"in action-ack");
         if(message.actionType == ACTION_PLAY) {
             NSLog(@"action-play-ack: curQues:%d", _currentQuestionNumber);
@@ -331,6 +349,14 @@
                 }
             }
         }
+    }
+    else if([messageType isEqualToString:@"answer"]) {
+        NSLog(@"received answer:%zd", message.answerNumber);
+        [_peerList setObject:[NSNumber numberWithInt:1] forKey:peerID.displayName];
+        ++_voteCount;
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            _votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
+        });
     }
     
 }

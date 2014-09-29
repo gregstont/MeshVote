@@ -245,6 +245,20 @@ NSArray *letters;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(_viewMode == VIEWMODE_ASK_QUESTION) { //submit answer
+        NSLog(@"clicked answer to submit");
+        
+        Message *answerMessage = [[Message alloc] init];
+        answerMessage.messageType = @"answer";
+        answerMessage.questionNumber = _currentQuestion.questionNum;
+        answerMessage.answerNumber = (int)indexPath.row/2;
+        
+        NSData *answerData = [NSKeyedArchiver archivedDataWithRootObject:answerMessage];
+        NSError *error;
+        
+        [_session sendData:answerData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }
         
     }
    
