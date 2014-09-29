@@ -14,6 +14,9 @@
 
 @interface ConnectingViewController : UIViewController <MCNearbyServiceAdvertiserDelegate, MCSessionDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabelBottom;
+@property (weak, nonatomic) IBOutlet UIImageView *checkImage;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *connectingActivityIndicator;
 
 @property (nonatomic, strong) NSString* sessionName;
 

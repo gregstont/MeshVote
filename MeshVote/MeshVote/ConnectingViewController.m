@@ -194,6 +194,9 @@
             //NSLog(@"GUI thread 1");
             // update label 1 text
             [_statusLabel setText:@"connected!"];
+            _statusLabelBottom.hidden = NO;
+            _checkImage.hidden = NO;
+            _connectingActivityIndicator.hidden = YES;
         });
         //_statusLabel.text = @"connected!";
         //[_statusLabel setText:@"connected!"];

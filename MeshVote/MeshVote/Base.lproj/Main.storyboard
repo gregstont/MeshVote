@@ -495,12 +495,26 @@
                                 <color key="textColor" red="0.49286511479591832" green="0.49286511479591832" blue="0.49286511479591832" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="g4V-SQ-g9i">
+                                <rect key="frame" x="141" y="189" width="39" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="waiting for poll to begin..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJH-p7-gzw">
+                                <rect key="frame" x="20" y="277" width="280" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" red="0.4928651148" green="0.4928651148" blue="0.4928651148" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Yll-1X-bsb"/>
                     <connections>
+                        <outlet property="checkImage" destination="g4V-SQ-g9i" id="IxN-Ui-kSZ"/>
+                        <outlet property="connectingActivityIndicator" destination="c3V-7f-0ec" id="G4F-X7-uyJ"/>
                         <outlet property="statusLabel" destination="EOf-uv-SsE" id="TSD-NO-h2s"/>
+                        <outlet property="statusLabelBottom" destination="VJH-p7-gzw" id="oYe-3x-4yr"/>
                         <segue destination="9vv-Mo-udS" kind="push" identifier="startTakingPollSegue" id="xDm-yi-HV8"/>
                     </connections>
                 </viewController>
@@ -520,6 +534,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pkq-jV-hku"/>
+        <segue reference="xDm-yi-HV8"/>
     </inferredMetricsTieBreakers>
 </document>
