@@ -299,13 +299,13 @@
                                                     <color key="tintColor" red="0.31219788463083942" green="0.87968351403061229" blue="0.2168401178762652" alpha="1" colorSpace="calibratedRGB"/>
                                                 </progressView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="32" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Tv-Ip-hIM">
-                                                    <rect key="frame" x="213" y="11" width="37" height="21"/>
+                                                    <rect key="frame" x="207" y="11" width="37" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEy-Ex-UZx">
-                                                    <rect key="frame" x="239" y="10" width="21" height="21"/>
+                                                    <rect key="frame" x="233" y="10" width="21" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
