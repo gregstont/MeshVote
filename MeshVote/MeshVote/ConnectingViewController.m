@@ -194,9 +194,23 @@
             //NSLog(@"GUI thread 1");
             // update label 1 text
             [_statusLabel setText:@"connected!"];
+            
+            _statusLabelBottom.alpha = 0.0;
+            _checkImage.alpha = 0.0;
             _statusLabelBottom.hidden = NO;
             _checkImage.hidden = NO;
             _connectingActivityIndicator.hidden = YES;
+            
+            //labelMain.alpha = 0;
+            
+            [UIView animateWithDuration:1.0 delay:0.3 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{ _statusLabelBottom.alpha = 1;}
+                             completion:nil];
+            //labelMain.alpha = 0;
+            
+            [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{ _checkImage.alpha = 0.6;}
+                             completion:nil];
         });
         //_statusLabel.text = @"connected!";
         //[_statusLabel setText:@"connected!"];
