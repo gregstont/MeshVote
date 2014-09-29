@@ -55,12 +55,16 @@
     [_colors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]]; //blue
     [_colors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]]; //yellow
     [_colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
+    [_colors addObject:[[UIColor alloc] initWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:1.0]]; //purple
+    [_colors addObject:[[UIColor alloc] initWithRed:1 green:149.0/255 blue:0 alpha:1.0]]; //orange
 
     _fadedColors = [[NSMutableArray alloc] init];
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:0.3]]; //green
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:0.3]]; //blue
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:0.3]]; //yellow
     [_fadedColors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:0.3]]; //red
+    [_fadedColors addObject:[[UIColor alloc] initWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:0.3]]; //purple
+    [_fadedColors addObject:[[UIColor alloc] initWithRed:1 green:149.0/255 blue:0 alpha:0.3]]; //orange
     
     _letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];
     

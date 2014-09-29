@@ -118,6 +118,8 @@ NSArray *letters;
     [colors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]]; //blue
     [colors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]]; //yellow
     [colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
+    [colors addObject:[[UIColor alloc] initWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:1.0]]; //purple
+    [colors addObject:[[UIColor alloc] initWithRed:1 green:149.0/255 blue:0 alpha:1.0]]; //orange
     
     letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];//[NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G" count:7];
 
@@ -411,6 +413,13 @@ NSArray *letters;
     if([textField.text isEqualToString:@"add answer"]) {
         [self setViewMode:VIEWMODE_ADD_NEW_QUESTION];
         textField.text = @"";
+        
+        //move the UI up so the keyboard doesnt hide it
+        [UIView beginAnimations:@"registerScroll" context:NULL];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.4];
+        self.view.transform = CGAffineTransformMakeTranslation(0, -34.0 * _currentQuestion.getAnswerCount);
+        [UIView commitAnimations];
     }
     else {
         [self setViewMode:VIEWMODE_EDIT_QUESTION];
@@ -423,6 +432,12 @@ NSArray *letters;
     NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
         [_currentQuestion addAnswer:textField.text];
+        [UIView beginAnimations:@"registerScroll" context:NULL];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.4];
+        //self.
+        self.view.transform = CGAffineTransformMakeTranslation(0, 0);
+        [UIView commitAnimations];
     }
     else { //editing an existing answer
         
