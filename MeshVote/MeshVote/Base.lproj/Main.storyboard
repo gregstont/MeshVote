@@ -262,7 +262,7 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <progressView opaque="NO" alpha="0.20000000000000007" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="iN3-fU-WBx">
+                                                <progressView opaque="NO" alpha="0.20000000000000007" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="iN3-fU-WBx">
                                                     <rect key="frame" x="31" y="10" width="229" height="3"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31219788463083942" green="0.87968351403061229" blue="0.2168401178762652" alpha="1" colorSpace="calibratedRGB"/>

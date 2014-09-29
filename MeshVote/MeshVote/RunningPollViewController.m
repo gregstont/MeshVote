@@ -34,6 +34,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _voteCount = 0;
     }
     return self;
 }
@@ -83,6 +84,12 @@
     
     _currentQuestionNumber = 0;
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+    _currentQuestion.voteCounts = [[NSMutableArray alloc] initWithCapacity:[_currentQuestion getAnswerCount]];
+    for(int i = 0; i < [_currentQuestion getAnswerCount]; ++i) {
+        [_currentQuestion.voteCounts addObject:[NSNumber numberWithInt:0]];
+    }
+    
+    NSLog(@"NUMNER OF ELEMTD :%zd", _currentQuestion.voteCounts.count);
     
     _timeRemaining = _currentQuestion.timeLimit;
     //_timeRemainingLabel.text = [self timeAsString:_currentQuestion.timeLimit];//[NSString stringWithFormat:@"%d", _currentQuestion.timeLimit];
@@ -120,6 +127,10 @@
 -(void)beginPoll {
     NSLog(@"beginPoll, timeRem:%d", _timeRemaining);
     _voteCount = 0;
+    _currentQuestion.voteCounts = [[NSMutableArray alloc] initWithCapacity:[_currentQuestion getAnswerCount]];
+    for(int i = 0; i < [_currentQuestion getAnswerCount]; ++i) {
+        [_currentQuestion.voteCounts addObject:[NSNumber numberWithInt:0]];
+    }
     
     //clear the answers for connected peers
     for (NSString* key in _peerList) {
@@ -241,7 +252,7 @@
     RunningAnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"runPollCell"]; //forIndexPath:indexPath];
     
     //temp
-    NSArray *tempPercent = @[@"34", @"31", @"23", @"12"];
+    //NSArray *tempPercent = @[@"34", @"31", @"23", @"12"];
     // Configure the cell...
     if (cell == nil) {
         NSLog(@"Shouldnt be here!!!!!!!!!!!");
@@ -252,8 +263,17 @@
     cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     cell.answerLetterLabel.text = [_letters objectAtIndex:indexPath.row];
     cell.answerProgress.progressTintColor = [_colors objectAtIndex:indexPath.row];
-    cell.answerProgress.progress = [[tempPercent objectAtIndex:indexPath.row] doubleValue] / 100.0f;
-    cell.answerPercentLabel.text = [tempPercent objectAtIndex:indexPath.row];
+    
+    double newPercent;
+    if(_voteCount == 0) {
+        newPercent = 0.0;
+    }
+    else {
+        newPercent = ([[_currentQuestion.voteCounts objectAtIndex:indexPath.row] intValue] + 0.0) / _voteCount;
+    }
+    NSLog(@"newPercent: %f", newPercent);
+    cell.answerProgress.progress = newPercent;
+    cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     
     CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 10.0f);
     cell.answerProgress.transform = transform;
@@ -362,14 +382,41 @@
     else if([messageType isEqualToString:@"answer"]) {
         NSLog(@"received answer:%zd", message.answerNumber);
         //if([_peerList ])
+        
+        //new vote
         if([[_peerList objectForKey:peerID.displayName] isEqualToNumber:[NSNumber numberWithInt:-1]]) {
             ++_voteCount;
             [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
+            int currentCount = [[_currentQuestion.voteCounts objectAtIndex:message.answerNumber] intValue];
+            [_currentQuestion.voteCounts setObject:[NSNumber numberWithInt:++currentCount] atIndexedSubscript:message.answerNumber];
+            
+            //need to update table
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [_answerTable reloadData];
+                //_votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
+            });
         }
-        else {
-            NSNumber *oldAnswer = [_peerList objectForKey:peerID.displayName];
-            NSLog(@"old answer:%zd", [oldAnswer integerValue]);
+        else { //someone changed their vote
+            //NSNumber *oldAnswer = [_peerList objectForKey:peerID.displayName];
+            
+            //remove the old vote
+            int oldAnswer = [[_peerList objectForKey:peerID.displayName] intValue];
+            int oldVoteCount = [[_currentQuestion.voteCounts objectAtIndex:oldAnswer] intValue];
+            NSLog(@"old answer:%zd", oldAnswer);
+            [_currentQuestion.voteCounts setObject:[NSNumber numberWithInt:--oldVoteCount] atIndexedSubscript:oldAnswer];
+            
+            //add the new vote
+            oldVoteCount = [[_currentQuestion.voteCounts objectAtIndex:message.answerNumber] intValue];
+            [_currentQuestion.voteCounts setObject:[NSNumber numberWithInt:++oldVoteCount] atIndexedSubscript:message.answerNumber];
+            
+            //update the peerlist with new vote
             [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
+            
+            //update the answer table
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [_answerTable reloadData];
+                //_votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
+            });
 
         }
         //[_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
