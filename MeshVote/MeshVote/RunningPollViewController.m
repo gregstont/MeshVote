@@ -285,7 +285,8 @@
         newPercent = ([[_currentQuestion.voteCounts objectAtIndex:indexPath.row] intValue] + 0.0) / _voteCount;
     }
     //NSLog(@"newPercent: %f", newPercent);
-    cell.answerProgress.progress = newPercent;
+    //cell.answerProgress.progress = newPercent;
+    [cell.answerProgress setProgress:newPercent animated:YES];
     cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     
     CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 10.0f);
