@@ -23,6 +23,7 @@
 @property (atomic, strong) NSMutableDictionary *peerList;
 
 @property (nonatomic) int selectedQuestion;
+@property (nonatomic, strong) UILabel *connectedPeersLabel;
 
 @end
 
@@ -126,6 +127,18 @@
     self.toolbarItems = buttonItems;
     //[self.toolbarItems ]
     //[_toolbar setItems:buttonItems];
+    
+    _connectedPeersLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+    _connectedPeersLabel.text = @"0 connected peers";
+    _connectedPeersLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.0];
+    //
+    _connectedPeersLabel.textAlignment = NSTextAlignmentCenter;
+    //l.textColor = [UIColor redColor];
+    self.tableView.tableHeaderView = _connectedPeersLabel;
+    
+    //add this
+    [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
+
 }
 
 
@@ -286,6 +299,11 @@
         
         [_peerList setObject:[NSNumber numberWithInt:-1] forKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
+        });
+        
         //NSString *helloString = @"Hello connected!";
         //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -311,6 +329,9 @@
         NSLog(@"  NOT connected!");
         [_peerList removeObjectForKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
+        });
     }
     else if(state == MCSessionStateConnecting) {
         NSLog(@"  connecting...");
