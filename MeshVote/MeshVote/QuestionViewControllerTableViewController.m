@@ -20,7 +20,7 @@
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 
-@property (atomic, strong) NSMutableDictionary *peerList;
+@property (nonatomic, strong) NSMutableDictionary *peerList;
 
 @property (nonatomic) int selectedQuestion;
 @property (nonatomic, strong) UILabel *connectedPeersLabel;

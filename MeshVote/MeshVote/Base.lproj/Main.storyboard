@@ -206,7 +206,7 @@
                                                     <color key="highlightedColor" red="1" green="0.96638668401756822" blue="0.93985000713315903" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Test" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Mgn-fd-oMi">
-                                                    <rect key="frame" x="37" y="-2" width="205" height="37"/>
+                                                    <rect key="frame" x="37" y="-2" width="243" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>

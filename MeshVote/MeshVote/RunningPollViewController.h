@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) QuestionSet* questionSet;
 @property (nonatomic, strong) MCSession* session;
-@property (atomic, strong) NSMutableDictionary *peerList;
+@property (nonatomic, strong) NSMutableDictionary *peerList;
 
 - (IBAction)rewindPressed:(UIButton *)sender;
 - (IBAction)playPressed:(UIButton *)sender;

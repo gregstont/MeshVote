@@ -9,6 +9,7 @@
 #import "ConnectingViewController.h"
 #import "Message.h"
 #import "EditQuestionViewController.h"
+#include <stdlib.h>
 
 @interface ConnectingViewController ()
 
@@ -37,7 +38,8 @@
     [super viewDidLoad];
     NSLog(@"sessionName:%@", _sessionName);
     // Do any additional setup after loading the view.
-    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
+    //MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
+    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:[NSString stringWithFormat:@"%@%d",_userName,arc4random_uniform(999)]];
     
     _session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     // Set ourselves as the MCSessionDelegate

@@ -9,6 +9,7 @@
 #import "JoinViewControllerTableViewController.h"
 #import "ConnectingViewController.h"
 #import <UIKit/UITableViewCell.h>
+#include <stdlib.h>
 
 @interface JoinViewControllerTableViewController ()
 
@@ -45,7 +46,7 @@
     
     _sessionList = [[NSMutableArray alloc] init];
     
-    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
+    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:[NSString stringWithFormat:@"%@%d",_userName,arc4random_uniform(999)]]; //TODO: change this!
     //_session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     // Set ourselves as the MCSessionDelegate
     //_session.delegate = self;
@@ -214,6 +215,7 @@
         
         ConnectingViewController *controller = (ConnectingViewController *)segue.destinationViewController;
         controller.sessionName = [_sessionList objectAtIndex:clickedButtonPath.row];
+        controller.userName = _userName;
     }
     
 }

@@ -20,4 +20,6 @@
 
 @property (nonatomic, strong) NSString* sessionName;
 
+@property (nonatomic, strong) NSString *userName;
+
 @end

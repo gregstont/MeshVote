@@ -239,11 +239,13 @@ NSArray *letters;
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //add new question
         if([_currentQuestion getAnswerCount] > (int)indexPath.row/2) {
+            cell.answerTextField.alpha = 1.0;
             cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
         }
         else {
             cell.textLabel.text = @"";
             cell.answerTextField.text = @"add answer";
+            cell.answerTextField.alpha = 0.25;
         }
         /*
         if([_currentQuestion getAnswerCount] == 0) { //no answers yet
@@ -413,6 +415,7 @@ NSArray *letters;
     if([textField.text isEqualToString:@"add answer"]) {
         [self setViewMode:VIEWMODE_ADD_NEW_QUESTION];
         textField.text = @"";
+        textField.alpha = 1.0;
         
         //move the UI up so the keyboard doesnt hide it
         [UIView beginAnimations:@"registerScroll" context:NULL];

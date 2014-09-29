@@ -114,7 +114,7 @@
     NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
     NSError *error;
     
-    _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
+    //_totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
     _votesReceivedLabel.text = @"0";
     _voteCount = 0;
     
@@ -144,7 +144,7 @@
     }
     
     //clear the answers for connected peers
-    for (NSString* key in _peerList) {
+    for (NSString* key in [_peerList allKeys]) {
         [_peerList setObject:[NSNumber numberWithInt:-1] forKey:key];
         //id value = [xyz objectForKey:key];
         // do stuff
@@ -269,7 +269,7 @@
         NSLog(@"Shouldnt be here!!!!!!!!!!!");
         cell = [[RunningAnswerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"runPollCell"];
     }
-    NSLog(@"answer:%@", [_currentQuestion.answerText objectAtIndex:indexPath.row]);
+    //NSLog(@"answer:%@", [_currentQuestion.answerText objectAtIndex:indexPath.row]);
     //cell.textLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     cell.answerLetterLabel.text = [_letters objectAtIndex:indexPath.row];
@@ -284,7 +284,7 @@
     else {
         newPercent = ([[_currentQuestion.voteCounts objectAtIndex:indexPath.row] intValue] + 0.0) / _voteCount;
     }
-    NSLog(@"newPercent: %f", newPercent);
+    //NSLog(@"newPercent: %f", newPercent);
     cell.answerProgress.progress = newPercent;
     cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     
@@ -323,7 +323,7 @@
     NSLog(@"peer changed state:");
     
     if(state == MCSessionStateConnected) {
-        NSLog(@"  connected!");
+        NSLog(@"  connected: %@", peerID.displayName);
         [_peerList setObject:[NSNumber numberWithInt:-1] forKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -332,7 +332,7 @@
         
     }
     else if(state == MCSessionStateNotConnected) {
-        NSLog(@"  NOT connected!");
+        NSLog(@"  NOT connected: %@",peerID.displayName);
         [_peerList removeObjectForKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -346,15 +346,17 @@
 
 // Received data from remote peer
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
-    NSLog(@"recieved data!");
+    NSLog(@"recieved data, from peer:%@", peerID.displayName);
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     NSString *messageType = message.messageType;
     NSLog(@"type2:%@", messageType);
     if([messageType isEqualToString:@"question-ack"]) {
         
         if(_hasBegunPoll == NO) { //TODO: check if all peers have question-acked here
-            [self beginPoll];
+            NSLog(@"BEGIN POLL!!!!");
             _hasBegunPoll = YES;
+            [self beginPoll];
+            //_hasBegunPoll = YES;
         }
         /*//TODO: need to verify all peers have acknowledged the question
          Message *beginMessage = [[Message alloc] init];
@@ -393,7 +395,7 @@
         }
     }
     else if([messageType isEqualToString:@"answer"]) {
-        NSLog(@"received answer:%zd", message.answerNumber);
+        NSLog(@"received answer:%zd from:%@", message.answerNumber, peerID.displayName);
         //if([_peerList ])
         
         //new vote
@@ -448,7 +450,7 @@
         
         
         
-        //[_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
+        [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
         //++_voteCount;
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
