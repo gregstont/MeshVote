@@ -28,6 +28,7 @@
 		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
 		348A1DD519D87BF6002E6FAE /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 348A1DD419D87BF6002E6FAE /* Message.m */; };
 		34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BE302319D7D38700C9F149 /* RunningPollViewController.m */; };
+		34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C4768819D8FC350087D3F8 /* check_icon128x128.png */; };
 		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
 		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
 		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
@@ -80,6 +81,7 @@
 		348A1DD419D87BF6002E6FAE /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		34BE302219D7D38700C9F149 /* RunningPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningPollViewController.h; sourceTree = "<group>"; };
 		34BE302319D7D38700C9F149 /* RunningPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningPollViewController.m; sourceTree = "<group>"; };
+		34C4768819D8FC350087D3F8 /* check_icon128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_icon128x128.png; sourceTree = "<group>"; };
 		34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectingViewController.h; sourceTree = "<group>"; };
 		34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectingViewController.m; sourceTree = "<group>"; };
 		34DF551519C80CBB00D9BBFB /* mesh_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_logo.png; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 		3424FDFD19C806BA003C3BEE /* MeshVote */ = {
 			isa = PBXGroup;
 			children = (
+				34C4768819D8FC350087D3F8 /* check_icon128x128.png */,
 				34DF551519C80CBB00D9BBFB /* mesh_logo.png */,
 				34E3D77519C8CFA70063A4F4 /* i_icon_large.png */,
 				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
@@ -290,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */,
 				3424FE1019C806BA003C3BEE /* Images.xcassets in Resources */,
 				34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */,
 				34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */,

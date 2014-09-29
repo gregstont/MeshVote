@@ -17,7 +17,8 @@
 @property (nonatomic) int currentQuestionNumber; //starts at 0
 
 @property (nonatomic, strong) NSArray* letters;
-@property (nonatomic, strong) NSMutableArray *colors;
+@property (nonatomic, strong) NSMutableArray *colors; //TODO: change this to define
+@property (nonatomic, strong) NSMutableArray *fadedColors;
 
 @property (nonatomic) int timeRemaining;
 @property (nonatomic) BOOL hasBegunPoll;
@@ -54,6 +55,12 @@
     [_colors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]]; //blue
     [_colors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]]; //yellow
     [_colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
+
+    _fadedColors = [[NSMutableArray alloc] init];
+    [_fadedColors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:0.3]]; //green
+    [_fadedColors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:0.3]]; //blue
+    [_fadedColors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:0.3]]; //yellow
+    [_fadedColors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:0.3]]; //red
     
     _letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];
     
@@ -263,6 +270,8 @@
     cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     cell.answerLetterLabel.text = [_letters objectAtIndex:indexPath.row];
     cell.answerProgress.progressTintColor = [_colors objectAtIndex:indexPath.row];
+    cell.answerProgress.backgroundColor = [_fadedColors objectAtIndex:indexPath.row];
+    //[cell.answerProgress.backgroundColor s]
     
     double newPercent;
     if(_voteCount == 0) {
@@ -417,8 +426,24 @@
                 [_answerTable reloadData];
                 //_votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
             });
-
         }
+        
+        //need to send answer-ack
+        Message *answerAck = [[Message alloc] init];
+        answerAck.messageType = @"answer-ack";
+        answerAck.questionNumber = _currentQuestionNumber;
+        answerAck.answerNumber = message.answerNumber;
+        
+        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:answerAck];
+        NSError *error;
+        
+        [_session sendData:ackData toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }
+        
+        
+        
         //[_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
         //++_voteCount;
         dispatch_async(dispatch_get_main_queue(), ^(void){

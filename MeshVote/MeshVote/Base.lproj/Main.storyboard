@@ -185,17 +185,27 @@
                                                     <color key="highlightedColor" red="1" green="0.96638668401756822" blue="0.93985000713315903" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Test" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Mgn-fd-oMi">
-                                                    <rect key="frame" x="37" y="-2" width="243" height="37"/>
+                                                    <rect key="frame" x="37" y="-2" width="205" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="rJj-yf-JaR">
+                                                    <rect key="frame" x="250" y="7" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-w3-FEa">
+                                                    <rect key="frame" x="248" y="5" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="answerActivityIndicator" destination="rJj-yf-JaR" id="RUi-JF-mMw"/>
+                                            <outlet property="answerCheckImage" destination="sU6-w3-FEa" id="G89-qJ-XzZ"/>
                                             <outlet property="answerChoiceLetter" destination="Xsy-UX-D3s" id="8yE-lK-kY3"/>
                                             <outlet property="answerTextField" destination="Mgn-fd-oMi" id="VKs-Ki-XGP"/>
                                         </connections>
@@ -262,7 +272,7 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <progressView opaque="NO" alpha="0.20000000000000007" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="iN3-fU-WBx">
+                                                <progressView opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="iN3-fU-WBx">
                                                     <rect key="frame" x="31" y="10" width="229" height="3"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31219788463083942" green="0.87968351403061229" blue="0.2168401178762652" alpha="1" colorSpace="calibratedRGB"/>
@@ -500,6 +510,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="check_icon128x128.png" width="128" height="128"/>
         <image name="i_icon_large.png" width="512" height="512"/>
         <image name="mesh_logo.png" width="600" height="600"/>
     </resources>

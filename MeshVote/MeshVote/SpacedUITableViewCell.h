@@ -11,5 +11,7 @@
 @interface SpacedUITableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *answerChoiceLetter;
 @property (weak, nonatomic) IBOutlet UITextField *answerTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *answerActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *answerCheckImage;
 
 @end

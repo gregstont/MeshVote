@@ -12,6 +12,9 @@
 
 @interface EditQuestionViewController ()
 
+@property (atomic) int currentAnswer;
+@property (atomic) BOOL currentAnswerAcked;
+
 @property (atomic) int timeRemaining;
 
 @end
@@ -34,6 +37,9 @@ NSArray *letters;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _currentAnswer = -1;
+    _currentAnswerAcked = NO;
     
     NSLog(@"in editQuestion view Controller, mode:%d",_viewMode);
     [_doneButton setTitle:@""];
@@ -211,6 +217,21 @@ NSArray *letters;
     
     cell.answerTextField.delegate = self;
     
+    if(_currentAnswer == indexPath.row/2) {
+        if(_currentAnswerAcked) {
+            cell.answerActivityIndicator.hidden = YES;
+            cell.answerCheckImage.hidden = NO;
+        }
+        else {
+            cell.answerActivityIndicator.hidden = NO;
+            [cell.answerActivityIndicator startAnimating];
+        }
+    }
+    else {
+        cell.answerCheckImage.hidden = YES;
+        cell.answerActivityIndicator.hidden = YES;
+    }
+    
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
@@ -260,6 +281,12 @@ NSArray *letters;
             NSLog(@"Error sending data");
         }
         
+        _currentAnswer = answerMessage.answerNumber;
+        _currentAnswerAcked = NO;
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [_tableView reloadData];
+        });
+        
     }
    
 
@@ -271,6 +298,8 @@ NSArray *letters;
     
     _currentQuestion = _nextQuestion;
     _timeRemaining = _currentQuestion.timeLimit;
+    _currentAnswer = -1;
+    _currentAnswerAcked = NO;
     //[_questionTextLabel setText:_currentQuestion.questionText];
     dispatch_async(dispatch_get_main_queue(), ^(void){
 
@@ -438,6 +467,13 @@ NSArray *letters;
     
     else if([messageType isEqualToString:@"answer-ack"]) {
         NSLog(@"  answer-ack");
+        if(message.questionNumber == _currentQuestion.questionNum && message.answerNumber == _currentAnswer) {
+            _currentAnswerAcked = YES;
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [_tableView reloadData];
+            });
+            
+        }
     }
     else if([messageType isEqualToString:@"action"]) {
         NSLog(@"  action:%d",message.actionType);
