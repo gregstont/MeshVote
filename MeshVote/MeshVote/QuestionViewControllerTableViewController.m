@@ -221,7 +221,7 @@
 
 // A nearby peer has stopped advertising
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
-    NSLog(@"LOST PEER!!");
+    NSLog(@"LOST PEER!! IN QUESTIONVIEW");
 }
 
 //@optional

@@ -109,6 +109,7 @@ NSArray *letters;
     // Do any additional setup after loading the view.
     [_tableView setDataSource:self];
     [_tableView setDelegate:self];
+    [_tableView setScrollsToTop:NO];
     
     [_questionTextLabel setDelegate:self];
     
