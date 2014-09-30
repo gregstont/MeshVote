@@ -10,6 +10,7 @@
 #import "QuestionSet.h"
 #import "MultipeerConnectivity/MCPeerID.h"
 #import "MultipeerConnectivity/MCSession.h"
+#import "KAProgressLabel.h"
 
 
 @interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate>
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) QuestionSet* questionSet;
 @property (nonatomic, strong) MCSession* session;
 @property (nonatomic, strong) NSMutableDictionary *peerList;
+@property (weak, nonatomic) IBOutlet KAProgressLabel *votesProgressLabel;
+@property (weak, nonatomic) IBOutlet KAProgressLabel *timeProgressLabel;
 
 - (IBAction)rewindPressed:(UIButton *)sender;
 - (IBAction)playPressed:(UIButton *)sender;

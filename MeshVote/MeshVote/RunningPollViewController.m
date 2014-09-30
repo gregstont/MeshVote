@@ -25,6 +25,7 @@
 
 @property (nonatomic) int voteCount;
 
+
 @end
 
 @implementation RunningPollViewController
@@ -48,6 +49,8 @@
     [super viewDidLoad];
     
     _hasBegunPoll = NO;
+    
+    
     
     //TODO: make this global or typedef or something
     _colors = [[NSMutableArray alloc] init];
@@ -123,6 +126,41 @@
     [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
     
     
+    //KAProgressLabel
+    //[_votesProgressLabel setDelegate:self];
+    //Using block
+    _timeProgressLabel.progressLabelVCBlock = ^(KAProgressLabel *label, CGFloat progress) {
+        
+        /*
+         dispatch_async(dispatch_get_main_queue(), ^{
+         [label setText:[NSString stringWithFormat:@"%.0f%%", (progress*100)]];
+         });
+         */
+    };
+    _votesProgressLabel.progressLabelVCBlock = ^(KAProgressLabel *label, CGFloat progress) {
+        
+        /*
+         dispatch_async(dispatch_get_main_queue(), ^{
+         [label setText:[NSString stringWithFormat:@"%.0f%%", (progress*100)]];
+         });
+         */
+    };
+    [_votesProgressLabel setProgress:0.0
+                              timing:TPPropertyAnimationTimingEaseOut
+                            duration:1.0
+                               delay:0.0];
+    [_timeProgressLabel setProgress:(_timeRemaining +0.0) / 60
+                             timing:TPPropertyAnimationTimingEaseOut
+                           duration:0.4
+                              delay:0.0];
+    [_timeProgressLabel setColorTable: @{
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor clearColor],
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor redColor]
+                                         }];
+    [_timeProgressLabel setAlpha:0.5];
+    //[_timeProgressLabel setClockWise:NO];
+    
     if(error) {
         NSLog(@"Error sending data");
     }
@@ -171,6 +209,15 @@
         self.pollQuestionText.text = _currentQuestion.questionText;
         [self.answerTable reloadData];
         self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
+        
+        [_votesProgressLabel setProgress:0.0
+                                  timing:TPPropertyAnimationTimingEaseOut
+                                duration:1.0
+                                   delay:0.0];
+        [_timeProgressLabel setProgress:(_timeRemaining +0.0) / 60
+                                 timing:TPPropertyAnimationTimingEaseOut
+                               duration:0.4
+                                  delay:0.0];
 
         //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     });
@@ -189,6 +236,11 @@
                 //NSLog(@"GUI thread 1");
                 // update label 1 text
                 self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];//@"Done with Label 1";
+                
+                [_timeProgressLabel setProgress:(_timeRemaining + 0.0)/60
+                                          timing:TPPropertyAnimationTimingEaseOut
+                                        duration:0.2
+                                           delay:0.0];
             });
             //NSLog(@"times up");
         }
@@ -455,6 +507,11 @@
         //++_voteCount;
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
+            
+            [_votesProgressLabel setProgress:(_voteCount + 0.0)/[[_peerList allKeys] count]
+                                      timing:TPPropertyAnimationTimingEaseOut
+                                    duration:1.0
+                                       delay:0.0];
         });
     }
     

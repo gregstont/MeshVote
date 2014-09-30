@@ -29,6 +29,8 @@
 		348A1DD519D87BF6002E6FAE /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 348A1DD419D87BF6002E6FAE /* Message.m */; };
 		34A5A23D19DA373F00887C1A /* icon_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 34A5A23C19DA373F00887C1A /* icon_new.png */; };
 		34A5A24119DA3AAE00887C1A /* icon_new_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 34A5A24019DA3AAE00887C1A /* icon_new_120.png */; };
+		34A5A24919DA4F1600887C1A /* KAProgressLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A5A24619DA4F1600887C1A /* KAProgressLabel.m */; };
+		34A5A24A19DA4F1600887C1A /* TPPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A5A24819DA4F1600887C1A /* TPPropertyAnimation.m */; };
 		34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BE302319D7D38700C9F149 /* RunningPollViewController.m */; };
 		34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C4768819D8FC350087D3F8 /* check_icon128x128.png */; };
 		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
@@ -83,6 +85,10 @@
 		348A1DD419D87BF6002E6FAE /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		34A5A23C19DA373F00887C1A /* icon_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new.png; sourceTree = "<group>"; };
 		34A5A24019DA3AAE00887C1A /* icon_new_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new_120.png; sourceTree = "<group>"; };
+		34A5A24519DA4F1600887C1A /* KAProgressLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KAProgressLabel.h; sourceTree = "<group>"; };
+		34A5A24619DA4F1600887C1A /* KAProgressLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KAProgressLabel.m; sourceTree = "<group>"; };
+		34A5A24719DA4F1600887C1A /* TPPropertyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPropertyAnimation.h; sourceTree = "<group>"; };
+		34A5A24819DA4F1600887C1A /* TPPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPropertyAnimation.m; sourceTree = "<group>"; };
 		34BE302219D7D38700C9F149 /* RunningPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningPollViewController.h; sourceTree = "<group>"; };
 		34BE302319D7D38700C9F149 /* RunningPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningPollViewController.m; sourceTree = "<group>"; };
 		34C4768819D8FC350087D3F8 /* check_icon128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_icon128x128.png; sourceTree = "<group>"; };
@@ -155,11 +161,9 @@
 		3424FDFD19C806BA003C3BEE /* MeshVote */ = {
 			isa = PBXGroup;
 			children = (
-				34C4768819D8FC350087D3F8 /* check_icon128x128.png */,
-				34A5A23C19DA373F00887C1A /* icon_new.png */,
-				34A5A24019DA3AAE00887C1A /* icon_new_120.png */,
-				34DF551519C80CBB00D9BBFB /* mesh_logo.png */,
-				34E3D77519C8CFA70063A4F4 /* i_icon_large.png */,
+				34A5A24319DA4CB700887C1A /* images */,
+				34A5A24219DA4C9000887C1A /* Model */,
+				34A5A24419DA4F1600887C1A /* KAProgressLabel */,
 				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
 				3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */,
 				3424FE0919C806BA003C3BEE /* Main.storyboard */,
@@ -183,12 +187,6 @@
 				34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */,
 				34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */,
 				34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */,
-				3405169B19CBE094004360E8 /* QuestionSet.h */,
-				3405169C19CBE094004360E8 /* QuestionSet.m */,
-				3405169E19CBE1B0004360E8 /* Question.h */,
-				3405169F19CBE1B0004360E8 /* Question.m */,
-				348A1DD319D87BF6002E6FAE /* Message.h */,
-				348A1DD419D87BF6002E6FAE /* Message.m */,
 			);
 			path = MeshVote;
 			sourceTree = "<group>";
@@ -220,6 +218,42 @@
 				3424FE1F19C806BA003C3BEE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		34A5A24219DA4C9000887C1A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3405169B19CBE094004360E8 /* QuestionSet.h */,
+				3405169C19CBE094004360E8 /* QuestionSet.m */,
+				3405169E19CBE1B0004360E8 /* Question.h */,
+				3405169F19CBE1B0004360E8 /* Question.m */,
+				348A1DD319D87BF6002E6FAE /* Message.h */,
+				348A1DD419D87BF6002E6FAE /* Message.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		34A5A24319DA4CB700887C1A /* images */ = {
+			isa = PBXGroup;
+			children = (
+				34C4768819D8FC350087D3F8 /* check_icon128x128.png */,
+				34A5A23C19DA373F00887C1A /* icon_new.png */,
+				34A5A24019DA3AAE00887C1A /* icon_new_120.png */,
+				34DF551519C80CBB00D9BBFB /* mesh_logo.png */,
+				34E3D77519C8CFA70063A4F4 /* i_icon_large.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		34A5A24419DA4F1600887C1A /* KAProgressLabel */ = {
+			isa = PBXGroup;
+			children = (
+				34A5A24519DA4F1600887C1A /* KAProgressLabel.h */,
+				34A5A24619DA4F1600887C1A /* KAProgressLabel.m */,
+				34A5A24719DA4F1600887C1A /* TPPropertyAnimation.h */,
+				34A5A24819DA4F1600887C1A /* TPPropertyAnimation.m */,
+			);
+			path = KAProgressLabel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,11 +368,13 @@
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
 				34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */,
 				34FEEE3919D7E0B0000E128F /* RunningAnswerTableViewCell.m in Sources */,
+				34A5A24A19DA4F1600887C1A /* TPPropertyAnimation.m in Sources */,
 				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				340516A019CBE1B0004360E8 /* Question.m in Sources */,
 				3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */,
 				3405169D19CBE094004360E8 /* QuestionSet.m in Sources */,
 				3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */,
+				34A5A24919DA4F1600887C1A /* KAProgressLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
