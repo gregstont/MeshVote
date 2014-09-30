@@ -78,7 +78,7 @@
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setTimeLimit:10];
+    [tempQuestion1 setTimeLimit:60];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -213,7 +213,7 @@
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     
     NSLog(@"FOUND PEER!!");
-    [_browser invitePeer:peerID toSession:_session withContext:nil timeout:10];
+    [_browser invitePeer:peerID toSession:_session withContext:nil timeout:17];
     
 }
 

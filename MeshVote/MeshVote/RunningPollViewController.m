@@ -51,7 +51,6 @@
     _hasBegunPoll = NO;
     
     
-    
     //TODO: make this global or typedef or something
     _colors = [[NSMutableArray alloc] init];
     [_colors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]]; //green
@@ -156,15 +155,33 @@
     [_timeProgressLabel setColorTable: @{
                                          NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
                                          NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor clearColor],
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor redColor]
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor darkGrayColor]
+                                         }];
+    [_votesProgressLabel setColorTable: @{
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.2],
+                                         NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.7]
                                          }];
     [_timeProgressLabel setAlpha:0.5];
+    
+    [_votesProgressLabel setFrontBorderWidth:8];
+    [_votesProgressLabel setBackBorderWidth:8];
+    [_timeProgressLabel setBackBorderWidth:11];
     //[_timeProgressLabel setClockWise:NO];
     
     if(error) {
         NSLog(@"Error sending data");
     }
     //[self beginPoll];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
+    self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:(190/255.0)  green:(190/255.0)  blue:(190/255.0)  alpha:1.0];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBar.barTintColor = nil;
+    self.navigationController.toolbar.barTintColor = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -508,7 +525,7 @@
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
             
-            [_votesProgressLabel setProgress:(_voteCount + 0.0)/[[_peerList allKeys] count]
+            [_votesProgressLabel setProgress:(_voteCount + 0.0)/([[_peerList allKeys] count] + 2)
                                       timing:TPPropertyAnimationTimingEaseOut
                                     duration:1.0
                                        delay:0.0];
