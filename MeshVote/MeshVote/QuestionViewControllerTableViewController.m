@@ -78,7 +78,7 @@
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setTimeLimit:60];
+    [tempQuestion1 setTimeLimit:15];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -86,6 +86,8 @@
     [tempQuestion2 addAnswer:@"grapefruit"];
     [tempQuestion2 addAnswer:@"tangerine"];
     [tempQuestion2 addAnswer:@"orange"];
+    [tempQuestion2 addAnswer:@"peanut"];
+    [tempQuestion2 addAnswer:@"banana pie"];
     [tempQuestion2 setTimeLimit:15];
     
     [_questionSet addQuestion:tempQuestion1];
