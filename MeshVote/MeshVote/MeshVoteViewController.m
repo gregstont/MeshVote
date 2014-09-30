@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view, typically from a nib.
-    CAGradientLayer *bgLayer = [BackgroundLayer blueGradient]; //actually grey
+    CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
     //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
     bgLayer.frame = self.view.bounds;
     [self.view.layer insertSublayer:bgLayer atIndex:0];

@@ -27,6 +27,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="22"/>
                                 <state key="normal" title="Join session">
+                                    <color key="titleColor" red="0.64752072704081631" green="0.09768252290300132" blue="0.021446579724903589" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -42,7 +43,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="22"/>
                                 <state key="normal" title="Create new session">
-                                    <color key="titleColor" red="0.58431375029999999" green="0.86666673419999996" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" red="0.98429393768310547" green="0.49061093716450221" blue="0.2095285012055885" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -50,7 +51,7 @@
                                     <segue destination="Fb5-mu-rlG" kind="push" identifier="createSessionSeque" id="qPS-IC-LHZ"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mesh_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Izv-U5-VBX">
+                            <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_new.png" translatesAutoresizingMaskIntoConstraints="NO" id="Izv-U5-VBX">
                                 <rect key="frame" x="-3" y="77" width="122" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -58,14 +59,14 @@
                                 <rect key="frame" x="96" y="86" width="224" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="48"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.58169244260204089" green="0.58169244260204089" blue="0.58169244260204089" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vote" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6Y-xh-tcU">
                                 <rect key="frame" x="203" y="80" width="120" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="48"/>
-                                <color key="textColor" red="0.77854308679999995" green="0.70138558600000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.83914620535714279" green="0.505278752716804" blue="0.19215253696440363" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKn-yd-bdO">
@@ -84,7 +85,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.76592394770408156" green="0.76592394770408156" blue="0.76592394770408156" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="gYx-7J-NNh" firstAttribute="trailing" secondItem="b08-c9-HVx" secondAttribute="trailing" id="2Yg-DZ-TUM"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="b08-c9-HVx" secondAttribute="bottom" constant="269" id="6ZZ-XE-Yjs"/>
@@ -159,7 +160,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWl-MV-N47" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712" y="844"/>
+            <point key="canvasLocation" x="1912" y="852"/>
         </scene>
         <!--Edit Question View Controller-->
         <scene sceneID="ITX-Hu-gHA">
@@ -251,7 +252,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2538" y="844"/>
+            <point key="canvasLocation" x="2746" y="376"/>
         </scene>
         <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
@@ -369,7 +370,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7J4-eu-qPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2176" y="1545"/>
+            <point key="canvasLocation" x="2746" y="1067"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5X-sh-eJD">
@@ -547,7 +548,7 @@
     <resources>
         <image name="check_icon128x128.png" width="128" height="128"/>
         <image name="i_icon_large.png" width="512" height="512"/>
-        <image name="mesh_logo.png" width="600" height="600"/>
+        <image name="icon_new.png" width="600" height="600"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -555,6 +556,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xDm-yi-HV8"/>
+        <segue reference="rVa-Vp-ZND"/>
     </inferredMetricsTieBreakers>
 </document>

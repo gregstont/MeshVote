@@ -27,6 +27,8 @@
 		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
 		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
 		348A1DD519D87BF6002E6FAE /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 348A1DD419D87BF6002E6FAE /* Message.m */; };
+		34A5A23D19DA373F00887C1A /* icon_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 34A5A23C19DA373F00887C1A /* icon_new.png */; };
+		34A5A24119DA3AAE00887C1A /* icon_new_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 34A5A24019DA3AAE00887C1A /* icon_new_120.png */; };
 		34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BE302319D7D38700C9F149 /* RunningPollViewController.m */; };
 		34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C4768819D8FC350087D3F8 /* check_icon128x128.png */; };
 		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
@@ -79,6 +81,8 @@
 		3424FE2D19C80928003C3BEE /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		348A1DD319D87BF6002E6FAE /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		348A1DD419D87BF6002E6FAE /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		34A5A23C19DA373F00887C1A /* icon_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new.png; sourceTree = "<group>"; };
+		34A5A24019DA3AAE00887C1A /* icon_new_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new_120.png; sourceTree = "<group>"; };
 		34BE302219D7D38700C9F149 /* RunningPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningPollViewController.h; sourceTree = "<group>"; };
 		34BE302319D7D38700C9F149 /* RunningPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningPollViewController.m; sourceTree = "<group>"; };
 		34C4768819D8FC350087D3F8 /* check_icon128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_icon128x128.png; sourceTree = "<group>"; };
@@ -152,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				34C4768819D8FC350087D3F8 /* check_icon128x128.png */,
+				34A5A23C19DA373F00887C1A /* icon_new.png */,
+				34A5A24019DA3AAE00887C1A /* icon_new_120.png */,
 				34DF551519C80CBB00D9BBFB /* mesh_logo.png */,
 				34E3D77519C8CFA70063A4F4 /* i_icon_large.png */,
 				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
@@ -295,10 +301,12 @@
 			files = (
 				34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */,
 				3424FE1019C806BA003C3BEE /* Images.xcassets in Resources */,
+				34A5A23D19DA373F00887C1A /* icon_new.png in Resources */,
 				34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */,
 				34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */,
 				3424FE0219C806BA003C3BEE /* InfoPlist.strings in Resources */,
 				3424FE0B19C806BA003C3BEE /* Main.storyboard in Resources */,
+				34A5A24119DA3AAE00887C1A /* icon_new_120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
