@@ -60,18 +60,14 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
      //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    /*_questions = [[NSMutableArray alloc] init];
-    
-    [_questions addObject:@"first!"];
-    [_questions addObject:@"second!"];
-    [_questions addObject:@"third!"];*/
-    
-    
+
     NSLog(@"question viewdidload, userName:%@", self.userName);
     
     _questionSet = [[QuestionSet alloc] init];
     _peerList = [[NSMutableDictionary alloc] init];
     
+    
+    ////begin temporary debug stuff
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
     [tempQuestion1 addAnswer:@"science"];
@@ -92,9 +88,11 @@
     
     [_questionSet addQuestion:tempQuestion1];
     [_questionSet addQuestion:tempQuestion2];
+    //end temporaru debug stuff
 
+    
+    //create my (host) peerID
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
-    //MCSession *mySession = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
     _session = [[MCSession alloc] initWithPeer:me];
     _session.delegate = self;
     
@@ -106,14 +104,11 @@
     [_advertiser startAdvertisingPeer];
     
     
+    //start browsing for question takers
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:self.userName];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
-    /*
-    EditQuestionViewController *secondViewController = [[EditQuestionViewController alloc] init];
-    secondViewController.delegate = self;
-    [[self navigationController] pushViewController:secondViewController animated:YES];
-    */
+
     
     //create toolbar buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
@@ -123,22 +118,16 @@
     forward.enabled = NO;
     rewind.enabled = NO;
     
-
-    
     NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
     self.toolbarItems = buttonItems;
-    //[self.toolbarItems ]
-    //[_toolbar setItems:buttonItems];
+
     
+    //create "hidden" label above table cells
     _connectedPeersLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
     _connectedPeersLabel.text = @"0 connected peers";
     _connectedPeersLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.0];
-    //
     _connectedPeersLabel.textAlignment = NSTextAlignmentCenter;
-    //l.textColor = [UIColor redColor];
     self.tableView.tableHeaderView = _connectedPeersLabel;
-    
-    //add this
     [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
 
 }
@@ -305,26 +294,7 @@
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
-        
-        //NSString *helloString = @"Hello connected!";
-        //NSData *helloMessage = [helloString dataUsingEncoding:NSUTF8StringEncoding];
-        
-        /*Question* questionMessage = [_questionSet getQuestionAtIndex:0];
-        questionMessage.questionNum = 0;
-        questionMessage.messageType = @"question";
-        NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-        NSError *error;
-        
-        //NSLog(@"size of myObject: %zd", malloc_size((__bridge const void *)(testQuestion)));
-        
-        NSMutableArray *peers = [[NSMutableArray alloc] init];
-        [peers addObject:peerID];
-        [_session sendData:testQuestion toPeers:peers withMode:MCSessionSendDataReliable error:&error];
-        
-        
-        if(error) {
-            NSLog(@"Error sending data");
-        }*/
+
         
     }
     else if(state == MCSessionStateNotConnected) {
@@ -348,18 +318,7 @@
     NSLog(@"type:%@", messageType);
     if([messageType isEqualToString:@"question-ack"]) {
         
-        /*//TODO: need to verify all peers have acknowledged the question
-        Message *beginMessage = [[Message alloc] init];
-        beginMessage.messageType = @"action";
-        beginMessage.actionType = ACTION_PLAY;
-        
-        NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
-        NSError *error;
-        //[session connectedPeers]
-        [_session sendData:actionData toPeers:[session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }*/
+        //TODO: need to verify all peers have acknowledged the question
 
         
     }
