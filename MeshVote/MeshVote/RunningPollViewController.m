@@ -1,3 +1,6 @@
+
+
+
 //
 //  RunningPollViewController.m
 //  MeshVote
@@ -60,7 +63,7 @@
     [_colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
     [_colors addObject:[[UIColor alloc] initWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:1.0]]; //purple
     [_colors addObject:[[UIColor alloc] initWithRed:1 green:149.0/255 blue:0 alpha:1.0]]; //orange
-
+    
     _fadedColors = [[NSMutableArray alloc] init];
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:0.3]]; //green
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:0.3]]; //blue
@@ -94,7 +97,7 @@
     
     NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
     self.toolbarItems = buttonItems;
-
+    
     
     _currentQuestionNumber = 0;
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
@@ -120,7 +123,10 @@
     //send out the first question to all peers
     Question* questionMessage = [_questionSet getQuestionAtIndex:0];
     questionMessage.questionNum = 0;
-    [self sendQuestion:questionMessage toPeers:[_session connectedPeers]];
+    questionMessage.messageType = @"question";
+    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
+    NSError *error;
+    [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
     
     //
     // setup circular progress bars for time and votes received (KAProgressLabel)
@@ -143,17 +149,19 @@
                                          NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor darkGrayColor]
                                          }];
     [_votesProgressLabel setColorTable: @{
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.2],
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.7]
-                                         }];
+                                          NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
+                                          NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.2],
+                                          NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.7]
+                                          }];
     [_timeProgressLabel setAlpha:0.5];
     
     [_votesProgressLabel setFrontBorderWidth:8];
     [_votesProgressLabel setBackBorderWidth:8];
     [_timeProgressLabel setBackBorderWidth:11];
     //[_timeProgressLabel setClockWise:NO];
-    
+    if(error) {
+        NSLog(@"Eror sending");
+    }
     [self beginPoll];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -218,7 +226,7 @@
                                  timing:TPPropertyAnimationTimingEaseOut
                                duration:0.4
                                   delay:0.0];
-
+        
         //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     });
     //self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
@@ -238,9 +246,9 @@
                 self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];//@"Done with Label 1";
                 
                 [_timeProgressLabel setProgress:(_timeRemaining + 0.0)/60
-                                          timing:TPPropertyAnimationTimingEaseOut
-                                        duration:0.2
-                                           delay:0.0];
+                                         timing:TPPropertyAnimationTimingEaseOut
+                                       duration:0.2
+                                          delay:0.0];
             });
             //NSLog(@"times up");
         }
@@ -280,15 +288,15 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
@@ -364,9 +372,9 @@
     //cell.answerProgress.progressTintColor
     /*
      cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-    cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    */
+     cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
+     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+     */
     return cell;
 }
 
