@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
-#define ACTION_REWIND   0
-#define ACTION_PLAY     1
-#define ACTION_PAUSE    2
-#define ACTION_FORWARD  3
-#define ACTION_DONE     4
-
 //messageType
 #define MSG_QUESTION_SET     1
 #define MSG_QUESTION_SET_ACK 2

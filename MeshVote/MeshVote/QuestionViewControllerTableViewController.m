@@ -311,16 +311,6 @@
         
         _questionSet.messageType = MSG_QUESTION_SET;
         [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
-        /*
-        _questionSet.messageType = @"question-set";
-        NSData* setData = [NSKeyedArchiver archivedDataWithRootObject:_questionSet];
-        NSError *error;
-        [_session sendData:setData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-            //return NO;
-        }*/
-        
         
     }
     else if(state == MCSessionStateNotConnected) {

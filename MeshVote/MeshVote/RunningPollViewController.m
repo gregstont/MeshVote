@@ -124,15 +124,6 @@
     
     
     _session.delegate = self;
-    /*
-    //send out the first question to all peers
-    Question* questionMessage = [_questionSet getQuestionAtIndex:0];
-    questionMessage.questionNum = 0;
-    questionMessage.messageType = @"question";
-    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-    NSError *error;
-    [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-     */
     
     //
     // setup circular progress bars for time and votes received (KAProgressLabel)
@@ -204,20 +195,11 @@
     
     //TODO: need to verify all peers have acknowledged the question
     Message *beginMessage = [[Message alloc] init];
-    //beginMessage.messageType = @"action";
     beginMessage.messageType = MSG_ACTION;
     beginMessage.questionNumber = _currentQuestionNumber;
     beginMessage.actionType = AT_PLAY;
     
     [Message sendMessage:beginMessage toPeers:[_session connectedPeers] inSession:_session];
-    /*
-    NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
-    NSError *error;
-    //[session connectedPeers]
-    [_session sendData:actionData toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-    if(error) {
-        NSLog(@"Error sending data");
-    }*/
     
     
     
@@ -357,8 +339,6 @@
 {
     RunningAnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"runPollCell"]; //forIndexPath:indexPath];
     
-    //temp
-    //NSArray *tempPercent = @[@"34", @"31", @"23", @"12"];
     // Configure the cell...
     if (cell == nil) {
         NSLog(@"Shouldnt be here!!!!!!!!!!!");
@@ -388,12 +368,6 @@
     cell.answerProgress.transform = transform;
     cell.backgroundColor = [UIColor clearColor];
     
-    //cell.answerProgress.progressTintColor
-    /*
-     cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-     cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
-     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-     */
     return cell;
 }
 
@@ -429,21 +403,7 @@
         _questionSet.messageType = MSG_QUESTION_SET;
         
         [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
-        /*
-        NSData* setData = [NSKeyedArchiver archivedDataWithRootObject:_questionSet];
-        NSError *error;
-        [_session sendData:setData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-            //return NO;
-        }
-         */
-        /*
-        //TODO: should send next question here (maybe change to current question later)
-        if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
-            [self sendQuestion:[_questionSet getQuestionAtIndex:_currentQuestionNumber + 1] toPeers:@[peerID]];
-        }
-         */
+
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected: %@",peerID.displayName);
@@ -462,23 +422,13 @@
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data, from peer:%@", peerID.displayName);
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    //NSString *messageType = message.messageType;
-    //NSLog(@"type2:%d", messageType);
+
 
     if(message.messageType == MSG_ACTION_ACK ) { //[messageType isEqualToString:@"action-ack"]) {
         NSLog(@"in action-ack");
         if(message.actionType == AT_PLAY) {
             NSLog(@"action-play-ack: curQues:%d", _currentQuestionNumber);
             
-            /*
-            //the peer has begun the next question, so they are ready to recieve a new question
-            if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
-                
-                Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
-                questionMessage.questionNum = _currentQuestionNumber + 1;
-                [self sendQuestion:questionMessage toPeers:[_session connectedPeers]];
-            }
-             */
         }
     }
     else if(message.messageType == MSG_ANSWER) { //[messageType isEqualToString:@"answer"]) {
@@ -523,21 +473,10 @@
         
         //need to send answer-ack
         Message *answerAck = [[Message alloc] init];
-        //answerAck.messageType = @"answer-ack";
         answerAck.messageType = MSG_ANSWER_ACK;
         answerAck.questionNumber = _currentQuestionNumber;
         answerAck.answerNumber = message.answerNumber;
-        
         [Message sendMessage:answerAck toPeers:[_session connectedPeers] inSession:_session];
-        /*
-        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:answerAck];
-        NSError *error;
-        
-        [_session sendData:ackData toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }
-        */
         
         
         [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];

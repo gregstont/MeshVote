@@ -72,22 +72,7 @@ NSArray *letters;
     else { // VIEWMODE_ASK_QUESTION
         
         
-        //send action-ack //TODO: function here
-    
-        //[Message sendMessage:<#(Message *)#> toPeers:<#(NSArray *)#> inSession:<#(MCSession *)#>]
-        /*
-        Message *playAck = [[Message alloc] init];
-        playAck.messageType = @"action-ack";
-        playAck.actionType = ACTION_PLAY;
-        
-        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:playAck];
-        NSError *error;
-        
-        [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }
-        */
+        //send action-ack
         [Message sendMessageType:MSG_ACTION withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
         
         NSLog(@"here");
@@ -177,10 +162,7 @@ NSArray *letters;
     //#warning Incomplete method implementation.
     // Return the number of rows in the section.
     //NSLog(@"checking number of rows");
-    
-    //NSIndexPath *temp = [tableView indexPathForSelectedRow];
-    
-    //NSLog(@" and:%d", [_delegate getAnswerCountAtIndex:0]);
+
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) {
         return MAX(1, [_currentQuestion getAnswerCount] * 2 + 1);
     }
@@ -270,15 +252,6 @@ NSArray *letters;
             cell.answerTextField.text = @"add answer";
             cell.answerTextField.alpha = 0.25;
         }
-        /*
-        if([_currentQuestion getAnswerCount] == 0) { //no answers yet
-            cell.textLabel.text = @"";
-            cell.answerTextField.text = @"add answer";
-        }
-        else {
-            cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
-        }
-         */
 
     }
     else {
@@ -302,14 +275,6 @@ NSArray *letters;
         answerMessage.answerNumber = (int)indexPath.row/2;
         
         [Message sendMessage:answerMessage toPeers:@[_host] inSession:_session];
-        /*
-        NSData *answerData = [NSKeyedArchiver archivedDataWithRootObject:answerMessage];
-        NSError *error;
-        
-        [_session sendData:answerData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }*/
         
         _currentAnswer = answerMessage.answerNumber;
         _currentAnswerAcked = NO;
@@ -349,12 +314,8 @@ NSArray *letters;
             [NSThread sleepForTimeInterval:1.0f];
             --_timeRemaining;
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                // GUI thread
-                //NSLog(@"GUI thread 1");
-                // update label 1 text
                 [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
             });
-            //NSLog(@"times up");
         }
         //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
     });
@@ -365,18 +326,6 @@ NSArray *letters;
     NSLog(@"sending action ack to host");
     
     [Message sendMessageType:MSG_ACTION_ACK withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
-   /* Message *playAck = [[Message alloc] init];
-    
-    playAck.messageType = @"action-ack";
-    playAck.actionType = ACTION_PLAY;
-    
-    NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:playAck];
-    NSError *error;
-    
-    [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
-    if(error) {
-        NSLog(@"Error sending data");
-    }*/
     
     
 }
@@ -529,9 +478,7 @@ NSArray *letters;
     else {
         NSLog(@"received invalid message");
     }
-    //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    //NSLog(@"  message:%@", recQuestion.questionText);
+
     
     
 }
