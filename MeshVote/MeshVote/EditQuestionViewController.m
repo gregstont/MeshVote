@@ -17,13 +17,13 @@
 
 @property (atomic) int timeRemaining;
 
+@property (nonatomic, strong) Colors* colors;
+
 
 @end
 
 @implementation EditQuestionViewController
 
-NSMutableArray *colors;
-NSArray *letters;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,6 +39,7 @@ NSArray *letters;
 {
     [super viewDidLoad];
     //_currentQuestionNumber = 0;
+    _colors = [[Colors alloc] init];
     _currentAnswer = -1;
     _currentAnswerAcked = NO;
     
@@ -109,17 +110,6 @@ NSArray *letters;
     [_tableView setScrollsToTop:NO];
     
     [_questionTextLabel setDelegate:self];
-    
-    
-    colors = [[NSMutableArray alloc] init];
-    [colors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:1.0]]; //green
-    [colors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:1.0]]; //blue
-    [colors addObject:[[UIColor alloc] initWithRed:0.905 green:0.713 blue:0.231 alpha:1.0]]; //yellow
-    [colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
-    [colors addObject:[[UIColor alloc] initWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:1.0]]; //purple
-    [colors addObject:[[UIColor alloc] initWithRed:1 green:149.0/255 blue:0 alpha:1.0]]; //orange
-    
-    letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];//[NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G" count:7];
 
     _session.delegate = self;
     
@@ -213,8 +203,8 @@ NSArray *letters;
     
     cell.answerChoiceLetter.layer.cornerRadius = 7.0f;
     
-    cell.answerChoiceLetter.backgroundColor = [colors objectAtIndex:indexPath.row/2];
-    [cell.answerChoiceLetter setText:[letters objectAtIndex:indexPath.row/2]];
+    cell.answerChoiceLetter.backgroundColor = [_colors getColorAtIndex:indexPath.row/2];
+    [cell.answerChoiceLetter setText:[_colors getLetterAtIndex:indexPath.row/2]];
     
     [cell setHighlighted:YES   animated:YES];
 

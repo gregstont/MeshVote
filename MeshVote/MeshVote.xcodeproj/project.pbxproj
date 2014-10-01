@@ -11,6 +11,7 @@
 		3405169D19CBE094004360E8 /* QuestionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169C19CBE094004360E8 /* QuestionSet.m */; };
 		340516A019CBE1B0004360E8 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169F19CBE1B0004360E8 /* Question.m */; };
 		340C245A19DBCF0C00F9EB94 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */; };
+		340C245D19DBE21000F9EB94 /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C245C19DBE21000F9EB94 /* Colors.m */; };
 		3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */; };
 		3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF719C806BA003C3BEE /* Foundation.framework */; };
 		3424FDFA19C806BA003C3BEE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF919C806BA003C3BEE /* CoreGraphics.framework */; };
@@ -61,6 +62,8 @@
 		3405169E19CBE1B0004360E8 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
 		3405169F19CBE1B0004360E8 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
+		340C245B19DBE21000F9EB94 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		340C245C19DBE21000F9EB94 /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		3412F4F419CD31EB00D1048E /* SpacedUITableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpacedUITableViewCell.h; sourceTree = "<group>"; };
 		3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpacedUITableViewCell.m; sourceTree = "<group>"; };
 		3424FDF419C806BA003C3BEE /* MeshVote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeshVote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +241,8 @@
 				3405169F19CBE1B0004360E8 /* Question.m */,
 				348A1DD319D87BF6002E6FAE /* Message.h */,
 				348A1DD419D87BF6002E6FAE /* Message.m */,
+				340C245B19DBE21000F9EB94 /* Colors.h */,
+				340C245C19DBE21000F9EB94 /* Colors.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -381,6 +386,7 @@
 				34A5A24A19DA4F1600887C1A /* TPPropertyAnimation.m in Sources */,
 				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				340516A019CBE1B0004360E8 /* Question.m in Sources */,
+				340C245D19DBE21000F9EB94 /* Colors.m in Sources */,
 				3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */,
 				3405169D19CBE094004360E8 /* QuestionSet.m in Sources */,
 				3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */,

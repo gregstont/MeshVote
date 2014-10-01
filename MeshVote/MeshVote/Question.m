@@ -50,7 +50,7 @@
 }
 
 - (void)encodeWithCoder:(NSCoder*)encoder {
-    //NSLog(@"encode:%@", [super messageType]);
+    //NSLog(@"ENCODE:%d", [super messageType]);
     [encoder encodeInt:[super messageType] forKey:@"messageType"];
     [encoder encodeObject:_questionText forKey:@"questionText"];
     [encoder encodeObject:_answerText forKey:@"answerText"];

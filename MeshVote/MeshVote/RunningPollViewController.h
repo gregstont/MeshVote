@@ -10,6 +10,7 @@
 #import "QuestionSet.h"
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "KAProgressLabel.h"
+#import "Colors.h"
 
 
 @interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate>

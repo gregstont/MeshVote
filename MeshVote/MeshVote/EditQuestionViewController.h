@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import "Colors.h"
 
 
 #define VIEWMODE_ADD_NEW_QUESTION   0

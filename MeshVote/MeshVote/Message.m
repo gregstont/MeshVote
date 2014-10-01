@@ -39,7 +39,6 @@
     return [self sendMessage:message toPeers:peers inSession:session];
 }
 + (BOOL)sendMessage:(Message*)message toPeers:(NSArray*)peers inSession:(MCSession*)session {
-    
     NSData *messageData = [NSKeyedArchiver archivedDataWithRootObject:message];
     NSError *error;
     
