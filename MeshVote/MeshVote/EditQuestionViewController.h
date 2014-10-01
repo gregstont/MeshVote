@@ -43,8 +43,10 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
+@property (nonatomic, strong) QuestionSet* questionSet;
+
 @property (nonatomic, strong) Question* currentQuestion;
-@property (nonatomic, strong) Question* nextQuestion; //for pre-loading when asking
+//@property (nonatomic, strong) Question* nextQuestion; //for pre-loading when asking
 @property (nonatomic) int viewMode;
 
 @property (nonatomic, strong) MCSession *session;

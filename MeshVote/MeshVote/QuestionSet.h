@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Question.h"
 
-@interface QuestionSet : NSObject
+@interface QuestionSet : Message <NSCoding>
 
 -(void)addQuestion:(Question*)question;
 

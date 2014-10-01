@@ -25,9 +25,11 @@
 @property (nonatomic, strong) NSMutableArray *fadedColors;
 
 @property (nonatomic) int timeRemaining;
-@property (nonatomic) BOOL hasBegunPoll;
+//@property (nonatomic) BOOL hasBegunPoll;
 
 @property (nonatomic) int voteCount;
+
+@property (nonatomic) BOOL pollRunning;
 
 
 @end
@@ -52,7 +54,8 @@
 {
     [super viewDidLoad];
     
-    _hasBegunPoll = NO;
+    //_hasBegunPoll = NO;
+    _pollRunning = YES;
     
     
     //TODO: make this global or typedef or something
@@ -119,7 +122,7 @@
     
     
     _session.delegate = self;
-    
+    /*
     //send out the first question to all peers
     Question* questionMessage = [_questionSet getQuestionAtIndex:0];
     questionMessage.questionNum = 0;
@@ -127,6 +130,7 @@
     NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
     NSError *error;
     [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
+     */
     
     //
     // setup circular progress bars for time and votes received (KAProgressLabel)
@@ -159,9 +163,7 @@
     [_votesProgressLabel setBackBorderWidth:8];
     [_timeProgressLabel setBackBorderWidth:11];
     //[_timeProgressLabel setClockWise:NO];
-    if(error) {
-        NSLog(@"Eror sending");
-    }
+
     [self beginPoll];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -171,6 +173,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    _pollRunning = NO;
     self.navigationController.navigationBar.barTintColor = nil;
     self.navigationController.toolbar.barTintColor = nil;
 }
@@ -231,42 +234,46 @@
     });
     //self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
     //self.pollQuestionText.text = _currentQuestion.questionText;
-    
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        // background thread
-        //NSLog(@"Background thread 1: waiting 5 seconds");
-        // wait 5 seconds
-        while(_timeRemaining > 0) {
-            [NSThread sleepForTimeInterval:1.0f];
-            --_timeRemaining;
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                // GUI thread
-                //NSLog(@"GUI thread 1");
-                // update label 1 text
-                self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];//@"Done with Label 1";
-                
-                [_timeProgressLabel setProgress:(_timeRemaining + 0.0)/60
-                                         timing:TPPropertyAnimationTimingEaseOut
-                                       duration:0.2
-                                          delay:0.0];
-            });
-            //NSLog(@"times up");
-        }
-        NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
-        [NSThread sleepForTimeInterval:3.0f];
-        if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
-            ++_currentQuestionNumber;
-            _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
-            _timeRemaining = _currentQuestion.timeLimit;
-            [self beginPoll];
-        }
-        else { //poll is over
-            NSLog(@"Poll over");
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
-            });
-        }
-    });
+    if(_pollRunning) {
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            // background thread
+            //NSLog(@"Background thread 1: waiting 5 seconds");
+            // wait 5 seconds
+            while(_timeRemaining > 0 && _pollRunning) {
+                [NSThread sleepForTimeInterval:1.0f];
+                --_timeRemaining;
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    // GUI thread
+                    //NSLog(@"GUI thread 1");
+                    // update label 1 text
+                    self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];//@"Done with Label 1";
+                    
+                    [_timeProgressLabel setProgress:(_timeRemaining + 0.0)/60
+                                             timing:TPPropertyAnimationTimingEaseOut
+                                           duration:0.2
+                                              delay:0.0];
+                });
+                //NSLog(@"times up");
+            }
+            NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+            [NSThread sleepForTimeInterval:3.0f];
+            if(_pollRunning == NO) {
+                //catch the back
+            }
+            else if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+                ++_currentQuestionNumber;
+                _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+                _timeRemaining = _currentQuestion.timeLimit;
+                [self beginPoll];
+            }
+            else { //poll is over
+                NSLog(@"Poll over");
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
+                });
+            }
+        });
+    }
     //NSLog(@"times up");
 }
 
@@ -407,10 +414,12 @@
             _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
         });
         
+        /*
         //TODO: should send next question here (maybe change to current question later)
         if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
             [self sendQuestion:[_questionSet getQuestionAtIndex:_currentQuestionNumber + 1] toPeers:@[peerID]];
         }
+         */
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected: %@",peerID.displayName);
@@ -433,12 +442,14 @@
     NSLog(@"type2:%@", messageType);
     if([messageType isEqualToString:@"question-ack"]) {
         
+        /*
         if(_hasBegunPoll == NO) { //TODO: check if all peers have question-acked here
             NSLog(@"BEGIN POLL!!!!");
             _hasBegunPoll = YES;
             //[self beginPoll];
             //_hasBegunPoll = YES;
         }
+         */
         /*//TODO: need to verify all peers have acknowledged the question
          Message *beginMessage = [[Message alloc] init];
          beginMessage.messageType = @"action";
@@ -457,7 +468,7 @@
         if(message.actionType == ACTION_PLAY) {
             NSLog(@"action-play-ack: curQues:%d", _currentQuestionNumber);
             
-            
+            /*
             //the peer has begun the next question, so they are ready to recieve a new question
             if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
                 
@@ -465,6 +476,7 @@
                 questionMessage.questionNum = _currentQuestionNumber + 1;
                 [self sendQuestion:questionMessage toPeers:[_session connectedPeers]];
             }
+             */
         }
     }
     else if([messageType isEqualToString:@"answer"]) {

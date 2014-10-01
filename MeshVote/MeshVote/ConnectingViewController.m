@@ -19,6 +19,8 @@
 @property (nonatomic, strong) Question* tempQuestion;
 @property (nonatomic, strong) MCPeerID* host;
 
+@property (nonatomic, strong) QuestionSet* questionSet;
+
 
 @end
 
@@ -52,7 +54,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"dealloc join");
+    NSLog(@"dealloc connecting");
     //[_browser stopBrowsingForPeers];
     [_advertiser stopAdvertisingPeer];
     [_session disconnect];
@@ -82,7 +84,8 @@
         //EditQuestionViewController *controller =
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ASK_QUESTION;
-        controller.currentQuestion = _tempQuestion;
+        controller.questionSet = _questionSet;
+        //controller.currentQuestion = _tempQuestion;
         controller.session = _session;
         controller.host = _host;
         //controller.userName = _nameInput.text;
@@ -106,7 +109,35 @@
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     NSString *messageType = message.messageType;
     NSLog(@"type:%@", messageType);
-    if([messageType isEqualToString:@"question"]) {
+    if([messageType isEqualToString:@"question-set"]) {
+        
+        
+        _questionSet = (QuestionSet*)message;
+        
+        
+        //received new question, ready to begin
+        //_tempQuestion = (Question*)message;
+        //Question *recQuestion = (Question*)message;
+        //NSLog(@"  question message:%@", _tempQuestion.questionText);
+        //[_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+        
+        
+        //send question-ack to host //TODO: this should be in statis message class
+        NSLog(@"send question-set-ack to host...");
+        Message *questionAck = [[Message alloc] init];
+        questionAck.messageType = @"question-set-ack";
+        //questionAck.questionNumber = _tempQuestion.questionNum;
+        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:questionAck];
+        NSError *error;
+        
+        
+        
+        [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+        }
+    }
+    /*else if([messageType isEqualToString:@"question"]) {
         
         //received new question, ready to begin
         _tempQuestion = (Question*)message;
@@ -129,7 +160,7 @@
         if(error) {
             NSLog(@"Error sending data");
         }
-    }
+    }*/
     
     else if([messageType isEqualToString:@"answer-ack"]) {
         NSLog(@"  answer-ack");
@@ -161,7 +192,7 @@
         }
     }
     else {
-        NSLog(@"received invalid message");
+        NSLog(@"!!!! received invalid message");
     }
     //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     //Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];

@@ -17,6 +17,8 @@
 
 @property (atomic) int timeRemaining;
 
+@property (nonatomic) int currentQuestionNumber;
+
 @end
 
 @implementation EditQuestionViewController
@@ -37,7 +39,7 @@ NSArray *letters;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _currentQuestionNumber = 0;
     _currentAnswer = -1;
     _currentAnswerAcked = NO;
     
@@ -70,7 +72,8 @@ NSArray *letters;
     }
     else { // VIEWMODE_ASK_QUESTION
         
-        //send action-ack
+        
+        //send action-ack //TODO: function here
         Message *playAck = [[Message alloc] init];
         playAck.messageType = @"action-ack";
         playAck.actionType = ACTION_PLAY;
@@ -83,7 +86,9 @@ NSArray *letters;
             NSLog(@"Error sending data");
         }
         
-        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestion.questionNum + 1];
+        _currentQuestion = [_questionSet getQuestionAtIndex:0];
+        
+        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         _questionTextLabel.text = _currentQuestion.questionText; //[NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];
         //_currentQuestion.t
         _timeRemaining = _currentQuestion.timeLimit;
@@ -285,7 +290,7 @@ NSArray *letters;
         
         Message *answerMessage = [[Message alloc] init];
         answerMessage.messageType = @"answer";
-        answerMessage.questionNumber = _currentQuestion.questionNum;
+        answerMessage.questionNumber = _currentQuestionNumber;
         answerMessage.answerNumber = (int)indexPath.row/2;
         
         NSData *answerData = [NSKeyedArchiver archivedDataWithRootObject:answerMessage];
@@ -311,14 +316,15 @@ NSArray *letters;
 
 -(void)moveToNextQuestion {
     
-    _currentQuestion = _nextQuestion;
+    ++_currentQuestionNumber;
+    _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
     _timeRemaining = _currentQuestion.timeLimit;
     _currentAnswer = -1;
     _currentAnswerAcked = NO;
     //[_questionTextLabel setText:_currentQuestion.questionText];
     dispatch_async(dispatch_get_main_queue(), ^(void){
 
-        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestion.questionNum + 1];
+        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         _questionTextLabel.text = _currentQuestion.questionText;
         [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _currentQuestion.timeLimit / 60, _currentQuestion.timeLimit % 60]];
         [self.tableView reloadData];
@@ -387,6 +393,8 @@ NSArray *letters;
         NSLog(@"submitted:%@", _currentQuestion.questionText);
         [self.delegate addQuestionToSet:_currentQuestion];
         [self.navigationController popViewControllerAnimated:YES];
+        
+        //TODO: need to resend questionset to connected peers!
         
     }
 }
@@ -475,6 +483,7 @@ NSArray *letters;
     NSLog(@"type:%@", messageType);
     if([messageType isEqualToString:@"question"]) {
         
+        /*
         //received new question, ready to begin
         _nextQuestion = (Question*)message;
         //Question *recQuestion = (Question*)message;
@@ -492,11 +501,12 @@ NSArray *letters;
         if(error) {
             NSLog(@"Error sending data");
         }
+         */
     }
     
     else if([messageType isEqualToString:@"answer-ack"]) {
         NSLog(@"  answer-ack");
-        if(message.questionNumber == _currentQuestion.questionNum && message.answerNumber == _currentAnswer) {
+        if(message.questionNumber == _currentQuestionNumber && message.answerNumber == _currentAnswer) {
             _currentAnswerAcked = YES;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [_tableView reloadData];

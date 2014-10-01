@@ -25,6 +25,26 @@
     return self;
 }
 
+//
+// NSCoding
+//
+
+- (id)initWithCoder:(NSCoder*)decoder {
+    self = [super init];
+    if(self) {
+        [super setMessageType:[decoder decodeObjectForKey:@"messageType"]];
+        _questions = [decoder decodeObjectForKey:@"questions"];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder*)encoder {
+    //NSLog(@"encode:%@", [super messageType]);
+    [encoder encodeObject:[super messageType] forKey:@"messageType"];
+    [encoder encodeObject:_questions forKey:@"questions"];
+}
+
 -(void)addQuestion:(Question*)question {
     NSLog(@"adding question");
     [_questions addObject:question];

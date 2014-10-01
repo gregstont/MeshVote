@@ -134,7 +134,7 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
-    //_session.delegate = self;
+    _session.delegate = self;
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController setToolbarHidden:NO];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
@@ -204,7 +204,7 @@
 
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     
-    NSLog(@"FOUND PEER!!");
+    NSLog(@"FOUND PEER!! in QuestionView");
     [_browser invitePeer:peerID toSession:_session withContext:nil timeout:17];
     
 }
@@ -295,7 +295,16 @@
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
-
+        
+        _questionSet.messageType = @"question-set";
+        NSData* setData = [NSKeyedArchiver archivedDataWithRootObject:_questionSet];
+        NSError *error;
+        [_session sendData:setData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+            //return NO;
+        }
+        
         
     }
     else if(state == MCSessionStateNotConnected) {
