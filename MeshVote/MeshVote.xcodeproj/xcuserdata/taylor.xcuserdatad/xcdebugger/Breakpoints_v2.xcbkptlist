@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MeshVote/QuestionViewControllerTableViewController.m"
-            timestampString = "433755139.974937"
+            timestampString = "433798444.765255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MeshVote/RunningPollViewController.m"
-            timestampString = "433752670.280678"
+            timestampString = "433821503.957049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "475"
-            endingLineNumber = "475"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
             landmarkName = "-session:didReceiveData:fromPeer:"
             landmarkType = "5">
          </BreakpointContent>

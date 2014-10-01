@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *questionText;
 @property (nonatomic, strong) NSMutableArray *answerText;
 @property (nonatomic, strong) NSMutableArray *voteCounts;
+@property (nonatomic, assign) int voteCount;
 @property (nonatomic, assign) int questionNum;
 @property (nonatomic, assign) int correctAnswer;
 @property (nonatomic, assign) int timeLimit;

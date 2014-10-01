@@ -10,6 +10,7 @@
 #import "BackgroundLayer.h"
 #import "Question.h"
 #import "RunningAnswerTableViewCell.h"
+#import "ResultsViewController.h"
 
 @interface RunningPollViewController ()
 
@@ -109,40 +110,24 @@
     NSLog(@"number of questions:%d", [_questionSet getQuestionCount]);
     
     
-    //send out the first question to all peers
-    Question* questionMessage = [_questionSet getQuestionAtIndex:0];
-    questionMessage.questionNum = 0;
-    questionMessage.messageType = @"question";
-    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-    NSError *error;
-    
     //_totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
     _votesReceivedLabel.text = @"0";
     _voteCount = 0;
     
     
     _session.delegate = self;
-    [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
     
+    //send out the first question to all peers
+    Question* questionMessage = [_questionSet getQuestionAtIndex:0];
+    questionMessage.questionNum = 0;
+    [self sendQuestion:questionMessage toPeers:[_session connectedPeers]];
     
-    //KAProgressLabel
-    //[_votesProgressLabel setDelegate:self];
-    //Using block
+    //
+    // setup circular progress bars for time and votes received (KAProgressLabel)
+    //
     _timeProgressLabel.progressLabelVCBlock = ^(KAProgressLabel *label, CGFloat progress) {
-        
-        /*
-         dispatch_async(dispatch_get_main_queue(), ^{
-         [label setText:[NSString stringWithFormat:@"%.0f%%", (progress*100)]];
-         });
-         */
     };
     _votesProgressLabel.progressLabelVCBlock = ^(KAProgressLabel *label, CGFloat progress) {
-        
-        /*
-         dispatch_async(dispatch_get_main_queue(), ^{
-         [label setText:[NSString stringWithFormat:@"%.0f%%", (progress*100)]];
-         });
-         */
     };
     [_votesProgressLabel setProgress:0.0
                               timing:TPPropertyAnimationTimingEaseOut
@@ -169,12 +154,10 @@
     [_timeProgressLabel setBackBorderWidth:11];
     //[_timeProgressLabel setClockWise:NO];
     
-    if(error) {
-        NSLog(@"Error sending data");
-    }
-    //[self beginPoll];
+    [self beginPoll];
 }
 - (void)viewWillAppear:(BOOL)animated {
+    _session.delegate = self;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
     self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:(190/255.0)  green:(190/255.0)  blue:(190/255.0)  alpha:1.0];
 }
@@ -269,13 +252,17 @@
             _timeRemaining = _currentQuestion.timeLimit;
             [self beginPoll];
         }
+        else { //poll is over
+            NSLog(@"Poll over");
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
+            });
+        }
     });
     //NSLog(@"times up");
 }
 
--(void)nextQuestion {
-    
-}
+
 
 //
 //  Toolbar buttons
@@ -302,6 +289,18 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"showResultsSegue"]){
+        //NSLog(@"prepareForSegue");
+        ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
+        controller.questionSet = _questionSet;
+    }
+    //showQuestion
+    
+    //addNewQuestionSegue
+}
 
 //
 //  UITableViewDataSource, UITableViewDelegate
@@ -390,7 +389,7 @@
 // Remote peer changed state
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
     
-    NSLog(@"peer changed state:");
+    NSLog(@"peer changed state in RunningView:");
     
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected: %@", peerID.displayName);
@@ -400,6 +399,10 @@
             _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
         });
         
+        //TODO: should send next question here (maybe change to current question later)
+        if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+            [self sendQuestion:[_questionSet getQuestionAtIndex:_currentQuestionNumber + 1] toPeers:@[peerID]];
+        }
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected: %@",peerID.displayName);
@@ -425,7 +428,7 @@
         if(_hasBegunPoll == NO) { //TODO: check if all peers have question-acked here
             NSLog(@"BEGIN POLL!!!!");
             _hasBegunPoll = YES;
-            [self beginPoll];
+            //[self beginPoll];
             //_hasBegunPoll = YES;
         }
         /*//TODO: need to verify all peers have acknowledged the question
@@ -449,18 +452,10 @@
             
             //the peer has begun the next question, so they are ready to recieve a new question
             if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+                
                 Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
                 questionMessage.questionNum = _currentQuestionNumber + 1;
-                questionMessage.messageType = @"question";
-                NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-                NSError *error;
-                
-                [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-                
-                
-                if(error) {
-                    NSLog(@"Error sending data");
-                }
+                [self sendQuestion:questionMessage toPeers:[_session connectedPeers]];
             }
         }
     }
@@ -547,6 +542,23 @@
 // Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
     
+}
+
+
+
+
+- (BOOL)sendQuestion:(Question*)question toPeers:(NSArray*)peers {
+    Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
+    //questionMessage.questionNum = _currentQuestionNumber;
+    question.messageType = @"question";
+    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
+    NSError *error;
+    [_session sendData:testQuestion toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+    if(error) {
+        NSLog(@"Error sending data");
+        return NO;
+    }
+    return YES;
 }
 
 
