@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) Colors *colors;
 
+@property (nonatomic, strong) NSMutableDictionary* voteHistory;
+
 
 @end
 
@@ -58,6 +60,9 @@
     //_hasBegunPoll = NO;
     _pollRunning = YES;
     _colors = [[Colors alloc] init];
+    
+    //this is used to track who voted for what, and used for displaying personal results at the end
+    _voteHistory = [[NSMutableDictionary alloc] init];
     
     
     [_answerTable setDataSource:self];
@@ -285,6 +290,8 @@
         //NSLog(@"prepareForSegue");
         ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
+        NSLog(@"vote history cout:%zd", [_voteHistory count]);
+        controller.voteHistory = _voteHistory;
     }
     //showQuestion
     
@@ -383,6 +390,16 @@
         _questionSet.messageType = MSG_QUESTION_SET;
         
         [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
+        
+        //add peer to the vote history if not already there
+        if([_voteHistory objectForKey:peerID.displayName] == nil) { //add peer
+            NSMutableArray *newPeerHistory = [[NSMutableArray alloc] initWithCapacity:[_questionSet getQuestionCount] ];
+            for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
+                [newPeerHistory addObject:[NSNumber numberWithInt:-1]];
+            }
+            [_voteHistory setObject:newPeerHistory forKey:peerID.displayName];
+            
+        }
 
     }
     else if(state == MCSessionStateNotConnected) {
@@ -427,6 +444,8 @@
                 [_answerTable reloadData];
                 //_votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
             });
+            
+            
         }
         else { //someone changed their vote
             //NSNumber *oldAnswer = [_peerList objectForKey:peerID.displayName];
@@ -450,6 +469,11 @@
                 //_votesReceivedLabel.text = [NSString stringWithFormat:@"%d", _voteCount];
             });
         }
+        
+        //add the vote to the voteHistory
+        NSMutableArray* peerHist = [_voteHistory objectForKey:peerID.displayName];
+        [peerHist setObject:[NSNumber numberWithInt:message.answerNumber] atIndexedSubscript:message.questionNumber];
+        
         
         //need to send answer-ack
         Message *answerAck = [[Message alloc] init];

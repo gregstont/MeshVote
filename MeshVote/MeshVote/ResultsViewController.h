@@ -12,6 +12,9 @@
 @interface ResultsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) QuestionSet *questionSet;
+@property (nonatomic, strong) NSMutableDictionary *voteHistory;
+
+
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
 - (IBAction)resultsDoneButton:(id)sender;
 

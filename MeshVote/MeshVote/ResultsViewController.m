@@ -11,6 +11,9 @@
 
 @interface ResultsViewController ()
 
+@property (nonatomic, strong) NSMutableDictionary* peerResults;
+
+
 @end
 
 @implementation ResultsViewController
@@ -32,6 +35,30 @@
     [_resultsTable setDataSource:self];
     [_resultsTable setDelegate:self];
     // Do any additional setup after loading the view.
+    _peerResults = [[NSMutableDictionary alloc] initWithCapacity:_voteHistory.count];
+    
+    
+    //iterate over each peer in the history
+    for(NSString* key in _voteHistory) {
+        NSLog(@"here!");
+        
+        NSMutableArray* curPeerHistory = [_voteHistory objectForKey:key];
+        
+        int numberCorrect;
+        //iterate over each question
+        for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
+            if([_questionSet getQuestionAtIndex:i].correctAnswer == [[curPeerHistory objectAtIndex:i] intValue]) {
+                ++numberCorrect;
+            }
+        }
+        double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
+        [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
+     }
+    
+    for(NSString* key in _peerResults) {
+        NSLog(@"name:%@ score:%f", key, [[_peerResults objectForKey:key] doubleValue]);
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,6 +170,8 @@
      cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
      */
+    
+    
     return cell;
 }
 

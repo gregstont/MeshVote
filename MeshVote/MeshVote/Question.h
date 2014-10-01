@@ -19,6 +19,7 @@
 @property (nonatomic, assign) int questionNum;
 @property (nonatomic, assign) int correctAnswer;
 @property (nonatomic, assign) int timeLimit;
+@property (nonatomic, assign) int givenAnswer; //used on client side only for post-results
 
 -(void)addAnswer:(NSString*)text;
 
