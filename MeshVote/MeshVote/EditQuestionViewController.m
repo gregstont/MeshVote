@@ -17,7 +17,6 @@
 
 @property (atomic) int timeRemaining;
 
-@property (nonatomic) int currentQuestionNumber;
 
 @end
 
@@ -39,7 +38,7 @@ NSArray *letters;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _currentQuestionNumber = 0;
+    //_currentQuestionNumber = 0;
     _currentAnswer = -1;
     _currentAnswerAcked = NO;
     
@@ -86,7 +85,7 @@ NSArray *letters;
             NSLog(@"Error sending data");
         }
         
-        _currentQuestion = [_questionSet getQuestionAtIndex:0];
+        _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
         
         self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         _questionTextLabel.text = _currentQuestion.questionText; //[NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];

@@ -20,6 +20,7 @@
 @property (nonatomic, strong) MCPeerID* host;
 
 @property (nonatomic, strong) QuestionSet* questionSet;
+@property (nonatomic) int currentQuestionNumber;
 
 
 @end
@@ -39,6 +40,7 @@
 {
     [super viewDidLoad];
     NSLog(@"sessionName:%@", _sessionName);
+    _currentQuestionNumber = 0;
     // Do any additional setup after loading the view.
     //MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:[NSString stringWithFormat:@"%@%d",_userName,arc4random_uniform(999)]];
@@ -85,6 +87,7 @@
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ASK_QUESTION;
         controller.questionSet = _questionSet;
+        controller.currentQuestionNumber = _currentQuestionNumber;
         //controller.currentQuestion = _tempQuestion;
         controller.session = _session;
         controller.host = _host;
@@ -166,7 +169,7 @@
         NSLog(@"  answer-ack");
     }
     else if([messageType isEqualToString:@"action"]) {
-        NSLog(@"  action:%d",message.actionType);
+        NSLog(@"  action qnum:%d",message.questionNumber);
         if(message.actionType == ACTION_REWIND) {
             
         }
@@ -176,6 +179,7 @@
                 // GUI thread
                 //NSLog(@"GUI thread 1");
                 // update label 1 text
+                _currentQuestionNumber = message.questionNumber;
                 [self performSegueWithIdentifier:@"startTakingPollSegue" sender:self];
             });
             

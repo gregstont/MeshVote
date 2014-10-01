@@ -203,6 +203,7 @@
     //TODO: need to verify all peers have acknowledged the question
     Message *beginMessage = [[Message alloc] init];
     beginMessage.messageType = @"action";
+    beginMessage.questionNumber = _currentQuestionNumber;
     beginMessage.actionType = ACTION_PLAY;
     
     NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
@@ -413,7 +414,14 @@
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
         });
-        
+        _questionSet.messageType = @"question-set";
+        NSData* setData = [NSKeyedArchiver archivedDataWithRootObject:_questionSet];
+        NSError *error;
+        [_session sendData:setData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
+        if(error) {
+            NSLog(@"Error sending data");
+            //return NO;
+        }
         /*
         //TODO: should send next question here (maybe change to current question later)
         if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {

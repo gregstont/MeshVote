@@ -46,6 +46,7 @@
 @property (nonatomic, strong) QuestionSet* questionSet;
 
 @property (nonatomic, strong) Question* currentQuestion;
+@property (nonatomic) int currentQuestionNumber;
 //@property (nonatomic, strong) Question* nextQuestion; //for pre-loading when asking
 @property (nonatomic) int viewMode;
 
