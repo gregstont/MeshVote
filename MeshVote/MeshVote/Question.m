@@ -43,6 +43,7 @@
         _timeLimit = [decoder decodeIntForKey:@"timeLimit"];
         _answerText = [decoder decodeObjectForKey:@"answerText"];
         _questionNum = [decoder decodeIntForKey:@"questionNum"];
+        _voteCount = [decoder decodeIntForKey:@"voteCount"];
     }
     
     return self;
@@ -56,6 +57,7 @@
     [encoder encodeInt:_correctAnswer forKey:@"correctAnswer"];
     [encoder encodeInt:_timeLimit forKey:@"timeLimit"];
     [encoder encodeInt:_questionNum forKey:@"questionNum"];
+    [encoder encodeInt:_voteCount forKey:@"voteCount"];
     
 }
 -(void)addAnswer:(NSString*)text {

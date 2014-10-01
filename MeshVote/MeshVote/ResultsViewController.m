@@ -89,24 +89,43 @@
     //NSLog(@"answer:%@", [_currentQuestion.answerText objectAtIndex:indexPath.row]);
     //cell.textLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     //cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
-    cell.answerLetterLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row];
+    cell.answerLetterLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row + 1];
+    
+    
     //cell.answerProgress.progressTintColor = [_colors objectAtIndex:indexPath.row];
     //cell.answerProgress.backgroundColor = [_fadedColors objectAtIndex:indexPath.row];
     //[cell.answerProgress.backgroundColor s]
     
     double newPercent = 0.5;
-    //int correctAnswer = [_questionSet getQuestionAtIndex:(int)indexPath.row].correctAnswer;
-    //int correctCount = [[[_questionSet getQuestionAtIndex:(int)indexPath.row].voteCounts objectAtIndex:correctAnswer] intValue];
-   /*
-    if(_voteCount == 0) {
-        newPercent = 0.0;
+    Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
+    int correctCount = [[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue];
+    
+    
+    //FOR TESTING ONLY
+    //newPercent = ((double)arc4random() / 0x100000000);
+    newPercent = 1.0 - ((indexPath.row + 0.0) / 10);
+    //newPercent =
+    double red, green;
+    if(newPercent < 0.5) {
+        red = 1.0 - (newPercent / 4);
+        green = newPercent * 2;
     }
     else {
-        newPercent = ([[_currentQuestion.voteCounts objectAtIndex:indexPath.row] intValue] + 0.0) / _voteCount;
+        red = (1 - newPercent) * 2;
+        green = 1.0 - ((1 - newPercent) / 4);
     }
-    */
-    //NSLog(@"newPercent: %f", newPercent);
-    //cell.answerProgress.progress = newPercent;
+    
+    
+    //
+    //newPercent = (correctCount + 0.0) / cur.voteCount + 1;
+
+    //color fades from red to green indicating how many missed
+    //high percentage  will be green and low red
+    
+    NSLog(@"newPercent:%f and %f", newPercent, (1 - newPercent));
+    UIColor *fadedColor = [UIColor colorWithRed:red green:green blue:0.0 alpha:1.0];
+    cell.answerProgress.progressTintColor = fadedColor;
+    
     [cell.answerProgress setProgress:newPercent animated:YES];
     cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     

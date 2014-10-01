@@ -349,7 +349,7 @@ NSArray *letters;
     });
     
     
-    //when we are done here, send the action-ack
+    //when we are done here, send the action-ack TODO funccall here
     
     NSLog(@"sending action ack to host");
     Message *playAck = [[Message alloc] init];

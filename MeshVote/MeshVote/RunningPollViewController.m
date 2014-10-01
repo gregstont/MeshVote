@@ -15,6 +15,8 @@
 #import "RunningAnswerTableViewCell.h"
 #import "ResultsViewController.h"
 
+#define QUESTION_DELAY 1
+
 @interface RunningPollViewController ()
 
 @property (nonatomic, strong) Question* currentQuestion;
@@ -257,7 +259,10 @@
                 //NSLog(@"times up");
             }
             NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
-            [NSThread sleepForTimeInterval:3.0f];
+            
+            
+            _currentQuestion.voteCount = _voteCount;
+            [NSThread sleepForTimeInterval:(double)QUESTION_DELAY];
             if(_pollRunning == NO) {
                 //catch the back
             }

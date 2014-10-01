@@ -11,6 +11,7 @@
 #import "Question.h"
 #import "RunningPollViewController.h"
 
+
 //#import <malloc/malloc.h> //TODO: remove on release
 
 @interface QuestionViewControllerTableViewController ()
@@ -74,7 +75,8 @@
     [tempQuestion1 addAnswer:@"flowers"];
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setTimeLimit:15];
+    [tempQuestion1 setCorrectAnswer:2];
+    [tempQuestion1 setTimeLimit:1];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -84,10 +86,21 @@
     [tempQuestion2 addAnswer:@"orange"];
     [tempQuestion2 addAnswer:@"peanut"];
     [tempQuestion2 addAnswer:@"banana pie"];
-    [tempQuestion2 setTimeLimit:15];
+    [tempQuestion2 setCorrectAnswer:1];
+    [tempQuestion2 setTimeLimit:1];
     
     [_questionSet addQuestion:tempQuestion1];
     [_questionSet addQuestion:tempQuestion2];
+        [_questionSet addQuestion:tempQuestion2];
+        [_questionSet addQuestion:tempQuestion2];
+        [_questionSet addQuestion:tempQuestion2];
+        [_questionSet addQuestion:tempQuestion2];
+        [_questionSet addQuestion:tempQuestion2];
+        [_questionSet addQuestion:tempQuestion2];
+    [_questionSet addQuestion:tempQuestion2];
+    [_questionSet addQuestion:tempQuestion2];
+    [_questionSet addQuestion:tempQuestion2];
+    
     //end temporaru debug stuff
 
     
