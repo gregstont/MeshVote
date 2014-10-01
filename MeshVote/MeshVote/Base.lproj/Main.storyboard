@@ -70,8 +70,8 @@
                                 <color key="textColor" red="0.83914620535714279" green="0.505278752716804" blue="0.19215253696440363" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKn-yd-bdO">
-                                <rect key="frame" x="270" y="463" width="30" height="30"/>
+                            <button opaque="NO" alpha="0.14999999999999969" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKn-yd-bdO">
+                                <rect key="frame" x="281" y="467" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="3g4-sl-u1T"/>
@@ -92,14 +92,14 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="b08-c9-HVx" secondAttribute="bottom" constant="269" id="6ZZ-XE-Yjs"/>
                             <constraint firstItem="gYx-7J-NNh" firstAttribute="trailing" secondItem="9kA-vg-wwX" secondAttribute="trailing" id="Edx-UG-SSE"/>
                             <constraint firstItem="gYx-7J-NNh" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="F1v-Hg-ZHS"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="LKn-yd-bdO" secondAttribute="bottom" constant="7" id="FUb-i1-U1f"/>
                             <constraint firstItem="gYx-7J-NNh" firstAttribute="leading" secondItem="b08-c9-HVx" secondAttribute="leading" id="c2K-Ub-jwd"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="LKn-yd-bdO" secondAttribute="bottom" constant="11" id="cej-oY-Olx"/>
                             <constraint firstItem="gYx-7J-NNh" firstAttribute="leading" secondItem="9kA-vg-wwX" secondAttribute="leading" id="fYu-CJ-fvU"/>
                             <constraint firstItem="gYx-7J-NNh" firstAttribute="top" secondItem="9kA-vg-wwX" secondAttribute="bottom" constant="8" symbolic="YES" id="gNX-NB-cI9"/>
-                            <constraint firstItem="LKn-yd-bdO" firstAttribute="top" secondItem="gYx-7J-NNh" secondAttribute="bottom" constant="71" id="lmT-sz-5ZV"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="LKn-yd-bdO" secondAttribute="bottom" constant="11" id="ofu-oX-a0P"/>
-                            <constraint firstItem="gYx-7J-NNh" firstAttribute="trailing" secondItem="LKn-yd-bdO" secondAttribute="trailing" id="sth-cu-3c2"/>
-                            <constraint firstAttribute="trailing" secondItem="LKn-yd-bdO" secondAttribute="trailing" constant="20" id="w66-5b-daq"/>
+                            <constraint firstItem="LKn-yd-bdO" firstAttribute="top" secondItem="gYx-7J-NNh" secondAttribute="bottom" constant="75" id="lmT-sz-5ZV"/>
+                            <constraint firstItem="gYx-7J-NNh" firstAttribute="trailing" secondItem="LKn-yd-bdO" secondAttribute="trailing" constant="-11" id="sth-cu-3c2"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LKn-yd-bdO" secondAttribute="trailing" constant="9" id="vMb-Ab-mxi"/>
+                            <constraint firstAttribute="trailing" secondItem="LKn-yd-bdO" secondAttribute="trailing" constant="9" id="w66-5b-daq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dl6-5n-Xl0"/>
@@ -431,7 +431,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="86" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-sM-k9K">
-                                <rect key="frame" x="38" y="31" width="51" height="23"/>
+                                <rect key="frame" x="38" y="34" width="51" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="29"/>
                                 <nil key="highlightedColor"/>
@@ -536,10 +536,10 @@
             </objects>
             <point key="canvasLocation" x="638" y="362"/>
         </scene>
-        <!--View Controller-->
+        <!--About View Controller-->
         <scene sceneID="5w1-RE-vXK">
             <objects>
-                <viewController id="uQv-Wg-fhb" sceneMemberID="viewController">
+                <viewController id="uQv-Wg-fhb" customClass="AboutViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia8-gx-yHk"/>
                         <viewControllerLayoutGuide type="bottom" id="2fl-U3-zwH"/>
@@ -552,46 +552,51 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vp6-gL-XxQ">
-                                        <rect key="frame" x="20" y="98" width="280" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="31"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MeshVote" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m4m-0R-IP6">
-                                        <rect key="frame" x="20" y="161" width="280" height="39"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="31"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="by Taylor Gregston" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2H-22-W11">
-                                        <rect key="frame" x="88" y="299" width="145" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Taylor Gregston" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2H-22-W11">
+                                        <rect key="frame" x="88" y="397" width="145" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="version 1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgp-or-1c2">
-                                        <rect key="frame" x="88" y="203" width="145" height="21"/>
+                                        <rect key="frame" x="88" y="163" width="145" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="University of Texas at Austin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0u-Q6-jam">
-                                        <rect key="frame" x="67" y="328" width="186" height="21"/>
+                                        <rect key="frame" x="67" y="426" width="186" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="© 2014 Taylor Gregston" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXD-I8-ARd">
-                                        <rect key="frame" x="67" y="454" width="186" height="21"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jo9-RM-ds0">
+                                        <rect key="frame" x="69" y="194" width="182" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="14"/>
+                                        <state key="normal" title="github.com/gregstont/MeshVote">
+                                            <color key="titleColor" red="0.71508286399397347" green="0.81751290797806175" blue="0.97971141581632648" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="githubButton:" destination="uQv-Wg-fhb" eventType="touchUpInside" id="VLz-5R-gCh"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mesh" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6L4-gn-tVg">
+                                        <rect key="frame" x="95" y="119" width="76" height="59"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="31"/>
+                                        <color key="textColor" red="0.58169244259999997" green="0.58169244259999997" blue="0.58169244259999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999987" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vote" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2g-F2-xJl">
+                                        <rect key="frame" x="168" y="113" width="58" height="71"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="31"/>
+                                        <color key="textColor" red="0.60720264668367352" green="0.46137716634844905" blue="0.28902240468095752" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -603,7 +608,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2V0-Gm-3uI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1095" y="1067"/>
+            <point key="canvasLocation" x="1095" y="1144"/>
         </scene>
         <!--Join View Controller Table View Controller - Join session-->
         <scene sceneID="QQE-lV-kzY">

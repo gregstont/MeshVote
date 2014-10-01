@@ -28,6 +28,7 @@
 		3424FE2119C806BA003C3BEE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3424FE1F19C806BA003C3BEE /* InfoPlist.strings */; };
 		3424FE2319C806BA003C3BEE /* MeshVoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2219C806BA003C3BEE /* MeshVoteTests.m */; };
 		3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3424FE2D19C80928003C3BEE /* BackgroundLayer.m */; };
+		3476719219DC9C4A005456D1 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3476719119DC9C4A005456D1 /* AboutViewController.m */; };
 		348A1DD519D87BF6002E6FAE /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 348A1DD419D87BF6002E6FAE /* Message.m */; };
 		34A5A23D19DA373F00887C1A /* icon_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 34A5A23C19DA373F00887C1A /* icon_new.png */; };
 		34A5A24119DA3AAE00887C1A /* icon_new_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 34A5A24019DA3AAE00887C1A /* icon_new_120.png */; };
@@ -87,6 +88,8 @@
 		3424FE2219C806BA003C3BEE /* MeshVoteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeshVoteTests.m; sourceTree = "<group>"; };
 		3424FE2C19C80928003C3BEE /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		3424FE2D19C80928003C3BEE /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		3476719019DC9C4A005456D1 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		3476719119DC9C4A005456D1 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		348A1DD319D87BF6002E6FAE /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		348A1DD419D87BF6002E6FAE /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		34A5A23C19DA373F00887C1A /* icon_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_new.png; sourceTree = "<group>"; };
@@ -177,6 +180,8 @@
 				3424FE0619C806BA003C3BEE /* MeshVoteAppDelegate.h */,
 				3424FE0719C806BA003C3BEE /* MeshVoteAppDelegate.m */,
 				3424FE0919C806BA003C3BEE /* Main.storyboard */,
+				3476719019DC9C4A005456D1 /* AboutViewController.h */,
+				3476719119DC9C4A005456D1 /* AboutViewController.m */,
 				3412F4F419CD31EB00D1048E /* SpacedUITableViewCell.h */,
 				3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */,
 				3424FE0C19C806BA003C3BEE /* MeshVoteViewController.h */,
@@ -386,6 +391,7 @@
 				34A5A24A19DA4F1600887C1A /* TPPropertyAnimation.m in Sources */,
 				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				340516A019CBE1B0004360E8 /* Question.m in Sources */,
+				3476719219DC9C4A005456D1 /* AboutViewController.m in Sources */,
 				340C245D19DBE21000F9EB94 /* Colors.m in Sources */,
 				3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */,
 				3405169D19CBE094004360E8 /* QuestionSet.m in Sources */,
