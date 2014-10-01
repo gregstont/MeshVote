@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) QuestionSet *questionSet;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
+- (IBAction)resultsDoneButton:(id)sender;
 
 @end

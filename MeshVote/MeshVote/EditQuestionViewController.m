@@ -122,6 +122,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"editWillDisappear");
     self.navigationController.navigationBar.barTintColor = nil;
     self.navigationController.toolbar.barTintColor = nil;
 }
@@ -281,7 +282,7 @@
 
 -(void)moveToNextQuestion {
     
-    ++_currentQuestionNumber;
+    //++_currentQuestionNumber;
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
     _timeRemaining = _currentQuestion.timeLimit;
     _currentAnswer = -1;
@@ -451,6 +452,7 @@
         }
         else if(message.actionType == AT_PLAY) {
             NSLog(@"  action play");
+            _currentQuestionNumber = message.questionNumber;
             [self moveToNextQuestion];
             
             

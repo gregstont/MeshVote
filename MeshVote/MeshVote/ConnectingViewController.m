@@ -55,6 +55,10 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    _session.delegate = self;
+}
+
 - (void)dealloc {
     NSLog(@"dealloc connecting");
     //[_browser stopBrowsingForPeers];

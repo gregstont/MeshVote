@@ -159,4 +159,12 @@
 }
 
 
+- (IBAction)resultsDoneButton:(id)sender {
+    NSLog(@"DONE");
+    //[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    //[self.navigationController popViewControllerAnimated:YES];
+    UINavigationController *temp = (UINavigationController*)self.presentingViewController;
+    [temp popViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
