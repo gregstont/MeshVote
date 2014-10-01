@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MultipeerConnectivity/MCNearbyServiceAdvertiser.h>
-#import <MultipeerConnectivity/MCNearbyServiceBrowser.h>
-#import <MultipeerConnectivity/MCAdvertiserAssistant.h>
-#import "MultipeerConnectivity/MCPeerID.h"
-#import "MultipeerConnectivity/MCSession.h"
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Question.h"
 
 @interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate>

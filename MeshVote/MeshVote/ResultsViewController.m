@@ -99,11 +99,15 @@
     double newPercent = 0.5;
     Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
     int correctCount = [[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue];
-    
+    NSLog(@"corC:%d and voteC:%d",correctCount, cur.voteCount);
+    if(cur.voteCount == 0)
+        newPercent = 0.0;
+    else
+        newPercent = (correctCount + 0.0) / cur.voteCount;
     
     //FOR TESTING ONLY
     //newPercent = ((double)arc4random() / 0x100000000);
-    newPercent = 1.0 - ((indexPath.row + 0.0) / 10);
+    //newPercent = 1.0 - ((indexPath.row + 0.0) / 10);
     //newPercent =
     double red, green;
     if(newPercent < 0.5) {
@@ -117,7 +121,7 @@
     
     
     //
-    //newPercent = (correctCount + 0.0) / cur.voteCount + 1;
+    
 
     //color fades from red to green indicating how many missed
     //high percentage  will be green and low red

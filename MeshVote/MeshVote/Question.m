@@ -37,7 +37,7 @@
 - (id)initWithCoder:(NSCoder*)decoder {
     self = [super init];
     if(self) {
-        [super setMessageType:[decoder decodeObjectForKey:@"messageType"]];
+        [super setMessageType:[decoder decodeIntForKey:@"messageType"]];
         _questionText = [decoder decodeObjectForKey:@"questionText"];
         _correctAnswer = [decoder decodeIntForKey:@"correctAnswer"];
         _timeLimit = [decoder decodeIntForKey:@"timeLimit"];
@@ -51,7 +51,7 @@
 
 - (void)encodeWithCoder:(NSCoder*)encoder {
     //NSLog(@"encode:%@", [super messageType]);
-    [encoder encodeObject:[super messageType] forKey:@"messageType"];
+    [encoder encodeInt:[super messageType] forKey:@"messageType"];
     [encoder encodeObject:_questionText forKey:@"questionText"];
     [encoder encodeObject:_answerText forKey:@"answerText"];
     [encoder encodeInt:_correctAnswer forKey:@"correctAnswer"];

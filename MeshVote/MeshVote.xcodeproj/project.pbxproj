@@ -10,6 +10,7 @@
 		340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 340200FD19CBF5A4005ADAE6 /* EditQuestionViewController.m */; };
 		3405169D19CBE094004360E8 /* QuestionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169C19CBE094004360E8 /* QuestionSet.m */; };
 		340516A019CBE1B0004360E8 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169F19CBE1B0004360E8 /* Question.m */; };
+		340C245A19DBCF0C00F9EB94 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */; };
 		3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */; };
 		3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF719C806BA003C3BEE /* Foundation.framework */; };
 		3424FDFA19C806BA003C3BEE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF919C806BA003C3BEE /* CoreGraphics.framework */; };
@@ -59,6 +60,7 @@
 		3405169C19CBE094004360E8 /* QuestionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionSet.m; sourceTree = "<group>"; };
 		3405169E19CBE1B0004360E8 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
 		3405169F19CBE1B0004360E8 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
+		340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		3412F4F419CD31EB00D1048E /* SpacedUITableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpacedUITableViewCell.h; sourceTree = "<group>"; };
 		3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpacedUITableViewCell.m; sourceTree = "<group>"; };
 		3424FDF419C806BA003C3BEE /* MeshVote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeshVote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340C245A19DBCF0C00F9EB94 /* MultipeerConnectivity.framework in Frameworks */,
 				3424FDFA19C806BA003C3BEE /* CoreGraphics.framework in Frameworks */,
 				3424FDFC19C806BA003C3BEE /* UIKit.framework in Frameworks */,
 				3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */,
@@ -153,6 +156,7 @@
 		3424FDF619C806BA003C3BEE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */,
 				3424FDF719C806BA003C3BEE /* Foundation.framework */,
 				3424FDF919C806BA003C3BEE /* CoreGraphics.framework */,
 				3424FDFB19C806BA003C3BEE /* UIKit.framework */,

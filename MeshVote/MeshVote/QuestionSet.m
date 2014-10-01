@@ -32,7 +32,7 @@
 - (id)initWithCoder:(NSCoder*)decoder {
     self = [super init];
     if(self) {
-        [super setMessageType:[decoder decodeObjectForKey:@"messageType"]];
+        [super setMessageType:[decoder decodeIntForKey:@"messageType"]];
         _questions = [decoder decodeObjectForKey:@"questions"];
     }
     
@@ -41,7 +41,7 @@
 
 - (void)encodeWithCoder:(NSCoder*)encoder {
     //NSLog(@"encode:%@", [super messageType]);
-    [encoder encodeObject:[super messageType] forKey:@"messageType"];
+    [encoder encodeInt:[super messageType] forKey:@"messageType"];
     [encoder encodeObject:_questions forKey:@"questions"];
 }
 

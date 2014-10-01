@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
-#import "MultipeerConnectivity/MCPeerID.h"
-#import "MultipeerConnectivity/MCSession.h"
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "KAProgressLabel.h"
 
 
 @interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate>
 
 - (NSString*)timeAsString:(int)time;
-- (BOOL)sendQuestion:(Question*)question toPeers:(NSArray*)peers;
 
 @property (nonatomic, strong) QuestionSet* questionSet;
 @property (nonatomic, strong) MCSession* session;

@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
-#import "MultipeerConnectivity/MCSession.h"
-#import "MultipeerConnectivity/MCPeerID.h"
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
 
 
 #define VIEWMODE_ADD_NEW_QUESTION   0

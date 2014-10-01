@@ -76,7 +76,7 @@
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
     [tempQuestion1 setCorrectAnswer:2];
-    [tempQuestion1 setTimeLimit:1];
+    [tempQuestion1 setTimeLimit:5];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -87,11 +87,11 @@
     [tempQuestion2 addAnswer:@"peanut"];
     [tempQuestion2 addAnswer:@"banana pie"];
     [tempQuestion2 setCorrectAnswer:1];
-    [tempQuestion2 setTimeLimit:1];
+    [tempQuestion2 setTimeLimit:5];
     
     [_questionSet addQuestion:tempQuestion1];
     [_questionSet addQuestion:tempQuestion2];
-        [_questionSet addQuestion:tempQuestion2];
+      /*  [_questionSet addQuestion:tempQuestion2];
         [_questionSet addQuestion:tempQuestion2];
         [_questionSet addQuestion:tempQuestion2];
         [_questionSet addQuestion:tempQuestion2];
@@ -99,7 +99,7 @@
         [_questionSet addQuestion:tempQuestion2];
     [_questionSet addQuestion:tempQuestion2];
     [_questionSet addQuestion:tempQuestion2];
-    [_questionSet addQuestion:tempQuestion2];
+    [_questionSet addQuestion:tempQuestion2];*/
     
     //end temporaru debug stuff
 
@@ -309,6 +309,9 @@
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
         
+        _questionSet.messageType = MSG_QUESTION_SET;
+        [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
+        /*
         _questionSet.messageType = @"question-set";
         NSData* setData = [NSKeyedArchiver archivedDataWithRootObject:_questionSet];
         NSError *error;
@@ -316,7 +319,7 @@
         if(error) {
             NSLog(@"Error sending data");
             //return NO;
-        }
+        }*/
         
         
     }
@@ -337,10 +340,10 @@
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data!");
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSString *messageType = message.messageType;
-    NSLog(@"type:%@", messageType);
-    if([messageType isEqualToString:@"question-ack"]) {
-        
+    //NSString *messageType = message.messageType;
+    //NSLog(@"type:%@", messageType);
+    if(message.messageType == MSG_QUESTION_SET_ACK) { //[messageType isEqualToString:@"question-ack"]) {
+        NSLog(@" got question-set-ack");
         //TODO: need to verify all peers have acknowledged the question
 
         

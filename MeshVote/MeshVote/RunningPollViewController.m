@@ -204,17 +204,23 @@
     
     //TODO: need to verify all peers have acknowledged the question
     Message *beginMessage = [[Message alloc] init];
-    beginMessage.messageType = @"action";
+    //beginMessage.messageType = @"action";
+    beginMessage.messageType = MSG_ACTION;
     beginMessage.questionNumber = _currentQuestionNumber;
-    beginMessage.actionType = ACTION_PLAY;
+    beginMessage.actionType = AT_PLAY;
     
+    [Message sendMessage:beginMessage toPeers:[_session connectedPeers] inSession:_session];
+    /*
     NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
     NSError *error;
     //[session connectedPeers]
     [_session sendData:actionData toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
     if(error) {
         NSLog(@"Error sending data");
-    }
+    }*/
+    
+    
+    
     dispatch_async(dispatch_get_main_queue(), ^(void){
         _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
         _votesReceivedLabel.text = @"0";
@@ -419,7 +425,11 @@
         dispatch_async(dispatch_get_main_queue(), ^(void){
             _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
         });
-        _questionSet.messageType = @"question-set";
+        //_questionSet.messageType = @"question-set";
+        _questionSet.messageType = MSG_QUESTION_SET;
+        
+        [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
+        /*
         NSData* setData = [NSKeyedArchiver archivedDataWithRootObject:_questionSet];
         NSError *error;
         [_session sendData:setData toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
@@ -427,6 +437,7 @@
             NSLog(@"Error sending data");
             //return NO;
         }
+         */
         /*
         //TODO: should send next question here (maybe change to current question later)
         if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
@@ -451,34 +462,12 @@
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data, from peer:%@", peerID.displayName);
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSString *messageType = message.messageType;
-    NSLog(@"type2:%@", messageType);
-    if([messageType isEqualToString:@"question-ack"]) {
-        
-        /*
-        if(_hasBegunPoll == NO) { //TODO: check if all peers have question-acked here
-            NSLog(@"BEGIN POLL!!!!");
-            _hasBegunPoll = YES;
-            //[self beginPoll];
-            //_hasBegunPoll = YES;
-        }
-         */
-        /*//TODO: need to verify all peers have acknowledged the question
-         Message *beginMessage = [[Message alloc] init];
-         beginMessage.messageType = @"action";
-         beginMessage.actionType = ACTION_PLAY;
-         
-         NSData *actionData = [NSKeyedArchiver archivedDataWithRootObject:beginMessage];
-         NSError *error;
-         //[session connectedPeers]
-         [_session sendData:actionData toPeers:[session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-         if(error) {
-         NSLog(@"Error sending data");
-         }*/
-    }
-    else if([messageType isEqualToString:@"action-ack"]) {
+    //NSString *messageType = message.messageType;
+    //NSLog(@"type2:%d", messageType);
+
+    if(message.messageType == MSG_ACTION_ACK ) { //[messageType isEqualToString:@"action-ack"]) {
         NSLog(@"in action-ack");
-        if(message.actionType == ACTION_PLAY) {
+        if(message.actionType == AT_PLAY) {
             NSLog(@"action-play-ack: curQues:%d", _currentQuestionNumber);
             
             /*
@@ -492,7 +481,7 @@
              */
         }
     }
-    else if([messageType isEqualToString:@"answer"]) {
+    else if(message.messageType == MSG_ANSWER) { //[messageType isEqualToString:@"answer"]) {
         NSLog(@"received answer:%zd from:%@", message.answerNumber, peerID.displayName);
         //if([_peerList ])
         
@@ -534,10 +523,13 @@
         
         //need to send answer-ack
         Message *answerAck = [[Message alloc] init];
-        answerAck.messageType = @"answer-ack";
+        //answerAck.messageType = @"answer-ack";
+        answerAck.messageType = MSG_ANSWER_ACK;
         answerAck.questionNumber = _currentQuestionNumber;
         answerAck.answerNumber = message.answerNumber;
         
+        [Message sendMessage:answerAck toPeers:[_session connectedPeers] inSession:_session];
+        /*
         NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:answerAck];
         NSError *error;
         
@@ -545,7 +537,7 @@
         if(error) {
             NSLog(@"Error sending data");
         }
-        
+        */
         
         
         [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
@@ -580,19 +572,6 @@
 
 
 
-- (BOOL)sendQuestion:(Question*)question toPeers:(NSArray*)peers {
-    Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
-    //questionMessage.questionNum = _currentQuestionNumber;
-    question.messageType = @"question";
-    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-    NSError *error;
-    [_session sendData:testQuestion toPeers:peers withMode:MCSessionSendDataReliable error:&error];
-    if(error) {
-        NSLog(@"Error sending data");
-        return NO;
-    }
-    return YES;
-}
 
 
 @end

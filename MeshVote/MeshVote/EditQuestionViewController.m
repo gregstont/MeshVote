@@ -73,6 +73,9 @@ NSArray *letters;
         
         
         //send action-ack //TODO: function here
+    
+        //[Message sendMessage:<#(Message *)#> toPeers:<#(NSArray *)#> inSession:<#(MCSession *)#>]
+        /*
         Message *playAck = [[Message alloc] init];
         playAck.messageType = @"action-ack";
         playAck.actionType = ACTION_PLAY;
@@ -84,8 +87,13 @@ NSArray *letters;
         if(error) {
             NSLog(@"Error sending data");
         }
+        */
+        [Message sendMessageType:MSG_ACTION withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
         
+        NSLog(@"here");
+        //_questionSet = (QuestionSet*)_questionSet;
         _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+        NSLog(@"not here");
         
         self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         _questionTextLabel.text = _currentQuestion.questionText; //[NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];
@@ -288,17 +296,20 @@ NSArray *letters;
         NSLog(@"clicked answer to submit");
         
         Message *answerMessage = [[Message alloc] init];
-        answerMessage.messageType = @"answer";
+        //answerMessage.messageType = @"answer";
+        answerMessage.messageType = MSG_ANSWER;
         answerMessage.questionNumber = _currentQuestionNumber;
         answerMessage.answerNumber = (int)indexPath.row/2;
         
+        [Message sendMessage:answerMessage toPeers:@[_host] inSession:_session];
+        /*
         NSData *answerData = [NSKeyedArchiver archivedDataWithRootObject:answerMessage];
         NSError *error;
         
         [_session sendData:answerData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
         if(error) {
             NSLog(@"Error sending data");
-        }
+        }*/
         
         _currentAnswer = answerMessage.answerNumber;
         _currentAnswerAcked = NO;
@@ -352,7 +363,10 @@ NSArray *letters;
     //when we are done here, send the action-ack TODO funccall here
     
     NSLog(@"sending action ack to host");
-    Message *playAck = [[Message alloc] init];
+    
+    [Message sendMessageType:MSG_ACTION_ACK withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
+   /* Message *playAck = [[Message alloc] init];
+    
     playAck.messageType = @"action-ack";
     playAck.actionType = ACTION_PLAY;
     
@@ -362,7 +376,7 @@ NSArray *letters;
     [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
     if(error) {
         NSLog(@"Error sending data");
-    }
+    }*/
     
     
 }
@@ -478,32 +492,10 @@ NSArray *letters;
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data in EditQuest!");
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSString *messageType = message.messageType;
-    NSLog(@"type:%@", messageType);
-    if([messageType isEqualToString:@"question"]) {
-        
-        /*
-        //received new question, ready to begin
-        _nextQuestion = (Question*)message;
-        //Question *recQuestion = (Question*)message;
-        NSLog(@"  question message:%@", _nextQuestion.questionText);
-        //[_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
-        
-        //send question-ack to host
-        Message *questionAck = [[Message alloc] init];
-        questionAck.messageType = @"question-ack";
-        questionAck.questionNumber = _nextQuestion.questionNum;
-        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:questionAck];
-        NSError *error;
-        
-        [session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }
-         */
-    }
+    //NSString *messageType = message.messageType;
+    //NSLog(@"type:%d", messageType);
     
-    else if([messageType isEqualToString:@"answer-ack"]) {
+    if(message.messageType == MSG_ANSWER_ACK) { //[messageType isEqualToString:@"answer-ack"]) {
         NSLog(@"  answer-ack");
         if(message.questionNumber == _currentQuestionNumber && message.answerNumber == _currentAnswer) {
             _currentAnswerAcked = YES;
@@ -513,24 +505,24 @@ NSArray *letters;
             
         }
     }
-    else if([messageType isEqualToString:@"action"]) {
+    else if(message.messageType == MSG_ACTION) { //[messageType isEqualToString:@"action"]) {
         NSLog(@"  action:%d",message.actionType);
-        if(message.actionType == ACTION_REWIND) {
+        if(message.actionType == AT_REWIND) {
             
         }
-        else if(message.actionType == ACTION_PLAY) {
+        else if(message.actionType == AT_PLAY) {
             NSLog(@"  action play");
             [self moveToNextQuestion];
             
             
         }
-        else if(message.actionType == ACTION_PAUSE) {
+        else if(message.actionType == AT_PAUSE) {
             
         }
-        else if(message.actionType == ACTION_FORWARD) {
+        else if(message.actionType == AT_FORWARD) {
             
         }
-        else if(message.actionType == ACTION_DONE) { //poll is over
+        else if(message.actionType == AT_DONE) { //poll is over
             
         }
     }

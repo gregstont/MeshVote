@@ -110,10 +110,10 @@
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
     NSLog(@"recieved data in connecting view!");
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSString *messageType = message.messageType;
-    NSLog(@"type:%@", messageType);
-    if([messageType isEqualToString:@"question-set"]) {
-        
+    //NSString *messageType = message.messageType;
+    //NSLog(@"type:%@", messageType);
+    if(message.messageType == MSG_QUESTION_SET) { //[messageType isEqualToString:@"question-set"]) {
+        NSLog(@"  got the question set");
         
         _questionSet = (QuestionSet*)message;
         
@@ -126,6 +126,9 @@
         
         
         //send question-ack to host //TODO: this should be in statis message class
+        [Message sendMessageType:MSG_QUESTION_SET_ACK toPeers:@[_host] inSession:_session];
+        
+        /*
         NSLog(@"send question-set-ack to host...");
         Message *questionAck = [[Message alloc] init];
         questionAck.messageType = @"question-set-ack";
@@ -138,7 +141,7 @@
         [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
         if(error) {
             NSLog(@"Error sending data");
-        }
+        }*/
     }
     /*else if([messageType isEqualToString:@"question"]) {
         
@@ -165,15 +168,15 @@
         }
     }*/
     
-    else if([messageType isEqualToString:@"answer-ack"]) {
+    else if(message.messageType == MSG_ANSWER_ACK) { //[messageType isEqualToString:@"answer-ack"]) {
         NSLog(@"  answer-ack");
     }
-    else if([messageType isEqualToString:@"action"]) {
+    else if(message.messageType == MSG_ACTION) { //[messageType isEqualToString:@"action"]) {
         NSLog(@"  action qnum:%d",message.questionNumber);
-        if(message.actionType == ACTION_REWIND) {
+        if(message.actionType == AT_REWIND) {
             
         }
-        else if(message.actionType == ACTION_PLAY) {
+        else if(message.actionType == AT_PLAY) {
             
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 // GUI thread
@@ -185,13 +188,13 @@
             
             
         }
-        else if(message.actionType == ACTION_PAUSE) {
+        else if(message.actionType == AT_PAUSE) {
             
         }
-        else if(message.actionType == ACTION_FORWARD) {
+        else if(message.actionType == AT_FORWARD) {
             
         }
-        else if(message.actionType == ACTION_DONE) { //poll is over
+        else if(message.actionType == AT_DONE) { //poll is over
             
         }
     }

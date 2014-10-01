@@ -7,14 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MultipeerConnectivity/MCNearbyServiceBrowser.h"
-//#import "MultipeerConnectivity/MC
-#import <MultipeerConnectivity/MCAdvertiserAssistant.h>
-#import <MultipeerConnectivity/MCNearbyServiceAdvertiser.h>
-
-//#import <MultipeerConnectivity/MCNearbyServiceBrowser.h>
-#import "MultipeerConnectivity/MCPeerID.h"
-#import "MultipeerConnectivity/MCSession.h"
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "EditQuestionViewController.h"
 
 @interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate, MCNearbyServiceAdvertiserDelegate>
