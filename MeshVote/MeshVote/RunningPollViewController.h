@@ -16,7 +16,7 @@
 @interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate>
 
 - (NSString*)timeAsString:(int)time;
--(void)nextQuestion;
+- (BOOL)sendQuestion:(Question*)question toPeers:(NSArray*)peers;
 
 @property (nonatomic, strong) QuestionSet* questionSet;
 @property (nonatomic, strong) MCSession* session;

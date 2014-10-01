@@ -134,6 +134,7 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    //_session.delegate = self;
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController setToolbarHidden:NO];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];

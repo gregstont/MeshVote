@@ -1,3 +1,6 @@
+
+
+
 //
 //  RunningPollViewController.m
 //  MeshVote
@@ -10,6 +13,7 @@
 #import "BackgroundLayer.h"
 #import "Question.h"
 #import "RunningAnswerTableViewCell.h"
+#import "ResultsViewController.h"
 
 @interface RunningPollViewController ()
 
@@ -59,7 +63,7 @@
     [_colors addObject:[[UIColor alloc] initWithRed:1 green:0.278 blue:0.309 alpha:1.0]]; //red
     [_colors addObject:[[UIColor alloc] initWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:1.0]]; //purple
     [_colors addObject:[[UIColor alloc] initWithRed:1 green:149.0/255 blue:0 alpha:1.0]]; //orange
-
+    
     _fadedColors = [[NSMutableArray alloc] init];
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0.258 green:0.756 blue:0.631 alpha:0.3]]; //green
     [_fadedColors addObject:[[UIColor alloc] initWithRed:0 green:0.592 blue:0.929 alpha:0.3]]; //blue
@@ -93,7 +97,7 @@
     
     NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
     self.toolbarItems = buttonItems;
-
+    
     
     _currentQuestionNumber = 0;
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
@@ -109,40 +113,27 @@
     NSLog(@"number of questions:%d", [_questionSet getQuestionCount]);
     
     
-    //send out the first question to all peers
-    Question* questionMessage = [_questionSet getQuestionAtIndex:0];
-    questionMessage.questionNum = 0;
-    questionMessage.messageType = @"question";
-    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-    NSError *error;
-    
     //_totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
     _votesReceivedLabel.text = @"0";
     _voteCount = 0;
     
     
     _session.delegate = self;
+    
+    //send out the first question to all peers
+    Question* questionMessage = [_questionSet getQuestionAtIndex:0];
+    questionMessage.questionNum = 0;
+    questionMessage.messageType = @"question";
+    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
+    NSError *error;
     [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
     
-    
-    //KAProgressLabel
-    //[_votesProgressLabel setDelegate:self];
-    //Using block
+    //
+    // setup circular progress bars for time and votes received (KAProgressLabel)
+    //
     _timeProgressLabel.progressLabelVCBlock = ^(KAProgressLabel *label, CGFloat progress) {
-        
-        /*
-         dispatch_async(dispatch_get_main_queue(), ^{
-         [label setText:[NSString stringWithFormat:@"%.0f%%", (progress*100)]];
-         });
-         */
     };
     _votesProgressLabel.progressLabelVCBlock = ^(KAProgressLabel *label, CGFloat progress) {
-        
-        /*
-         dispatch_async(dispatch_get_main_queue(), ^{
-         [label setText:[NSString stringWithFormat:@"%.0f%%", (progress*100)]];
-         });
-         */
     };
     [_votesProgressLabel setProgress:0.0
                               timing:TPPropertyAnimationTimingEaseOut
@@ -158,23 +149,23 @@
                                          NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor darkGrayColor]
                                          }];
     [_votesProgressLabel setColorTable: @{
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.2],
-                                         NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.7]
-                                         }];
+                                          NSStringFromProgressLabelColorTableKey(ProgressLabelFillColor):[UIColor clearColor],
+                                          NSStringFromProgressLabelColorTableKey(ProgressLabelTrackColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.2],
+                                          NSStringFromProgressLabelColorTableKey(ProgressLabelProgressColor):[UIColor colorWithRed:1.0 green:94/255.0 blue:58/255.0 alpha:0.7]
+                                          }];
     [_timeProgressLabel setAlpha:0.5];
     
     [_votesProgressLabel setFrontBorderWidth:8];
     [_votesProgressLabel setBackBorderWidth:8];
     [_timeProgressLabel setBackBorderWidth:11];
     //[_timeProgressLabel setClockWise:NO];
-    
     if(error) {
-        NSLog(@"Error sending data");
+        NSLog(@"Eror sending");
     }
-    //[self beginPoll];
+    [self beginPoll];
 }
 - (void)viewWillAppear:(BOOL)animated {
+    _session.delegate = self;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
     self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:(190/255.0)  green:(190/255.0)  blue:(190/255.0)  alpha:1.0];
 }
@@ -235,7 +226,7 @@
                                  timing:TPPropertyAnimationTimingEaseOut
                                duration:0.4
                                   delay:0.0];
-
+        
         //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     });
     //self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];
@@ -255,9 +246,9 @@
                 self.timeRemainingLabel.text = [self timeAsString:_timeRemaining];//@"Done with Label 1";
                 
                 [_timeProgressLabel setProgress:(_timeRemaining + 0.0)/60
-                                          timing:TPPropertyAnimationTimingEaseOut
-                                        duration:0.2
-                                           delay:0.0];
+                                         timing:TPPropertyAnimationTimingEaseOut
+                                       duration:0.2
+                                          delay:0.0];
             });
             //NSLog(@"times up");
         }
@@ -269,13 +260,17 @@
             _timeRemaining = _currentQuestion.timeLimit;
             [self beginPoll];
         }
+        else { //poll is over
+            NSLog(@"Poll over");
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
+            });
+        }
     });
     //NSLog(@"times up");
 }
 
--(void)nextQuestion {
-    
-}
+
 
 //
 //  Toolbar buttons
@@ -293,15 +288,27 @@
 }
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"showResultsSegue"]){
+        //NSLog(@"prepareForSegue");
+        ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
+        controller.questionSet = _questionSet;
+    }
+    //showQuestion
+    
+    //addNewQuestionSegue
 }
-*/
 
 //
 //  UITableViewDataSource, UITableViewDelegate
@@ -365,9 +372,9 @@
     //cell.answerProgress.progressTintColor
     /*
      cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-    cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    */
+     cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
+     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+     */
     return cell;
 }
 
@@ -390,7 +397,7 @@
 // Remote peer changed state
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
     
-    NSLog(@"peer changed state:");
+    NSLog(@"peer changed state in RunningView:");
     
     if(state == MCSessionStateConnected) {
         NSLog(@"  connected: %@", peerID.displayName);
@@ -400,6 +407,10 @@
             _totalConnectedLabel.text = [NSString stringWithFormat:@"%zd", [[_peerList allKeys] count]];
         });
         
+        //TODO: should send next question here (maybe change to current question later)
+        if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+            [self sendQuestion:[_questionSet getQuestionAtIndex:_currentQuestionNumber + 1] toPeers:@[peerID]];
+        }
     }
     else if(state == MCSessionStateNotConnected) {
         NSLog(@"  NOT connected: %@",peerID.displayName);
@@ -425,7 +436,7 @@
         if(_hasBegunPoll == NO) { //TODO: check if all peers have question-acked here
             NSLog(@"BEGIN POLL!!!!");
             _hasBegunPoll = YES;
-            [self beginPoll];
+            //[self beginPoll];
             //_hasBegunPoll = YES;
         }
         /*//TODO: need to verify all peers have acknowledged the question
@@ -449,18 +460,10 @@
             
             //the peer has begun the next question, so they are ready to recieve a new question
             if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
+                
                 Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
                 questionMessage.questionNum = _currentQuestionNumber + 1;
-                questionMessage.messageType = @"question";
-                NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
-                NSError *error;
-                
-                [_session sendData:testQuestion toPeers:[_session connectedPeers] withMode:MCSessionSendDataReliable error:&error];
-                
-                
-                if(error) {
-                    NSLog(@"Error sending data");
-                }
+                [self sendQuestion:questionMessage toPeers:[_session connectedPeers]];
             }
         }
     }
@@ -547,6 +550,23 @@
 // Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
 - (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
     
+}
+
+
+
+
+- (BOOL)sendQuestion:(Question*)question toPeers:(NSArray*)peers {
+    Question* questionMessage = [_questionSet getQuestionAtIndex:_currentQuestionNumber + 1];
+    //questionMessage.questionNum = _currentQuestionNumber;
+    question.messageType = @"question";
+    NSData *testQuestion = [NSKeyedArchiver archivedDataWithRootObject:questionMessage];
+    NSError *error;
+    [_session sendData:testQuestion toPeers:peers withMode:MCSessionSendDataReliable error:&error];
+    if(error) {
+        NSLog(@"Error sending data");
+        return NO;
+    }
+    return YES;
 }
 
 
