@@ -45,13 +45,14 @@
         
         NSMutableArray* curPeerHistory = [_voteHistory objectForKey:key];
         
-        int numberCorrect;
+        int numberCorrect = 0;
         //iterate over each question
         for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
             if([_questionSet getQuestionAtIndex:i].correctAnswer == [[curPeerHistory objectAtIndex:i] intValue]) {
                 ++numberCorrect;
             }
         }
+        NSLog(@"score..numCorect:%d questcount:%d", numberCorrect, [_questionSet getQuestionCount]);
         double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
         [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
      }

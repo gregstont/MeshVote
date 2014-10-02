@@ -220,7 +220,8 @@
     if(_currentAnswer == indexPath.row/2) {
         if(_currentAnswerAcked) {
             cell.answerActivityIndicator.hidden = YES;
-            cell.answerCheckImage.hidden = NO;
+            //cell.answerCheckImage.hidden = NO;
+            cell.checkButton.hidden = NO;
         }
         else {
             cell.answerActivityIndicator.hidden = NO;
@@ -228,7 +229,8 @@
         }
     }
     else {
-        cell.answerCheckImage.hidden = YES;
+        cell.checkButton.hidden = YES;
+        //cell.answerCheckImage.hidden = YES;
         cell.answerActivityIndicator.hidden = YES;
     }
     

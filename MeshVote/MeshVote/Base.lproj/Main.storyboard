@@ -218,10 +218,24 @@
                                                     <rect key="frame" x="250" y="7" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon_outline130.png" translatesAutoresizingMaskIntoConstraints="NO" id="D9t-oE-YUJ">
+                                                    <rect key="frame" x="248" y="5" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.8500000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-w3-FEa">
                                                     <rect key="frame" x="248" y="5" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AV7-PU-TiH">
+                                                    <rect key="frame" x="248" y="5" width="25" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button" image="check_icon128x128.png">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="checkClicked:" destination="i1d-mu-Tz7" eventType="touchUpInside" id="r8E-vR-u9X"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
@@ -231,6 +245,8 @@
                                             <outlet property="answerCheckImage" destination="sU6-w3-FEa" id="G89-qJ-XzZ"/>
                                             <outlet property="answerChoiceLetter" destination="Xsy-UX-D3s" id="8yE-lK-kY3"/>
                                             <outlet property="answerTextField" destination="Mgn-fd-oMi" id="VKs-Ki-XGP"/>
+                                            <outlet property="checkButton" destination="AV7-PU-TiH" id="UXI-nB-8CW"/>
+                                            <outlet property="checkOutline" destination="D9t-oE-YUJ" id="ckC-91-DLR"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -713,6 +729,7 @@
     </scenes>
     <resources>
         <image name="check_icon128x128.png" width="128" height="128"/>
+        <image name="check_icon_outline130.png" width="130" height="130"/>
         <image name="i_icon_large.png" width="512" height="512"/>
         <image name="icon_new.png" width="600" height="600"/>
     </resources>

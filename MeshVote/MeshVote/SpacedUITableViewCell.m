@@ -36,4 +36,6 @@
     self.textLabel.frame = CGRectMake(35, 5, 320, 20);
 }
 
+- (IBAction)checkClicked:(id)sender {
+}
 @end
