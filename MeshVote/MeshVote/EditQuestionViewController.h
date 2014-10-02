@@ -38,8 +38,10 @@
 @interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UITextFieldDelegate, MCSessionDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *questionTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *questionNumberLabel;
 @property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UITextField *timeTextField;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 

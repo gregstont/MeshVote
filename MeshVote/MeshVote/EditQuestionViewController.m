@@ -68,7 +68,8 @@
     else if(_viewMode == VIEWMODE_EDIT_QUESTION) { //edit existing question
         _currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
         [_questionTextLabel setText:_currentQuestion.questionText];
-        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
+        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1]];
+        //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
     }
     else { // VIEWMODE_ASK_QUESTION
         
@@ -81,13 +82,15 @@
         _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
         NSLog(@"not here");
         
-        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
+        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1]];
+        //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         _questionTextLabel.text = _currentQuestion.questionText; //[NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];
         //_currentQuestion.t
         _timeRemaining = _currentQuestion.timeLimit;
-        [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+        [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+        //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
         
-        //start timer
+        //start timer TODO: move this to moveToNextQuestion
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             while(_timeRemaining > 0) {
                 [NSThread sleepForTimeInterval:1.0f];
@@ -96,7 +99,8 @@
                     // GUI thread
                     //NSLog(@"GUI thread 1");
                     // update label 1 text
-                    [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+                    [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+                    //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
                 });
                 //NSLog(@"times up");
             }
@@ -311,10 +315,11 @@
     _currentAnswerAcked = NO;
     //[_questionTextLabel setText:_currentQuestion.questionText];
     dispatch_async(dispatch_get_main_queue(), ^(void){
-
-        self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
+        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1]];
+        //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         _questionTextLabel.text = _currentQuestion.questionText;
-        [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _currentQuestion.timeLimit / 60, _currentQuestion.timeLimit % 60]];
+        [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+        //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _currentQuestion.timeLimit / 60, _currentQuestion.timeLimit % 60]];
         [self.tableView reloadData];
     });
     
@@ -327,7 +332,8 @@
             [NSThread sleepForTimeInterval:1.0f];
             --_timeRemaining;
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                [_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+                [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+                //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
             });
         }
         //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
