@@ -170,9 +170,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //add new question
-        
-    }
     
     if(indexPath.row % 2 == 1) { //blank spacing cell
         UITableViewCell *blankCell = [tableView dequeueReusableCellWithIdentifier:@"eq_cellid2"];
@@ -216,6 +213,7 @@
     
     cell.answerTextField.delegate = self;
     
+    //checkbutton for submissions (VIEWMODE_ASK_QUESTION)
     if(_currentAnswer == indexPath.row/2) {
         if(_currentAnswerAcked) {
             cell.answerActivityIndicator.hidden = YES;
@@ -239,8 +237,8 @@
     }
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
-    //NSIndexPath *temp = [tableView indexPathForSelectedRow];
-    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //add new question
+    //show check button and outline
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION || _viewMode == VIEWMODE_EDIT_QUESTION) { //add new question
         if([_currentQuestion getAnswerCount] > (int)indexPath.row/2) {
             cell.answerTextField.alpha = 1.0;
             cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
@@ -261,7 +259,7 @@
             //else
              //   [cell.checkButton setAlpha:0.0005];
         }
-        else {
+        else { //"add answer" button
             cell.textLabel.text = @"";
             cell.answerTextField.text = @"add answer";
             cell.answerTextField.alpha = 0.25;
