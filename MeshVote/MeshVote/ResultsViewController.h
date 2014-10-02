@@ -14,6 +14,10 @@
 @property (nonatomic, strong) QuestionSet *questionSet;
 @property (nonatomic, strong) NSMutableDictionary *voteHistory;
 
+@property (weak, nonatomic) IBOutlet UILabel *meanLabel;
+@property (weak, nonatomic) IBOutlet UILabel *minLabel;
+@property (weak, nonatomic) IBOutlet UILabel *maxLabel;
+@property (weak, nonatomic) IBOutlet UILabel *medianLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
 - (IBAction)resultsDoneButton:(id)sender;

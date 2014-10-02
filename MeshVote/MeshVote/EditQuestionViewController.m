@@ -232,6 +232,8 @@
         //cell.answerCheckImage.hidden = YES;
         cell.answerActivityIndicator.hidden = YES;
     }
+    
+    //if correct answer, show check button
     if(_viewMode == VIEWMODE_EDIT_QUESTION && _currentQuestion.correctAnswer == indexPath.row/2) {
         cell.checkButton.hidden = NO;
     }
@@ -533,7 +535,14 @@
     
     NSLog(@"indexPath = %zd", indexPath.row/2);
     
-    _currentQuestion.correctAnswer = (int)indexPath.row/2;
+    if(_currentQuestion.correctAnswer == (int)indexPath.row/2) {
+        _currentQuestion.correctAnswer = -1;
+    }
+    else {
+        _currentQuestion.correctAnswer = (int)indexPath.row/2;
+    }
+    
+    //_currentQuestion.correctAnswer = (int)indexPath.row/2;
     [_tableView reloadData];
 }
 

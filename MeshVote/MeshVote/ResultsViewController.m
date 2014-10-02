@@ -39,6 +39,7 @@
     _peerResults = [[NSMutableDictionary alloc] initWithCapacity:[[_voteHistory allKeys] count]];
     
     
+    //calculate the peer results from the voteHistory
     //iterate over each peer in the history
     for(NSString* key in _voteHistory) {
         NSLog(@"here!");
@@ -55,7 +56,34 @@
         NSLog(@"score..numCorect:%d questcount:%d", numberCorrect, [_questionSet getQuestionCount]);
         double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
         [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
-     }
+    }
+    
+    //calculate mean, median, min and max
+    NSArray* scores = [[_peerResults allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"doubleValue" ascending:YES]]];
+    
+    //for testing only!
+    //NSArray* scores = @[@0.5, @0.7, @0.9, @0.91];
+    int count = (int)[scores count];
+    if(count > 0) {
+        double sum = 0.0;
+        for(NSNumber* num in scores) {
+            sum += [num doubleValue];
+        }
+        self.meanLabel.text = [NSString stringWithFormat:@"%d", (int)((sum / count) * 100)];
+        self.minLabel.text = [NSString stringWithFormat:@"%d", (int)([[scores objectAtIndex:0] doubleValue] * 100)];
+        self.maxLabel.text = [NSString stringWithFormat:@"%d", (int)([[scores objectAtIndex:count - 1] doubleValue] * 100)];
+        
+        int median = 0;
+        if(count % 2 == 0) { //even number, so average middle 2
+            median = (int)(([[scores objectAtIndex:count/2] doubleValue] + [[scores objectAtIndex:count/2 - 1] doubleValue]) * 50);
+        }
+        else {
+            median = (int)([[scores objectAtIndex:count/2] doubleValue] * 100);
+        }
+        self.medianLabel.text = [NSString stringWithFormat:@"%d", median];
+    }
+    
+    
     
     for(NSString* key in _peerResults) {
         NSLog(@"name:%@ score:%f", key, [[_peerResults objectForKey:key] doubleValue]);
@@ -102,7 +130,7 @@
         //return [_questionSet getQuestionCount];
         return [_questionSet getQuestionCount];
     }
-    else {
+    else { //individual results section
         return [_voteHistory count];
     }
 }
@@ -113,12 +141,13 @@
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
     NSString* labelString;
     if(section == 0) {
-        labelString = @"per question results";
+        labelString = @" per question results";
     }
     else if(section == 1) {
-        labelString =@"individual peer results";
+        labelString =@" individual peer results";
     }
     [label setText:labelString];
+    [label setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
     [view addSubview:label];
     return view;
 }
