@@ -199,7 +199,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xsy-UX-D3s">
-                                                    <rect key="frame" x="6" y="6" width="22" height="22"/>
+                                                    <rect key="frame" x="0.0" y="-3" width="31" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.22417568978658872" green="0.71859056122448983" blue="0.56309876160291561" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" red="0.2113759566" green="0.2113759566" blue="0.2113759566" alpha="1" colorSpace="calibratedRGB"/>
@@ -244,7 +244,7 @@
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.040000000000000001" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="answerActivityIndicator" destination="rJj-yf-JaR" id="RUi-JF-mMw"/>
                                             <outlet property="answerChoiceLetter" destination="Xsy-UX-D3s" id="8yE-lK-kY3"/>

@@ -198,11 +198,11 @@
 
     }
     
-    cell.answerChoiceLetter.layer.cornerRadius = 2.0f;
+    //cell.answerChoiceLetter.layer.cornerRadius = 2.0f;
     
-    cell.answerChoiceLetter.backgroundColor = [_colors getColorAtIndex:indexPath.row/2];
+    cell.answerChoiceLetter.backgroundColor = [_colors getAlphaColor2AtIndex:indexPath.row/2];
     [cell.answerChoiceLetter setText:[_colors getLetterAtIndex:indexPath.row/2]];
-    [cell setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.1]];
+    [cell setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.08]];
     //[cell setAlpha:0.7]
     
     [cell setHighlighted:YES   animated:YES];
