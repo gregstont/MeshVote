@@ -218,7 +218,7 @@
                                                     <rect key="frame" x="250" y="7" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-w3-FEa">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.8500000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-w3-FEa">
                                                     <rect key="frame" x="248" y="5" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>

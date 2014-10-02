@@ -55,7 +55,7 @@
     _delegate = [self.navigationController.viewControllers objectAtIndex:1];
     
     _questionTextLabel.clipsToBounds = YES;
-    _questionTextLabel.layer.cornerRadius = 10.0f;
+    _questionTextLabel.layer.cornerRadius = 3.0f;
     
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //create new question
         _currentQuestion = [[Question alloc] init];
@@ -202,14 +202,16 @@
 
     }
     
-    cell.answerChoiceLetter.layer.cornerRadius = 7.0f;
+    cell.answerChoiceLetter.layer.cornerRadius = 2.0f;
     
     cell.answerChoiceLetter.backgroundColor = [_colors getColorAtIndex:indexPath.row/2];
     [cell.answerChoiceLetter setText:[_colors getLetterAtIndex:indexPath.row/2]];
+    [cell setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.1]];
+    //[cell setAlpha:0.7]
     
     [cell setHighlighted:YES   animated:YES];
 
-    cell.layer.cornerRadius = 10.0f;
+    cell.layer.cornerRadius = 2.0f;
     cell.clipsToBounds = YES;
     cell.textLabel.font= [UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
     

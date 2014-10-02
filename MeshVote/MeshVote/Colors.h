@@ -12,6 +12,7 @@
 
 - (UIColor*)getColorAtIndex:(long)index;
 - (UIColor*)getAlphaColorAtIndex:(long)index;
+- (UIColor*)getAlphaColor2AtIndex:(long)index;
 - (NSString*)getLetterAtIndex:(long)index;
 
 @end
