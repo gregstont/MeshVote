@@ -13,8 +13,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *answerTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *answerActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIImageView *answerCheckImage;
-@property (weak, nonatomic) IBOutlet UIImageView *checkOutline;
 @property (weak, nonatomic) IBOutlet UIButton *checkButton;
+@property (weak, nonatomic) IBOutlet UIButton *checkOutline;
+
 - (IBAction)checkClicked:(id)sender;
 
 @end

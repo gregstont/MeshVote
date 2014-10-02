@@ -196,7 +196,6 @@
     [cell setHidden:NO];
     // Configure the cell...
     if (cell == nil) {
-        NSLog(@"Shouldnt be here!!!!!!!!!!!");
 
         cell = [[SpacedUITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"eq_cellid"];
 
@@ -233,7 +232,9 @@
         //cell.answerCheckImage.hidden = YES;
         cell.answerActivityIndicator.hidden = YES;
     }
-    
+    if(_viewMode == VIEWMODE_EDIT_QUESTION && _currentQuestion.correctAnswer == indexPath.row/2) {
+        cell.checkButton.hidden = NO;
+    }
     //cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue Thin" size:38];
     
     //NSIndexPath *temp = [tableView indexPathForSelectedRow];
@@ -241,6 +242,22 @@
         if([_currentQuestion getAnswerCount] > (int)indexPath.row/2) {
             cell.answerTextField.alpha = 1.0;
             cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
+            cell.checkOutline.hidden = NO;
+            cell.checkOutline.enabled = YES;
+            
+            cell.checkButton.hidden = YES;
+            cell.checkButton.enabled = NO;
+            //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //cell.contentView.userInteractionEnabled = NO;
+            //[cell setUserInteractionEnabled:NO];
+            [cell setEditing:NO];
+            if(indexPath.row/2 == _currentQuestion.correctAnswer) {
+                cell.checkButton.hidden = NO;
+                cell.checkButton.enabled = YES;
+                cell.checkOutline.hidden = YES;
+            }
+            //else
+             //   [cell.checkButton setAlpha:0.0005];
         }
         else {
             cell.textLabel.text = @"";
@@ -283,6 +300,7 @@
     
     
 }
+
 
 -(void)moveToNextQuestion {
     
@@ -502,6 +520,25 @@
         NSLog(@"connected1");
     }
 
+}
+
+- (IBAction)checkButtonPressed:(id)sender {
+    NSLog(@"check button pressed!");
+
+    
+    UIView *parentCell = [[[sender superview] superview] superview];
+    UIView *parentView = [[parentCell superview] superview];
+    UITableView *tableView = (UITableView *)parentView;
+    NSIndexPath *indexPath = [tableView indexPathForCell:(UITableViewCell *)parentCell];
+    
+    NSLog(@"indexPath = %zd", indexPath.row/2);
+    
+    _currentQuestion.correctAnswer = (int)indexPath.row/2;
+    [_tableView reloadData];
+}
+
+- (IBAction)checkButtonOutlinePressed:(id)sender {
+    NSLog(@"check button outline pressed!");
 }
 
 @end

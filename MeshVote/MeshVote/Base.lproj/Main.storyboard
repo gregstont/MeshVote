@@ -207,8 +207,8 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="0.96638668401756822" blue="0.93985000713315903" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Test" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Mgn-fd-oMi">
-                                                    <rect key="frame" x="37" y="-2" width="243" height="37"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Test" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mgn-fd-oMi">
+                                                    <rect key="frame" x="37" y="-2" width="205" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
@@ -218,22 +218,27 @@
                                                     <rect key="frame" x="250" y="7" width="20" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon_outline130.png" translatesAutoresizingMaskIntoConstraints="NO" id="D9t-oE-YUJ">
-                                                    <rect key="frame" x="248" y="5" width="25" height="25"/>
+                                                <button hidden="YES" opaque="NO" alpha="0.29999999999999966" contentMode="scaleAspectFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oV8-b3-ACt">
+                                                    <rect key="frame" x="241" y="-3" width="39" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.8500000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="sU6-w3-FEa">
-                                                    <rect key="frame" x="248" y="5" width="25" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
+                                                    <inset key="contentEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
+                                                    <state key="normal" title="Button" image="check_icon_outline130.png">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="checkButtonOutlinePressed:" destination="9vv-Mo-udS" eventType="touchUpInside" id="qIN-jS-Ney"/>
+                                                        <action selector="checkButtonPressed:" destination="9vv-Mo-udS" eventType="touchUpInside" id="KHi-hj-eag"/>
+                                                    </connections>
+                                                </button>
                                                 <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AV7-PU-TiH">
-                                                    <rect key="frame" x="248" y="5" width="25" height="25"/>
+                                                    <rect key="frame" x="241" y="-3" width="39" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <inset key="contentEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
                                                     <state key="normal" title="Button" image="check_icon128x128.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="checkClicked:" destination="i1d-mu-Tz7" eventType="touchUpInside" id="r8E-vR-u9X"/>
+                                                        <action selector="checkButtonPressed:" destination="9vv-Mo-udS" eventType="touchUpInside" id="xh6-9s-bft"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -242,11 +247,10 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="answerActivityIndicator" destination="rJj-yf-JaR" id="RUi-JF-mMw"/>
-                                            <outlet property="answerCheckImage" destination="sU6-w3-FEa" id="G89-qJ-XzZ"/>
                                             <outlet property="answerChoiceLetter" destination="Xsy-UX-D3s" id="8yE-lK-kY3"/>
                                             <outlet property="answerTextField" destination="Mgn-fd-oMi" id="VKs-Ki-XGP"/>
                                             <outlet property="checkButton" destination="AV7-PU-TiH" id="UXI-nB-8CW"/>
-                                            <outlet property="checkOutline" destination="D9t-oE-YUJ" id="ckC-91-DLR"/>
+                                            <outlet property="checkOutline" destination="oV8-b3-ACt" id="OcN-it-q8A"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

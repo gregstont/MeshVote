@@ -37,5 +37,13 @@
 }
 
 - (IBAction)checkClicked:(id)sender {
+    
+    /*CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        NSLog(@"check indexPath clicked:%zd", indexPath.row);
+    }
+     */
 }
 @end

@@ -54,6 +54,9 @@
 @property (nonatomic, strong) MCPeerID* host;
 
 - (IBAction)doneButtonPressed:(id)sender;
+//@property (weak, nonatomic) IBOutlet UIButton *checkButtonPressed;
+- (IBAction)checkButtonPressed:(id)sender;
+- (IBAction)checkButtonOutlinePressed:(id)sender;
 -(void)moveToNextQuestion;
 
 
