@@ -493,9 +493,16 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wO-od-crQ">
+                                                    <rect key="frame" x="35" y="11" width="225" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="answerLabel" destination="1wO-od-crQ" id="CVm-jN-w6j"/>
                                             <outlet property="answerLetterLabel" destination="zhx-0u-WLu" id="JE3-7n-CC9"/>
                                             <outlet property="answerPercentLabel" destination="Gof-Ly-Oro" id="VkO-aZ-t0X"/>
                                             <outlet property="answerProgress" destination="a0l-XF-7EN" id="n3i-XF-Zbk"/>
@@ -715,6 +722,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xDm-yi-HV8"/>
+        <segue reference="rVa-Vp-ZND"/>
     </inferredMetricsTieBreakers>
 </document>

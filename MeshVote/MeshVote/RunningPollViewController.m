@@ -64,6 +64,16 @@
     //this is used to track who voted for what, and used for displaying personal results at the end
     _voteHistory = [[NSMutableDictionary alloc] init];
     
+    for(NSString* peerName in _peerList) {
+        
+        NSLog(@"adding peer to vote history");
+        NSMutableArray *newPeerHistory = [[NSMutableArray alloc] initWithCapacity:[_questionSet getQuestionCount] ];
+        for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
+            [newPeerHistory addObject:[NSNumber numberWithInt:-1]];
+        }
+        [_voteHistory setObject:newPeerHistory forKey:peerName];
+    }
+    
     
     [_answerTable setDataSource:self];
     [_answerTable setDelegate:self];
@@ -290,7 +300,7 @@
         //NSLog(@"prepareForSegue");
         ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
-        NSLog(@"vote history cout:%zd", [_voteHistory count]);
+        NSLog(@"vote history cout:%lu", (unsigned long)_voteHistory.count);
         controller.voteHistory = _voteHistory;
     }
     //showQuestion
@@ -391,8 +401,11 @@
         
         [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
         
+        
+        NSLog(@"HEREEEEE1");
         //add peer to the vote history if not already there
         if([_voteHistory objectForKey:peerID.displayName] == nil) { //add peer
+            NSLog(@"adding peer to vote history");
             NSMutableArray *newPeerHistory = [[NSMutableArray alloc] initWithCapacity:[_questionSet getQuestionCount] ];
             for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
                 [newPeerHistory addObject:[NSNumber numberWithInt:-1]];
