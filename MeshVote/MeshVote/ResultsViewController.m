@@ -160,7 +160,7 @@
         //NSLog(@"name:%@ score:%f", key, [[[_peerResults allKeys] objectAtIndex:indexPath.row] doubleValue]);
         NSString* key = [[_peerResults allKeys] objectAtIndex:indexPath.row];
         newPercent = [[_peerResults objectForKey:key] doubleValue]; //TODO: dont use allkeys here
-        cell.answerLabel.text = key;
+        cell.answerLabel.text = [key substringToIndex:[key length] - 6];
         cell.answerLabel.hidden = NO;
         
     }
