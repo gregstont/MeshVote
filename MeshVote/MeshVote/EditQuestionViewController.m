@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) Colors* colors;
 
-
+@property (nonatomic, strong) NSNumberFormatter* numberFormatter;
 @end
 
 @implementation EditQuestionViewController
@@ -38,6 +38,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //time input stuff
+    self.numberFormatter = [[NSNumberFormatter alloc] init];
+    [self.numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
+    [self.numberFormatter setGroupingSize:2];
+    [self.numberFormatter setGroupingSeparator:@":"];
+    [self.numberFormatter setUsesGroupingSeparator:YES];
+    [self.numberFormatter setMaximumFractionDigits:0];
+    [self.numberFormatter setMinimumIntegerDigits:3];
+    [self.numberFormatter setMaximumIntegerDigits:3];
+    
+    
+    
+    
+    
+    
     //_currentQuestionNumber = 0;
     _colors = [[Colors alloc] init];
     _currentAnswer = -1;
@@ -69,6 +85,15 @@
         _currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
         [_questionTextLabel setText:_currentQuestion.questionText];
         [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1]];
+        
+        NSInteger time = _currentQuestion.timeLimit;
+        //NSInteger hours = (time / 3600) % 3600;
+        NSInteger minutes = (time / 60) % 60;
+        NSInteger seconds = time % 60;
+        
+        self.timeTextField.delegate = self;
+        self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02ld%02ld", minutes, seconds] doubleValue])];
+        
         //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
     }
     else { // VIEWMODE_ASK_QUESTION
@@ -77,10 +102,11 @@
         //send action-ack
         [Message sendMessageType:MSG_ACTION withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
         
-        NSLog(@"here");
+        [_timeTextField setBackgroundColor:[UIColor clearColor]];
+        //NSLog(@"here");
         //_questionSet = (QuestionSet*)_questionSet;
         _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
-        NSLog(@"not here");
+        //NSLog(@"not here");
         
         [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1]];
         //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
@@ -116,6 +142,8 @@
     [_questionTextLabel setDelegate:self];
 
     _session.delegate = self;
+    
+    //[_timeTextField setDelegate:self];
     
     //NSLog(@"selectedQuestion:%d", temp);
 }
@@ -408,7 +436,39 @@
 {
     // Indicate we're done with the keyboard. Make it go away.
     [textField resignFirstResponder];
+    NSLog(@"text:%@", [textField.text stringByReplacingOccurrencesOfString:@":" withString:@""]);
+    
+    int time = [[textField.text stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
+    
+    int min = (time / 100);
+    int seconds = time % 100;
+    if(seconds > 59) {
+        ++min;
+        seconds -= 60;
+    }
+    
+    
+    _currentQuestion.timeLimit = min * 60 + seconds;
+    
+    self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02d%02d", min, seconds] doubleValue])];
+
+    
     return YES;
+}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementString {
+    NSString *originalNumber = textField.text;
+    if([replacementString isEqualToString:@""]) {
+        originalNumber = [originalNumber stringByReplacingCharactersInRange:range withString:@""];
+    } else {
+        originalNumber = [originalNumber stringByAppendingString:replacementString];
+    }
+    originalNumber = [originalNumber stringByReplacingOccurrencesOfString:@":" withString:@""];
+    NSString *newString = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:[originalNumber doubleValue]]];
+    self.timeTextField.text = newString;
+    
+    return NO;
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     [_doneButton setTitle:@"Done"];
@@ -431,9 +491,16 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     //if([textView. isEqualToString:@)
+    
     [_doneButton setTitle:@"Save"];
-    NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
-    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
+    
+    if(textField.tag == 2) { //done editing time
+        NSLog(@"saving time:%@",textField.text);
+        
+        
+        //return;
+    }
+    else if(_viewMode == VIEWMODE_ADD_NEW_QUESTION && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
         [_currentQuestion addAnswer:textField.text];
         [UIView beginAnimations:@"registerScroll" context:NULL];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -441,16 +508,20 @@
         //self.
         self.view.transform = CGAffineTransformMakeTranslation(0, 0);
         [UIView commitAnimations];
+        
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
     else { //editing an existing answer
         
     }
+
+
     
     //[_currentQuestion setQuestionText:textView.text];
-    NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
-    NSLog(@"added answer:%@", textField.text);
+    //NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
+    //NSLog(@"added answer:%@", textField.text);
     //[self.tableView reloadData];
-    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 //
