@@ -11,6 +11,8 @@
 #import "QuestionViewControllerTableViewController.h"
 #import "JoinViewControllerTableViewController.h"
 
+#import "PollListViewController.h"
+
 @interface MeshVoteViewController ()
 
 @end
@@ -79,9 +81,9 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
-    if([segue.identifier isEqualToString:@"createSessionSeque"]){
+    if([segue.identifier isEqualToString:@"showPollListSegue"]){
         //NSLog(@"prepareForSegue");
-        QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
+        PollListViewController *controller = (PollListViewController *)segue.destinationViewController;
         controller.userName = _nameInput.text;
     }
     else if([segue.identifier isEqualToString:@"joinSessionSegue"]){

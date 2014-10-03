@@ -51,7 +51,7 @@
                                 </state>
                                 <connections>
                                     <action selector="createSession:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rr9-EH-zum"/>
-                                    <segue destination="Fb5-mu-rlG" kind="push" identifier="createSessionSeque" id="qPS-IC-LHZ"/>
+                                    <segue destination="3hU-87-gKP" kind="push" identifier="showPollListSegue" id="wfb-Yw-aJy"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_new.png" translatesAutoresizingMaskIntoConstraints="NO" id="Izv-U5-VBX">
@@ -163,7 +163,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWl-MV-N47" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912" y="852"/>
+            <point key="canvasLocation" x="2191" y="811"/>
         </scene>
         <!--Edit Question View Controller-->
         <scene sceneID="ITX-Hu-gHA">
@@ -298,7 +298,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2746" y="376"/>
+            <point key="canvasLocation" x="2798" y="376"/>
         </scene>
         <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
@@ -433,7 +433,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7J4-eu-qPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2746" y="1067"/>
+            <point key="canvasLocation" x="2798" y="1067"/>
         </scene>
         <!--Results View Controller-->
         <scene sceneID="WJr-eg-z4A">
@@ -580,7 +580,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kwM-3a-xhW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3199" y="1067"/>
+            <point key="canvasLocation" x="3251" y="1067"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5X-sh-eJD">
@@ -677,6 +677,129 @@
             </objects>
             <point key="canvasLocation" x="1095" y="1144"/>
         </scene>
+        <!--Poll List View Controller-->
+        <scene sceneID="XgJ-Y5-O6Z">
+            <objects>
+                <viewController id="3hU-87-gKP" customClass="PollListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1oG-Zn-LID"/>
+                        <viewControllerLayoutGuide type="bottom" id="cYG-ob-na5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WtM-Ja-lrV">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TEj-pg-CpW">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pollListCell" id="BGG-JC-IT7">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BGG-JC-IT7" id="jy0-bq-Lzk">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Fb5-mu-rlG" kind="push" identifier="showPollQuestionSegue" id="gDE-5u-uuM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3ej-E3-uF0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="vls-Ep-hby">
+                            <connections>
+                                <segue destination="DF0-Ki-3Do" kind="push" id="fec-sE-lwI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="TEj-pg-CpW" id="zvB-hZ-vFk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r4d-9R-Ryv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1719" y="811"/>
+        </scene>
+        <!--Create Poll View Controller-->
+        <scene sceneID="Hfj-e1-lrd">
+            <objects>
+                <viewController id="DF0-Ki-3Do" customClass="CreatePollViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cOz-KH-qZJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="yhq-Qu-qoq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vWO-0K-1qz">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xa8-Xs-nA7">
+                                <rect key="frame" x="20" y="39" width="52" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Quiz 1" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ma2-CN-nef">
+                                <rect key="frame" x="158" y="35" width="132" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1b8-sp-Nny">
+                                <rect key="frame" x="20" y="101" width="57" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-WS-MU5">
+                                <rect key="frame" x="241" y="93" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5499999999999996" contentMode="scaleToFill" fixedFrame="YES" text="Poll mode does not involve correct answers. Quiz mode has correct answers. This setting will affect post-results." translatesAutoresizingMaskIntoConstraints="NO" id="aiM-bE-iTe">
+                                <rect key="frame" x="40" y="124" width="240" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Show results" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmO-cq-qHN">
+                                <rect key="frame" x="20" y="220" width="103" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="09w-vA-YnZ">
+                                <rect key="frame" x="241" y="212" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5499999999999996" contentMode="scaleToFill" fixedFrame="YES" text="Enabling this setting will allow all participants to view the statistics of the poll and/or quiz on completion." translatesAutoresizingMaskIntoConstraints="NO" id="2H9-0a-5FB">
+                                <rect key="frame" x="40" y="243" width="240" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.86240433673469385" green="0.86240433673469385" blue="0.86240433673469385" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="6Cg-gm-CM9">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="Gfl-1g-n0X">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="9vv-Mo-udS" id="z1E-MS-vKd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zw6-7I-2IB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2191" y="1509"/>
+        </scene>
         <!--Join View Controller Table View Controller - Join session-->
         <scene sceneID="QQE-lV-kzY">
             <objects>
@@ -763,7 +886,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YKf-nY-giq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2139" y="114"/>
+            <point key="canvasLocation" x="2191" y="114"/>
         </scene>
     </scenes>
     <resources>
@@ -778,6 +901,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rVa-Vp-ZND"/>
+        <segue reference="pkq-jV-hku"/>
     </inferredMetricsTieBreakers>
 </document>

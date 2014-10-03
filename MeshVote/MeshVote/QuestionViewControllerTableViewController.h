@@ -16,6 +16,11 @@
 - (IBAction)playPressed:(UIButton *)sender;
 
 @property (nonatomic, strong) NSString* userName;
+@property (nonatomic, NS_NONATOMIC_IOSONLY) MCSession *session;
+
+@property (nonatomic, strong) NSMutableDictionary *peerList;
+
+@property (nonatomic, strong) QuestionSet *questionSet; //change this later
 
 
 @end

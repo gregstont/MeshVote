@@ -44,6 +44,8 @@
 		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
 		34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */; };
 		34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */; };
+		34F22D3919DE6509004C904F /* CreatePollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F22D3819DE6509004C904F /* CreatePollViewController.m */; };
+		34F22D3C19DE6936004C904F /* PollListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F22D3B19DE6936004C904F /* PollListViewController.m */; };
 		34FEEE3919D7E0B0000E128F /* RunningAnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FEEE3819D7E0B0000E128F /* RunningAnswerTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +117,10 @@
 		34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewControllerTableViewController.m; sourceTree = "<group>"; };
 		34E3D78019C956300063A4F4 /* JoinViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinViewControllerTableViewController.h; sourceTree = "<group>"; };
 		34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinViewControllerTableViewController.m; sourceTree = "<group>"; };
+		34F22D3719DE6509004C904F /* CreatePollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePollViewController.h; sourceTree = "<group>"; };
+		34F22D3819DE6509004C904F /* CreatePollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePollViewController.m; sourceTree = "<group>"; };
+		34F22D3A19DE6936004C904F /* PollListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollListViewController.h; sourceTree = "<group>"; };
+		34F22D3B19DE6936004C904F /* PollListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollListViewController.m; sourceTree = "<group>"; };
 		34FEEE3719D7E0B0000E128F /* RunningAnswerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningAnswerTableViewCell.h; sourceTree = "<group>"; };
 		34FEEE3819D7E0B0000E128F /* RunningAnswerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningAnswerTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,6 +214,10 @@
 				34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */,
 				34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */,
 				34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */,
+				34F22D3A19DE6936004C904F /* PollListViewController.h */,
+				34F22D3B19DE6936004C904F /* PollListViewController.m */,
+				34F22D3719DE6509004C904F /* CreatePollViewController.h */,
+				34F22D3819DE6509004C904F /* CreatePollViewController.m */,
 			);
 			path = MeshVote;
 			sourceTree = "<group>";
@@ -389,6 +399,7 @@
 				34AC916419DB660200D8BE5B /* ResultsViewController.m in Sources */,
 				340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */,
 				34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */,
+				34F22D3919DE6509004C904F /* CreatePollViewController.m in Sources */,
 				3424FE0419C806BA003C3BEE /* main.m in Sources */,
 				348A1DD519D87BF6002E6FAE /* Message.m in Sources */,
 				34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */,
@@ -400,6 +411,7 @@
 				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				340516A019CBE1B0004360E8 /* Question.m in Sources */,
 				3476719219DC9C4A005456D1 /* AboutViewController.m in Sources */,
+				34F22D3C19DE6936004C904F /* PollListViewController.m in Sources */,
 				340C245D19DBE21000F9EB94 /* Colors.m in Sources */,
 				3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */,
 				3405169D19CBE094004360E8 /* QuestionSet.m in Sources */,

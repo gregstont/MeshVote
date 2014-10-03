@@ -68,7 +68,7 @@
     //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
     bgLayer.frame = self.view.bounds;
     [self.view.layer insertSublayer:bgLayer atIndex:0];
-    _delegate = [self.navigationController.viewControllers objectAtIndex:1];
+    _delegate = [self.navigationController.viewControllers objectAtIndex:2]; //TODO: change this! bug waiting to happen
     
     _questionTextLabel.clipsToBounds = YES;
     _questionTextLabel.layer.cornerRadius = 3.0f;
@@ -80,6 +80,7 @@
         [_doneButton setTitle:@"Save"];
         [_doneButton setEnabled:YES];
         self.navigationItem.title = @"New question";
+        self.timeTextField.delegate = self;
     }
     else if(_viewMode == VIEWMODE_EDIT_QUESTION) { //edit existing question
         _currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
@@ -458,17 +459,22 @@
 
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementString {
-    NSString *originalNumber = textField.text;
-    if([replacementString isEqualToString:@""]) {
-        originalNumber = [originalNumber stringByReplacingCharactersInRange:range withString:@""];
-    } else {
-        originalNumber = [originalNumber stringByAppendingString:replacementString];
+    //NSLog(@"tag");
+    if(textField.tag == 2) {
+        NSLog(@"tag2");
+        NSString *originalNumber = textField.text;
+        if([replacementString isEqualToString:@""]) {
+            originalNumber = [originalNumber stringByReplacingCharactersInRange:range withString:@""];
+        } else {
+            originalNumber = [originalNumber stringByAppendingString:replacementString];
+        }
+        originalNumber = [originalNumber stringByReplacingOccurrencesOfString:@":" withString:@""];
+        NSString *newString = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:[originalNumber doubleValue]]];
+        self.timeTextField.text = newString;
+
+        return NO;
     }
-    originalNumber = [originalNumber stringByReplacingOccurrencesOfString:@":" withString:@""];
-    NSString *newString = [self.numberFormatter stringFromNumber:[NSNumber numberWithDouble:[originalNumber doubleValue]]];
-    self.timeTextField.text = newString;
-    
-    return NO;
+    return YES;
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     [_doneButton setTitle:@"Done"];

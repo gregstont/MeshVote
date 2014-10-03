@@ -16,12 +16,7 @@
 
 @interface QuestionViewControllerTableViewController ()
 
-@property (nonatomic, strong) QuestionSet *questionSet; //change this later
-@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
-@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
-@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
 
-@property (nonatomic, strong) NSMutableDictionary *peerList;
 
 @property (nonatomic) int selectedQuestion;
 @property (nonatomic, strong) UILabel *connectedPeersLabel;
@@ -64,10 +59,16 @@
 
     NSLog(@"question viewdidload, userName:%@", self.userName);
     
-    _questionSet = [[QuestionSet alloc] init];
-    _peerList = [[NSMutableDictionary alloc] init];
+    //preemptively send out this set to all peers anticipating this poll to start
+    if(_questionSet == nil)
+        NSLog(@"sdfsdfsdf");
+    _questionSet.messageType = MSG_QUESTION_SET;
+    [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
     
+    //_questionSet = [[QuestionSet alloc] init];
+    //_peerList = [[NSMutableDictionary alloc] init];
     
+    /*
     ////begin temporary debug stuff
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
@@ -91,7 +92,7 @@
     
     
     [_questionSet addQuestion:tempQuestion1];
-    [_questionSet addQuestion:tempQuestion2];
+    [_questionSet addQuestion:tempQuestion2];*/
       /*  [_questionSet addQuestion:tempQuestion2];
         [_questionSet addQuestion:tempQuestion2];
         [_questionSet addQuestion:tempQuestion2];
@@ -104,7 +105,7 @@
     
     //end temporaru debug stuff
 
-    
+    /*
     //create my (host) peerID
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
     _session = [[MCSession alloc] initWithPeer:me];
@@ -122,7 +123,7 @@
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:self.userName];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
-
+*/
     
     //create toolbar buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
@@ -149,8 +150,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     _session.delegate = self;
-    [self.navigationController setNavigationBarHidden:NO];
-    [self.navigationController setToolbarHidden:NO];
+    //[self.navigationController setNavigationBarHidden:NO];
+    //[self.navigationController setToolbarHidden:NO];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
@@ -158,14 +159,15 @@
 
 - (void)dealloc {
     NSLog(@"dealloc");
-    [_browser stopBrowsingForPeers];
-    [_advertiser stopAdvertisingPeer];
-    [_session disconnect];
+    //[_browser stopBrowsingForPeers];
+    //[_advertiser stopAdvertisingPeer];
+    //[_session disconnect];
 }
 
 
 - (IBAction)playPressed:(UIButton *)sender {
     NSLog(@"playPressed");
+    //TODO: verify evyerbody has the questionSet
     [self performSegueWithIdentifier:@"startPollSegue" sender:self];
     
 }
@@ -219,7 +221,7 @@
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     
     NSLog(@"FOUND PEER!! in QuestionView");
-    [_browser invitePeer:peerID toSession:_session withContext:nil timeout:17];
+    //[_browser invitePeer:peerID toSession:_session withContext:nil timeout:17];
     
 }
 

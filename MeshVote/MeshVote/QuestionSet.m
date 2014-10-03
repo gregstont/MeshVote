@@ -34,6 +34,7 @@
     if(self) {
         [super setMessageType:[decoder decodeIntForKey:@"messageType"]];
         _questions = [decoder decodeObjectForKey:@"questions"];
+        _name = [decoder decodeObjectForKey:@"name"];
     }
     
     return self;
@@ -43,6 +44,7 @@
     //NSLog(@"encode:%@", [super messageType]);
     [encoder encodeInt:[super messageType] forKey:@"messageType"];
     [encoder encodeObject:_questions forKey:@"questions"];
+    [encoder encodeObject:_name forKey:@"name"];
 }
 
 -(void)addQuestion:(Question*)question {

@@ -25,4 +25,6 @@
 
 -(int)getAnswerCountAtIndex:(int)index;
 
+@property (nonatomic, strong) NSString* name;
+
 @end
