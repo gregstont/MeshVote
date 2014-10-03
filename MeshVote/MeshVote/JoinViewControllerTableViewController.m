@@ -108,19 +108,36 @@
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return _sessionList.count;
+    return _sessionList.count + 1;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"sdfdsf");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCell" forIndexPath:indexPath];
     
     if(cell == nil) {
         NSLog(@"nil sessionNameCell");
     }
     
-    cell.textLabel.text = [_sessionList objectAtIndex:indexPath.row];
+    if(indexPath.row < _sessionList.count) {
+        cell.textLabel.text = [_sessionList objectAtIndex:indexPath.row];
+    }
+    else { //animated circle thing
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        cell.contentView.backgroundColor=[UIColor whiteColor];
+        [cell.contentView addSubview:spinner];
+        spinner.tag = 123;
+        CGRect _frame = [spinner frame];
+        _frame.origin.y = 10;
+        _frame.origin.x= 160-(_frame.size.width/2);
+        spinner.frame = _frame;
+        [spinner startAnimating];
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        
+        
+    }
     
     // Configure the cell...
     
