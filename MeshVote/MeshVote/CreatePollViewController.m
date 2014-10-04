@@ -121,5 +121,6 @@
 
 - (IBAction)saveButton:(id)sender {
     [_pollSet addObject:_tempQuestionSet];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end
