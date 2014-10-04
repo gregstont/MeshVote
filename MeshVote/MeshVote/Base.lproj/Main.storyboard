@@ -713,7 +713,7 @@
                     <navigationItem key="navigationItem" id="3ej-E3-uF0">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vls-Ep-hby">
                             <connections>
-                                <segue destination="DF0-Ki-3Do" kind="push" id="fec-sE-lwI"/>
+                                <segue destination="DF0-Ki-3Do" kind="push" identifier="createPollSegue" id="fec-sE-lwI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -746,7 +746,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Quiz 1" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ma2-CN-nef">
                                 <rect key="frame" x="158" y="35" width="132" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="19"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1b8-sp-Nny">
@@ -755,14 +755,24 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="poll" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ycl-d9-Wmf">
+                                <rect key="frame" x="169" y="97" width="57" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-WS-MU5">
                                 <rect key="frame" x="241" y="93" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="modeSwitch:" destination="DF0-Ki-3Do" eventType="valueChanged" id="kCT-wP-2oX"/>
+                                </connections>
                             </switch>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5499999999999996" contentMode="scaleToFill" fixedFrame="YES" text="Poll mode does not involve correct answers. Quiz mode has correct answers. This setting will affect post-results." translatesAutoresizingMaskIntoConstraints="NO" id="aiM-bE-iTe">
-                                <rect key="frame" x="40" y="124" width="240" height="80"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5499999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aiM-bE-iTe">
+                                <rect key="frame" x="40" y="124" width="240" height="82"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <string key="text">Poll mode does not involve correct answers. Quiz mode has correct answers. This setting will affect how the results are displayed at the end.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -775,9 +785,32 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="09w-vA-YnZ">
                                 <rect key="frame" x="241" y="212" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="showResultsSwitch:" destination="DF0-Ki-3Do" eventType="valueChanged" id="JU2-eB-hWa"/>
+                                </connections>
                             </switch>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5499999999999996" contentMode="scaleToFill" fixedFrame="YES" text="Enabling this setting will allow all participants to view the statistics of the poll and/or quiz on completion." translatesAutoresizingMaskIntoConstraints="NO" id="2H9-0a-5FB">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5499999999999996" contentMode="scaleToFill" fixedFrame="YES" text="Enabling this setting will allow all participants to view the statistics of the poll or quiz on completion." translatesAutoresizingMaskIntoConstraints="NO" id="2H9-0a-5FB">
                                 <rect key="frame" x="40" y="243" width="240" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share peer scores" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="np8-TS-dfK">
+                                <rect key="frame" x="20" y="322" width="149" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YcR-2T-J5b">
+                                <rect key="frame" x="241" y="314" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="shareScoresSwitch:" destination="DF0-Ki-3Do" eventType="valueChanged" id="0Sj-Kp-Sox"/>
+                                </connections>
+                            </switch>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.55000001192092896" contentMode="scaleToFill" fixedFrame="YES" text="Enabling this setting will allow all quiz participants to view the score of other peers." translatesAutoresizingMaskIntoConstraints="NO" id="sqn-Ai-3i8">
+                                <rect key="frame" x="40" y="345" width="240" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="14"/>
@@ -790,11 +823,18 @@
                     <navigationItem key="navigationItem" id="6Cg-gm-CM9">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="Gfl-1g-n0X">
                             <connections>
-                                <action selector="doneButtonPressed:" destination="9vv-Mo-udS" id="z1E-MS-vKd"/>
+                                <action selector="saveButton:" destination="DF0-Ki-3Do" id="3np-kc-OdZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="modeSwitchOutlet" destination="dqb-WS-MU5" id="VBA-BX-CG2"/>
+                        <outlet property="modeSwitchText" destination="Ycl-d9-Wmf" id="Cy8-7s-fdE"/>
+                        <outlet property="pollNameTextField" destination="ma2-CN-nef" id="n5R-WU-byt"/>
+                        <outlet property="shareScoresOutlet" destination="YcR-2T-J5b" id="DL6-SU-buP"/>
+                        <outlet property="showResultsOutlet" destination="09w-vA-YnZ" id="JWN-nz-1xe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zw6-7I-2IB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

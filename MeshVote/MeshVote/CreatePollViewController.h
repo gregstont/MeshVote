@@ -8,7 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "BackgroundLayer.h"
+#import "QuestionSet.h"
 
-@interface CreatePollViewController : UIViewController
+@interface CreatePollViewController : UIViewController <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *pollNameTextField;
+
+@property (nonatomic, strong) NSMutableArray *pollSet; //handed down from PollListVC
+
+
+@property (weak, nonatomic) IBOutlet UISwitch *modeSwitchOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *modeSwitchText;
+@property (weak, nonatomic) IBOutlet UISwitch *showResultsOutlet;
+@property (weak, nonatomic) IBOutlet UISwitch *shareScoresOutlet;
+
+
+
+- (IBAction)saveButton:(id)sender;
+- (IBAction)modeSwitch:(id)sender;
+- (IBAction)showResultsSwitch:(id)sender;
+- (IBAction)shareScoresSwitch:(id)sender;
+
+
 
 @end

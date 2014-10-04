@@ -10,6 +10,8 @@
 
 @interface CreatePollViewController ()
 
+@property (nonatomic, strong) QuestionSet* tempQuestionSet;
+
 @end
 
 @implementation CreatePollViewController
@@ -39,6 +41,24 @@
     bgLayer.frame = temp;//self.view.bounds;
     //bgLayer.frame.size.height = 990;
     [self.view.layer insertSublayer:bgLayer atIndex:0];
+    
+    _tempQuestionSet = [[QuestionSet alloc] init];
+    _tempQuestionSet.isQuiz = YES;
+    _tempQuestionSet.showResults = YES;
+    _tempQuestionSet.shareScores = NO;
+    
+    if(_tempQuestionSet.isQuiz)
+        [_modeSwitchText setText:@"quiz"];
+    else
+        [_modeSwitchText setText:@"poll"];
+    
+    
+    _pollNameTextField.delegate = self;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setToolbarHidden:YES];
 }
 
 
@@ -59,4 +79,47 @@
 }
 */
 
+//
+// UITextFieldDelegate
+//
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    // Indicate we're done with the keyboard. Make it go away.
+    [textField resignFirstResponder];
+    return YES;
+}
+/*
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if([textField.text isEqualToString:@"Name"]) {
+        textField.text = @"";
+    }
+    return YES;
+}
+ */
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    //if([textView. isEqualToString:@)
+    _tempQuestionSet.name = textField.text;
+}
+
+- (IBAction)modeSwitch:(id)sender {
+    _tempQuestionSet.isQuiz = [_modeSwitchOutlet isOn];
+    if(_tempQuestionSet.isQuiz)
+        [_modeSwitchText setText:@"quiz"];
+    else
+        [_modeSwitchText setText:@"poll"];
+    
+}
+
+- (IBAction)showResultsSwitch:(id)sender {
+    _tempQuestionSet.showResults = [_showResultsOutlet isOn];
+}
+
+- (IBAction)shareScoresSwitch:(id)sender {
+    _tempQuestionSet.shareScores = [_shareScoresOutlet isOn];
+}
+
+- (IBAction)saveButton:(id)sender {
+    [_pollSet addObject:_tempQuestionSet];
+}
 @end

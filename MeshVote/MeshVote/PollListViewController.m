@@ -9,6 +9,7 @@
 #import "PollListViewController.h"
 #import "QuestionSet.h"
 #import "QuestionViewControllerTableViewController.h"
+#import "CreatePollViewController.h"
 
 @interface PollListViewController ()
 
@@ -147,6 +148,11 @@
         controller.questionSet = [_pollSet objectAtIndex:0]; //TODO: change
         controller.session = _session;
         controller.peerList = _peerList;
+    }
+    else if([segue.identifier isEqualToString:@"createPollSegue"]){
+        //NSLog(@"prepareForSegue");
+        CreatePollViewController *controller = (CreatePollViewController *)segue.destinationViewController;
+        controller.pollSet = _pollSet;
     }
 }
 

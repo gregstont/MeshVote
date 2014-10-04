@@ -35,6 +35,9 @@
         [super setMessageType:[decoder decodeIntForKey:@"messageType"]];
         _questions = [decoder decodeObjectForKey:@"questions"];
         _name = [decoder decodeObjectForKey:@"name"];
+        _isQuiz = [decoder decodeBoolForKey:@"isQuiz"];
+        _showResults = [decoder decodeBoolForKey:@"showResults"];
+        _shareScores = [decoder decodeBoolForKey:@"shareScores"];
     }
     
     return self;
@@ -45,6 +48,9 @@
     [encoder encodeInt:[super messageType] forKey:@"messageType"];
     [encoder encodeObject:_questions forKey:@"questions"];
     [encoder encodeObject:_name forKey:@"name"];
+    [encoder encodeBool:_isQuiz forKey:@"isQuiz"];
+    [encoder encodeBool:_showResults forKey:@"showResults"];
+    [encoder encodeBool:_shareScores forKey:@"shareScores"];
 }
 
 -(void)addQuestion:(Question*)question {

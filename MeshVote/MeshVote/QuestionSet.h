@@ -25,6 +25,11 @@
 
 -(int)getAnswerCountAtIndex:(int)index;
 
+
+
 @property (nonatomic, strong) NSString* name;
+@property (nonatomic) BOOL isQuiz; //otherwise poll
+@property (nonatomic) BOOL showResults;
+@property (nonatomic) BOOL shareScores;
 
 @end
