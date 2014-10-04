@@ -16,30 +16,13 @@
 #define VIEWMODE_EDIT_QUESTION      1
 #define VIEWMODE_ASK_QUESTION       2
 
-@class EditQuestionViewController;
-@protocol EditQuestionViewControllerDelegate <NSObject>
-
--(Question*)getQuestionAtIndex:(int)index;
-
--(NSString*)getQuestionTextAtIndex:(int)index;
-
--(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex;
-
--(void)addQuestionToSet:(Question*)question;
-
--(int)getAnswerCountAtIndex:(int)index;
-
--(int)getSelectedQuestion;
-
-
-@end
 
 
 @interface EditQuestionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UITextFieldDelegate, MCSessionDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *questionTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *questionNumberLabel;
-@property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
+//@property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UITextField *timeTextField;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;

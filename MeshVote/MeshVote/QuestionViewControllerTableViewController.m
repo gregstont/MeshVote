@@ -184,37 +184,6 @@
 
 
 //
-//  EditQuestionViewControllerDelegate
-//
-
--(NSString*)getQuestionTextAtIndex:(int)index {
-    return [_questionSet getQuestionTextAtIndex:index];
-}
-
--(NSString*)getAnswerTextAtIndex:(int)index andAnswerIndex:(int)ansIndex {
-    //NSLog(@"getting answer text");
-    return [_questionSet getAnswerTextAtIndex:index andAnswerIndex:ansIndex];
-}
-
--(int)getAnswerCountAtIndex:(int)index {
-    return [_questionSet getAnswerCountAtIndex:index];
-}
-
--(int)getSelectedQuestion {
-    return _selectedQuestion;
-}
-
--(Question*)getQuestionAtIndex:(int)index {
-    return  [_questionSet getQuestionAtIndex:index];
-}
-
--(void)addQuestionToSet:(Question*)question {
-    [_questionSet addQuestion:question];
-}
-
-
-
-//
 //  MCNearbyServiceBrowserDelegate
 //
 
@@ -421,11 +390,14 @@
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
+        controller.questionSet = _questionSet;
+        //controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
     else if([segue.identifier isEqualToString:@"showQuestion"]){
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_EDIT_QUESTION;
+        controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
     //showQuestion
     

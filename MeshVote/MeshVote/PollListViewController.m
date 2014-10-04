@@ -57,6 +57,7 @@
     [tempQuestion1 addAnswer:@"stripes"];
     [tempQuestion1 setCorrectAnswer:2];
     [tempQuestion1 setTimeLimit:5];
+    [tempQuestion1 setQuestionNumber:1];
     
     
     Question *tempQuestion2 = [[Question alloc] init];
@@ -68,6 +69,7 @@
     [tempQuestion2 addAnswer:@"banana pie"];
     [tempQuestion2 setCorrectAnswer:1];
     [tempQuestion2 setTimeLimit:5];
+    [tempQuestion2 setQuestionNumber:2];
     
     
     [tt addQuestion:tempQuestion1];

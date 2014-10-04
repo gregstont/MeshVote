@@ -68,13 +68,14 @@
     //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
     bgLayer.frame = self.view.bounds;
     [self.view.layer insertSublayer:bgLayer atIndex:0];
-    _delegate = [self.navigationController.viewControllers objectAtIndex:2]; //TODO: change this! bug waiting to happen
+    //_delegate = [self.navigationController.viewControllers objectAtIndex:2]; //TODO: change this! bug waiting to happen
     
     _questionTextLabel.clipsToBounds = YES;
     _questionTextLabel.layer.cornerRadius = 3.0f;
     
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //create new question
         _currentQuestion = [[Question alloc] init];
+        _currentQuestion.questionNumber = [_questionSet getQuestionCount] + 1;
         [_questionTextLabel setText:@"Question..."];
         //[_doneButton setHidden:NO];
         [_doneButton setTitle:@"Save"];
@@ -83,9 +84,9 @@
         self.timeTextField.delegate = self;
     }
     else if(_viewMode == VIEWMODE_EDIT_QUESTION) { //edit existing question
-        _currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
+        //_currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
         [_questionTextLabel setText:_currentQuestion.questionText];
-        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1]];
+        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestion.questionNumber]];
         
         NSInteger time = _currentQuestion.timeLimit;
         //NSInteger hours = (time / 3600) % 3600;
@@ -401,7 +402,8 @@
     }
     else { //save/add new question
         NSLog(@"submitted:%@", _currentQuestion.questionText);
-        [self.delegate addQuestionToSet:_currentQuestion];
+        [_questionSet addQuestion:_currentQuestion];
+        //[self.delegate addQuestionToSet:_currentQuestion];
         [self.navigationController popViewControllerAnimated:YES];
         
         //TODO: need to resend questionset to connected peers!

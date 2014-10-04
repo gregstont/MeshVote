@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSMutableArray *answerText;
 @property (nonatomic, strong) NSMutableArray *voteCounts;
 @property (nonatomic, assign) int voteCount;
-@property (nonatomic, assign) int questionNum;
+//@property (nonatomic, assign) int questionNum;
 @property (nonatomic, assign) int correctAnswer;
 @property (nonatomic, assign) int timeLimit;
 @property (nonatomic, assign) int givenAnswer; //used on client side only for post-results

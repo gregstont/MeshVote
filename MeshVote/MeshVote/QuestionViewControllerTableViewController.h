@@ -10,7 +10,7 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "EditQuestionViewController.h"
 
-@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, EditQuestionViewControllerDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
 
 - (IBAction)addNewQuestion:(id)sender;
 - (IBAction)playPressed:(UIButton *)sender;
