@@ -1,6 +1,5 @@
 
 
-
 //
 //  RunningPollViewController.m
 //  MeshVote
@@ -27,11 +26,17 @@
 
 @property (nonatomic) int voteCount;
 
-@property (nonatomic) BOOL pollRunning;
+@property (atomic) BOOL pollRunning;
 
 @property (nonatomic, strong) Colors *colors;
 
 @property (nonatomic, strong) NSMutableDictionary* voteHistory;
+
+@property (nonatomic, strong) UIBarButtonItem *rewind;
+@property (nonatomic, strong) UIBarButtonItem *play;
+@property (nonatomic, strong) UIBarButtonItem *pause;
+@property (nonatomic, strong) UIBarButtonItem *forward;
+
 
 
 @end
@@ -85,17 +90,19 @@
     
     // Do any additional setup after loading the view.
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(rewindPressed:)];
-    UIBarButtonItem *play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(playPressed:)];
-    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(forwardPressed:)];
-    forward.enabled = NO;
+    _rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(rewindPressed:)];
+    _play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPressed:)];
+    _pause = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(pausePressed:)];
+    _forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(forwardPressed:)];
+    //[play setStyle:UIBarButtonSystemItemPlay];
+    _rewind.enabled = NO;
     
     //[_currentQuestion.timeLimit ;
     
     
     
     
-    NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
+    NSArray *buttonItems = [NSArray arrayWithObjects:spacer, _rewind, spacer, _pause, spacer, _forward, spacer, nil];
     self.toolbarItems = buttonItems;
     
     
@@ -152,7 +159,7 @@
     [_timeProgressLabel setBackBorderWidth:11];
     //[_timeProgressLabel setClockWise:NO];
 
-    [self beginPoll];
+    [self beginPollAndClearVotes:YES];
 }
 - (void)viewWillAppear:(BOOL)animated {
     _session.delegate = self;
@@ -172,19 +179,21 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)beginPoll {
+-(void)beginPollAndClearVotes:(BOOL)clear {
     NSLog(@"beginPoll, timeRem:%d", _timeRemaining);
-    _voteCount = 0;
-    _currentQuestion.voteCounts = [[NSMutableArray alloc] initWithCapacity:[_currentQuestion getAnswerCount]];
-    for(int i = 0; i < [_currentQuestion getAnswerCount]; ++i) {
-        [_currentQuestion.voteCounts addObject:[NSNumber numberWithInt:0]];
-    }
-    
-    //clear the answers for connected peers
-    for (NSString* key in [_peerList allKeys]) {
-        [_peerList setObject:[NSNumber numberWithInt:-1] forKey:key];
-        //id value = [xyz objectForKey:key];
-        // do stuff
+    if(clear) {
+        _voteCount = 0;
+        _currentQuestion.voteCounts = [[NSMutableArray alloc] initWithCapacity:[_currentQuestion getAnswerCount]];
+        for(int i = 0; i < [_currentQuestion getAnswerCount]; ++i) {
+            [_currentQuestion.voteCounts addObject:[NSNumber numberWithInt:0]];
+        }
+        
+        //clear the answers for connected peers
+        for (NSString* key in [_peerList allKeys]) {
+            [_peerList setObject:[NSNumber numberWithInt:-1] forKey:key];
+            //id value = [xyz objectForKey:key];
+            // do stuff
+        }
     }
     
     
@@ -227,6 +236,10 @@
             // wait 5 seconds
             while(_timeRemaining > 0 && _pollRunning) {
                 [NSThread sleepForTimeInterval:1.0f];
+                
+                if(_pollRunning == NO)
+                    return;
+                
                 --_timeRemaining;
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     // GUI thread
@@ -253,7 +266,7 @@
                 ++_currentQuestionNumber;
                 _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
                 _timeRemaining = _currentQuestion.timeLimit;
-                [self beginPoll];
+                [self beginPollAndClearVotes:YES];
             }
             else { //poll is over
                 NSLog(@"Poll over");
@@ -276,8 +289,25 @@
     //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
 }
 - (IBAction)playPressed:(UIButton *)sender {
-    NSLog(@"playPressed");
-    [self performSegueWithIdentifier:@"startPollSegue" sender:self];
+    NSLog(@"playPressed in RunningPoll");
+    _pollRunning = YES;
+    NSMutableArray *newToolbar = [self.toolbarItems mutableCopy];
+    [newToolbar removeObject:_play];
+    [newToolbar insertObject:_pause atIndex:3];
+    [self setToolbarItems:newToolbar];
+    [self beginPollAndClearVotes:NO];
+    //[self performSegueWithIdentifier:@"startPollSegue" sender:self];
+}
+- (IBAction)pausePressed:(UIButton *)sender {
+    NSLog(@"pausePressed in RunningPoll");
+    _pollRunning = NO;
+    
+    [Message sendMessageType:MSG_ACTION withActionType:AT_PAUSE toPeers:[_session connectedPeers] inSession:_session];
+    
+    NSMutableArray *newToolbar = [self.toolbarItems mutableCopy];
+    [newToolbar removeObject:_pause];
+    [newToolbar insertObject:_play atIndex:3];
+    [self setToolbarItems:newToolbar];
 }
 - (IBAction)forwardPressed:(UIButton *)sender {
     //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];

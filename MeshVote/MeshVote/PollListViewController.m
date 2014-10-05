@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSMutableArray *pollSet;
 
+@property (nonatomic) int selectedPollNumber;
+
 @end
 
 @implementation PollListViewController
@@ -145,8 +147,13 @@
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
     if([segue.identifier isEqualToString:@"showPollQuestionSegue"]){
         //NSLog(@"prepareForSegue");
+        //UITableViewCell *clickedCell = (UITableViewCell *)[[[sender superview] superview] superview];
+        //NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+        
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        
         QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
-        controller.questionSet = [_pollSet objectAtIndex:0]; //TODO: change
+        controller.questionSet = [_pollSet objectAtIndex:selectedIndexPath.row]; //TODO: change
         controller.session = _session;
         controller.peerList = _peerList;
     }
@@ -226,6 +233,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
+    _selectedPollNumber = (int)indexPath.row;
     /*_selectedQuestion = (int)indexPath.row;
     
     [self performSegueWithIdentifier:@"showQuestion" sender:self];

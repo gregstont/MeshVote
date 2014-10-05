@@ -89,25 +89,32 @@
     [textField resignFirstResponder];
     return YES;
 }
-/*
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if([textField.text isEqualToString:@"Name"]) {
-        textField.text = @"";
-    }
+    [_saveButton setTitle:@"Done"];
     return YES;
 }
- */
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     //if([textView. isEqualToString:@)
+    [_saveButton setTitle:@"Save"];
     _tempQuestionSet.name = textField.text;
 }
 
 - (IBAction)modeSwitch:(id)sender {
     _tempQuestionSet.isQuiz = [_modeSwitchOutlet isOn];
-    if(_tempQuestionSet.isQuiz)
+    if(_tempQuestionSet.isQuiz) {
         [_modeSwitchText setText:@"quiz"];
-    else
+        _shareScoresTextTitle.hidden = NO;
+        _shareScoresTextDetail.hidden = NO;
+        _shareScoresOutlet.hidden = NO;
+    }
+    else {
         [_modeSwitchText setText:@"poll"];
+        _shareScoresTextTitle.hidden = YES;
+        _shareScoresTextDetail.hidden = YES;
+        _shareScoresOutlet.hidden = YES;
+    }
     
 }
 
@@ -120,7 +127,12 @@
 }
 
 - (IBAction)saveButton:(id)sender {
-    [_pollSet addObject:_tempQuestionSet];
-    [self.navigationController popViewControllerAnimated:YES];
+    if([_saveButton.title isEqualToString:@"Done"]) {
+        [_pollNameTextField resignFirstResponder];
+    }
+    else {
+        [_pollSet addObject:_tempQuestionSet];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 @end

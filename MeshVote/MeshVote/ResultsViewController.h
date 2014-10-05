@@ -20,6 +20,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *medianLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
+
+@property (nonatomic) BOOL isQuiz;
+
+
 - (IBAction)resultsDoneButton:(id)sender;
 
 @end

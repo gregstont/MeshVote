@@ -832,7 +832,10 @@
                         <outlet property="modeSwitchOutlet" destination="dqb-WS-MU5" id="VBA-BX-CG2"/>
                         <outlet property="modeSwitchText" destination="Ycl-d9-Wmf" id="Cy8-7s-fdE"/>
                         <outlet property="pollNameTextField" destination="ma2-CN-nef" id="n5R-WU-byt"/>
+                        <outlet property="saveButton" destination="Gfl-1g-n0X" id="8Zv-aZ-aKe"/>
                         <outlet property="shareScoresOutlet" destination="YcR-2T-J5b" id="DL6-SU-buP"/>
+                        <outlet property="shareScoresTextDetail" destination="sqn-Ai-3i8" id="dZ8-kg-Uxg"/>
+                        <outlet property="shareScoresTextTitle" destination="np8-TS-dfK" id="YWD-0H-GbL"/>
                         <outlet property="showResultsOutlet" destination="09w-vA-YnZ" id="JWN-nz-1xe"/>
                     </connections>
                 </viewController>
