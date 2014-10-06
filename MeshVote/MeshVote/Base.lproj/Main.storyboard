@@ -117,7 +117,7 @@
         <scene sceneID="Rl5-1j-Biy">
             <objects>
                 <tableViewController id="Fb5-mu-rlG" customClass="QuestionViewControllerTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aIM-Iv-usp">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aIM-Iv-usp">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -127,7 +127,7 @@
                             <items/>
                         </toolbar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="qcellid" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid" editingAccessoryType="detailDisclosureButton" id="oLg-FT-SVD">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="qcellid" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid" id="oLg-FT-SVD">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oLg-FT-SVD" id="L6m-rs-rNg">
@@ -146,18 +146,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Questions" id="kyE-EV-ZbL">
-                        <barButtonItem key="rightBarButtonItem" id="BH6-Yp-Eno">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" id="gNA-bN-71I">
-                                <rect key="frame" x="282" y="11" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="addNewQuestion:" destination="Fb5-mu-rlG" eventType="touchUpInside" id="6Wb-NQ-4SK"/>
-                                    <segue destination="9vv-Mo-udS" kind="push" identifier="addNewQuestionSegue" id="rVa-Vp-ZND"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="BH6-Yp-Eno">
+                            <connections>
+                                <action selector="addNewQuestion:" destination="Fb5-mu-rlG" id="5ru-Lc-nVC"/>
+                                <segue destination="9vv-Mo-udS" kind="push" identifier="addNewQuestionSegue" id="Xtn-mO-XRj"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="tableView" destination="aIM-Iv-usp" id="N89-aD-cze"/>
                         <segue destination="kNH-1b-uJ6" kind="push" identifier="startPollSegue" id="e70-Ct-PBA"/>
                     </connections>
                 </tableViewController>
@@ -282,6 +279,7 @@
                         <color key="backgroundColor" red="0.84183673469387754" green="0.84183673469387754" blue="0.84183673469387754" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="T02-EE-Py7">
+                        <barButtonItem key="backBarButtonItem" title="Cancel" id="Hp7-cn-5IO"/>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="IVB-9U-eRD">
                             <connections>
                                 <action selector="doneButtonPressed:" destination="9vv-Mo-udS" id="gFJ-lp-9x0"/>
@@ -677,7 +675,7 @@
             </objects>
             <point key="canvasLocation" x="1095" y="1144"/>
         </scene>
-        <!--Poll List View Controller-->
+        <!--Poll List View Controller - Create Session-->
         <scene sceneID="XgJ-Y5-O6Z">
             <objects>
                 <viewController id="3hU-87-gKP" customClass="PollListViewController" sceneMemberID="viewController">
@@ -710,7 +708,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3ej-E3-uF0">
+                    <navigationItem key="navigationItem" title="Create Session" id="3ej-E3-uF0">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vls-Ep-hby">
                             <connections>
                                 <segue destination="DF0-Ki-3Do" kind="push" identifier="createPollSegue" id="fec-sE-lwI"/>
@@ -944,6 +942,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pkq-jV-hku"/>
+        <segue reference="Xtn-mO-XRj"/>
     </inferredMetricsTieBreakers>
 </document>

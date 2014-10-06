@@ -40,7 +40,6 @@
     if (self) {
         // Custom initialization
         NSLog(@"in init question view!");
-        //_peerList = [[NSMutableDictionary alloc] init];
         
     }
     return self;
@@ -144,6 +143,8 @@
     _connectedPeersLabel.textAlignment = NSTextAlignmentCenter;
     self.tableView.tableHeaderView = _connectedPeersLabel;
     [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
 
 }
 
@@ -257,6 +258,14 @@
     //TODO: this
     
 
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [_questionSet removeQuestionAtIndex:(int)indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        //[self.tableView reloadData];
+        //[_tableView reloadData];
+    }
 }
 
 
