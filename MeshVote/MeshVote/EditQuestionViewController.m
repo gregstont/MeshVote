@@ -210,7 +210,6 @@
         [blankCell setHidden:YES];
         [blankCell setUserInteractionEnabled:NO];
         if(blankCell == nil) {
-            NSLog(@"Shouldnt be here!!!!!!!!!!!");
             blankCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                            reuseIdentifier:@"eq_cellid2"];
             [blankCell.contentView setAlpha:0];
@@ -276,11 +275,14 @@
         if([_currentQuestion getAnswerCount] > (int)indexPath.row/2) {
             cell.answerTextField.alpha = 1.0;
             cell.answerTextField.text = [_currentQuestion.answerText objectAtIndex:(int)indexPath.row/2];
-            cell.checkOutline.hidden = NO;
-            cell.checkOutline.enabled = YES;
-            
-            cell.checkButton.hidden = YES;
-            cell.checkButton.enabled = NO;
+            //NSLog(@"isQuiz:%d",_questionSet.isQuiz);
+            if(_questionSet.isQuiz) {
+                cell.checkOutline.hidden = NO;
+                cell.checkOutline.enabled = YES;
+                
+                cell.checkButton.hidden = YES;
+                cell.checkButton.enabled = NO;
+            }
             //cell.selectionStyle = UITableViewCellSelectionStyleNone;
             //cell.contentView.userInteractionEnabled = NO;
             //[cell setUserInteractionEnabled:NO];
@@ -516,7 +518,7 @@
         
         self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02d%02d", min, seconds] doubleValue])];
     }
-    else { //if not the time text field
+    else { //if not the time text field, its an answer field
     
         //reset the view's position
         [UIView beginAnimations:@"registerScroll" context:NULL];
@@ -554,38 +556,7 @@
     }
     
     return;
-    
-    
-    if(textField.tag == 2) { //done editing time
-        NSLog(@"saving time:%@",textField.text);
-        
-        
-        //return;
-    }
-    else if(_viewMode == VIEWMODE_ADD_NEW_QUESTION && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
-        [_currentQuestion addAnswer:textField.text];
-        /*
-        [UIView beginAnimations:@"registerScroll" context:NULL];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDuration:0.4];
-        //self.
-        self.view.transform = CGAffineTransformMakeTranslation(0, 0);
-        [UIView commitAnimations];
-         */
-        
-        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-    }
-    else { //editing an existing answer
-        
-    }
 
-
-    
-    //[_currentQuestion setQuestionText:textView.text];
-    //NSLog(@"answer count:%d", _currentQuestion.getAnswerCount);
-    //NSLog(@"added answer:%@", textField.text);
-    //[self.tableView reloadData];
-    //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 //

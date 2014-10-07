@@ -51,6 +51,9 @@
     
     QuestionSet *tt = [[QuestionSet alloc] init];
     tt.name = @"Quiz 1";
+    tt.isQuiz = YES;
+    tt.showResults = YES;
+    tt.shareScores = YES;
     
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];

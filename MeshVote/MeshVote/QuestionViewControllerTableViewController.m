@@ -400,12 +400,14 @@
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
         controller.questionSet = _questionSet;
+        //NSLog(@"segue isquiz:%d", _questionSet.isQuiz);
         //controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
     else if([segue.identifier isEqualToString:@"showQuestion"]){
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_EDIT_QUESTION;
+        controller.questionSet = _questionSet;
         controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
     //showQuestion
