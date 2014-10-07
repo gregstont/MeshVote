@@ -188,7 +188,7 @@
     // Return the number of rows in the section.
     //NSLog(@"checking number of rows");
 
-    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) {
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION || _viewMode == VIEWMODE_EDIT_QUESTION) {
         return MAX(1, [_currentQuestion getAnswerCount] * 2 + 1);
     }
     else
@@ -425,7 +425,12 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     //if([textView. isEqualToString:@)
-    [_doneButton setTitle:@"Save"];
+    if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) {
+        [_doneButton setTitle:@"Save"];
+    }
+    else {
+        [_doneButton setTitle:nil];
+    }
     [_currentQuestion setQuestionText:textView.text];
     //NSLog(@"submitted:%@", _currentQuestion.questionText);
 }
@@ -439,22 +444,6 @@
 {
     // Indicate we're done with the keyboard. Make it go away.
     [textField resignFirstResponder];
-    NSLog(@"text:%@", [textField.text stringByReplacingOccurrencesOfString:@":" withString:@""]);
-    
-    int time = [[textField.text stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
-    
-    int min = (time / 100);
-    int seconds = time % 100;
-    if(seconds > 59) {
-        ++min;
-        seconds -= 60;
-    }
-    
-    
-    _currentQuestion.timeLimit = min * 60 + seconds;
-    
-    self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02d%02d", min, seconds] doubleValue])];
-
     
     return YES;
 }
@@ -479,28 +468,93 @@
     return YES;
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    [_doneButton setTitle:@"Done"];
-    if([textField.text isEqualToString:@"add answer"]) {
-        [self setViewMode:VIEWMODE_ADD_NEW_QUESTION];
-        textField.text = @"";
-        textField.alpha = 1.0;
+    //if(_viewMode == VIEWMODE_ADD_NEW_QUESTION || textField.tag == 2) {
+        [_doneButton setTitle:@"Done"];
+        [_doneButton setEnabled:YES];
+    //}
+    //SpacedUITableViewCell *clickedC = (SpacedUITableViewCell*)[[]]
+    if(textField.tag != 2) { //if not time field
+        SpacedUITableViewCell *clickedCell = (SpacedUITableViewCell *)[[[textField superview] superview] superview];
+        NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+        NSLog(@"clicked:%d", (int)clickedButtonPath.row);
         
-        //move the UI up so the keyboard doesnt hide it
+        //move the UI up so the keyboard doesnt hide it TODO: maybe need to max out around 5 or 6?
         [UIView beginAnimations:@"registerScroll" context:NULL];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.4];
-        self.view.transform = CGAffineTransformMakeTranslation(0, -34.0 * _currentQuestion.getAnswerCount);
+        self.view.transform = CGAffineTransformMakeTranslation(0, -34.0 * (clickedButtonPath.row/2));
         [UIView commitAnimations];
-    }
-    else {
-        [self setViewMode:VIEWMODE_EDIT_QUESTION];
+        
+        if([textField.text isEqualToString:@"add answer"]) {
+            //[self setViewMode:VIEWMODE_ADD_NEW_QUESTION];
+            textField.text = @"";
+            textField.alpha = 1.0;
+
+        }
+
     }
     return YES;
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (void)textFieldDidEndEditing:(UITextField *)textField { //TODO: rewrite this 
     //if([textView. isEqualToString:@)
     
-    [_doneButton setTitle:@"Save"];
+    
+    if(textField.tag == 2) { //time field text
+        NSLog(@"text:%@", [textField.text stringByReplacingOccurrencesOfString:@":" withString:@""]);
+        
+        int time = [[textField.text stringByReplacingOccurrencesOfString:@":" withString:@""] intValue];
+        
+        int min = (time / 100);
+        int seconds = time % 100;
+        if(seconds > 59) {
+            ++min;
+            seconds -= 60;
+        }
+        
+        
+        _currentQuestion.timeLimit = min * 60 + seconds;
+        
+        self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02d%02d", min, seconds] doubleValue])];
+    }
+    else { //if not the time text field
+    
+        //reset the view's position
+        [UIView beginAnimations:@"registerScroll" context:NULL];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.4];
+        //self.
+        self.view.transform = CGAffineTransformMakeTranslation(0, 0);
+        [UIView commitAnimations];
+        
+        
+        SpacedUITableViewCell *clickedCell = (SpacedUITableViewCell *)[[[textField superview] superview] superview];
+        NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+        
+        if(clickedButtonPath.row/2 == [_currentQuestion getAnswerCount]) {
+            NSLog(@"adding a new answer");
+            [_currentQuestion addAnswer:textField.text];
+
+        }
+        else {
+            NSLog(@"editing an existing answer");
+            [_currentQuestion.answerText setObject:textField.text atIndexedSubscript:clickedButtonPath.row/2];
+        }
+        
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        
+    }
+    
+    //[_doneButton setTitle:@"Save"];
+    
+    if(_viewMode == VIEWMODE_EDIT_QUESTION) {
+        [_doneButton setTitle:nil];
+    }
+    else {
+        [_doneButton setTitle:@"Save"];
+    }
+    
+    return;
+    
     
     if(textField.tag == 2) { //done editing time
         NSLog(@"saving time:%@",textField.text);
@@ -510,12 +564,14 @@
     }
     else if(_viewMode == VIEWMODE_ADD_NEW_QUESTION && ![textField.text isEqualToString:@"add answer"]) { //adding new answer
         [_currentQuestion addAnswer:textField.text];
+        /*
         [UIView beginAnimations:@"registerScroll" context:NULL];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.4];
         //self.
         self.view.transform = CGAffineTransformMakeTranslation(0, 0);
         [UIView commitAnimations];
+         */
         
         [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
