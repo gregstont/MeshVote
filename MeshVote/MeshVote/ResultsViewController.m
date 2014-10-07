@@ -8,11 +8,12 @@
 
 #import "ResultsViewController.h"
 #import "RunningAnswerTableViewCell.h"
+#import "Colors.h"
 
 @interface ResultsViewController ()
 
 @property (nonatomic, strong) NSMutableDictionary* peerResults;
-
+@property (nonatomic, strong) Colors* colors;
 
 @end
 
@@ -31,6 +32,7 @@
 {
     [super viewDidLoad];
     NSLog(@"in show results");
+    _colors = [[Colors alloc] init];
     //_resultsTable.delegate = self;
     [_resultsTable setDataSource:self];
     [_resultsTable setDelegate:self];
@@ -118,20 +120,28 @@
 {
     //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 2;
+    if(_questionSet.isQuiz)
+        return 2;
+    else
+        return [_questionSet getQuestionCount];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    if(section == 0) {
-        NSLog(@"number of rows in results:%d",[_questionSet getQuestionCount]);
-        //return [_questionSet getQuestionCount];
-        return [_questionSet getQuestionCount];
+    if(_questionSet.isQuiz) {
+        if(section == 0) {
+            NSLog(@"number of rows in results:%d",[_questionSet getQuestionCount]);
+            //return [_questionSet getQuestionCount];
+            return [_questionSet getQuestionCount];
+        }
+        else { //individual results section
+            return [_voteHistory count];
+        }
     }
-    else { //individual results section
-        return [_voteHistory count];
+    else { //poll
+        return [_questionSet getAnswerCountAtIndex:(int)section];
     }
 }
 
@@ -140,12 +150,21 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
     NSString* labelString;
-    if(section == 0) {
-        labelString = @" per question results";
+    
+    if(_questionSet.isQuiz) {
+        if(section == 0) {
+            labelString = @" per question results";
+        }
+        else if(section == 1) {
+            labelString =@" individual peer results";
+        }
     }
-    else if(section == 1) {
-        labelString =@" individual peer results";
+    else { //poll
+        labelString = [NSString stringWithFormat:@"Question %d", [_questionSet getQuestionAtIndex:(int)section].questionNumber];
     }
+    
+    
+    
     [label setText:labelString];
     [label setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
     [view addSubview:label];
@@ -168,7 +187,11 @@
     //NSLog(@"answer:%@", [_currentQuestion.answerText objectAtIndex:indexPath.row]);
     //cell.textLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     //cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
-    cell.answerLetterLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row + 1];
+    if(_questionSet.isQuiz)
+        cell.answerLetterLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row + 1];
+    else {
+        cell.answerLetterLabel.text = [_colors getLetterAtIndex:indexPath.row];
+    }
     
     
     //cell.answerProgress.progressTintColor = [_colors objectAtIndex:indexPath.row];
@@ -176,23 +199,35 @@
     //[cell.answerProgress.backgroundColor s]
     
     double newPercent = 0.5;
-    if(indexPath.section == 0) {
-    Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
-    int correctCount = [[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue];
-    NSLog(@"corC:%d and voteC:%d",correctCount, cur.voteCount);
-    if(cur.voteCount == 0)
-        newPercent = 0.0;
-    else
-        newPercent = (correctCount + 0.0) / cur.voteCount;
+    if(_questionSet.isQuiz) {
+        if(indexPath.section == 0) {
+            Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
+            int correctCount = [[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue];
+            NSLog(@"corC:%d and voteC:%d",correctCount, cur.voteCount);
+            if(cur.voteCount == 0)
+                newPercent = 0.0;
+            else
+                newPercent = (correctCount + 0.0) / cur.voteCount;
+        }
+        else { //personal results
+            
+            //NSLog(@"name:%@ score:%f", key, [[[_peerResults allKeys] objectAtIndex:indexPath.row] doubleValue]);
+            NSString* key = [[_peerResults allKeys] objectAtIndex:indexPath.row];
+            newPercent = [[_peerResults objectForKey:key] doubleValue]; //TODO: dont use allkeys here
+            cell.answerLabel.text = [key substringToIndex:[key length] - 6];
+            cell.answerLabel.hidden = NO;
+            
+        }
     }
-    else { //personal results
-        
-        //NSLog(@"name:%@ score:%f", key, [[[_peerResults allKeys] objectAtIndex:indexPath.row] doubleValue]);
-        NSString* key = [[_peerResults allKeys] objectAtIndex:indexPath.row];
-        newPercent = [[_peerResults objectForKey:key] doubleValue]; //TODO: dont use allkeys here
-        cell.answerLabel.text = [key substringToIndex:[key length] - 6];
+    else { //poll
+        Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.section];
+        int votes = [[cur.voteCounts objectAtIndex:indexPath.row] intValue];
+        if(cur.voteCount == 0)
+            newPercent = 0.0;
+        else
+            newPercent = (votes + 0.0) / cur.voteCount;
+        cell.answerLabel.text = [cur.answerText objectAtIndex:indexPath.row];
         cell.answerLabel.hidden = NO;
-        
     }
     
     //FOR TESTING ONLY
