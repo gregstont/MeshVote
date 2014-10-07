@@ -51,7 +51,7 @@
     
     QuestionSet *tt = [[QuestionSet alloc] init];
     tt.name = @"Quiz 1";
-    tt.isQuiz = NO;
+    tt.isQuiz = YES;
     tt.showResults = YES;
     tt.shareScores = YES;
     
@@ -62,7 +62,7 @@
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
     [tempQuestion1 setCorrectAnswer:2];
-    [tempQuestion1 setTimeLimit:5];
+    [tempQuestion1 setTimeLimit:2];
     [tempQuestion1 setQuestionNumber:1];
     
     
@@ -74,7 +74,7 @@
     [tempQuestion2 addAnswer:@"peanut"];
     [tempQuestion2 addAnswer:@"banana pie"];
     [tempQuestion2 setCorrectAnswer:1];
-    [tempQuestion2 setTimeLimit:5];
+    [tempQuestion2 setTimeLimit:2];
     [tempQuestion2 setQuestionNumber:2];
     
     

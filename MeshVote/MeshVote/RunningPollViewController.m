@@ -13,6 +13,7 @@
 #import "Question.h"
 #import "RunningAnswerTableViewCell.h"
 #import "ResultsViewController.h"
+#import "ResultsPollViewController.h"
 
 #define QUESTION_DELAY 1
 
@@ -270,9 +271,16 @@
             }
             else { //poll is over
                 NSLog(@"Poll over");
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
-                });
+                if(_questionSet.isQuiz) {
+                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                        [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
+                    });
+                }
+                else { //poll
+                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                        [self performSegueWithIdentifier:@"showResultsPollSegue" sender:self];
+                    });
+                }
             }
         });
     }
@@ -332,6 +340,13 @@
         controller.questionSet = _questionSet;
         NSLog(@"vote history cout:%lu", (unsigned long)_voteHistory.count);
         controller.voteHistory = _voteHistory;
+    }
+    else if([segue.identifier isEqualToString:@"showResultsPollSegue"]){
+        //NSLog(@"prepareForSegue");
+        ResultsPollViewController *controller = (ResultsPollViewController *)segue.destinationViewController;
+        controller.questionSet = _questionSet;
+        NSLog(@"vote history cout:");
+        //controller.voteHistory = _voteHistory;
     }
     //showQuestion
     
