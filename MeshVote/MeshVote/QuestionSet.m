@@ -10,7 +10,7 @@
 
 @interface QuestionSet()
 
-@property (nonatomic, strong) NSMutableArray *questions; //array of class Question
+//@property (nonatomic, strong) NSMutableArray *questions; //array of class Question
 //@property (nonatomic) int numberOfQuestions;
 
 @end
@@ -62,7 +62,7 @@
 }
 
 -(Question*)getQuestionAtIndex:(int)index {
-    NSLog(@"getQuestionAtIndex");
+    //NSLog(@"getQuestionAtIndex");
     return [_questions objectAtIndex:index];
 }
 

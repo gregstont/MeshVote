@@ -12,6 +12,8 @@
 @interface ResultsPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
 
+@property (nonatomic, strong) MCSession* session;
+
 @property (nonatomic, strong) QuestionSet *questionSet;
 - (IBAction)resultsDoneButton:(id)sender;
 

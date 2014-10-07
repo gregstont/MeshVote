@@ -25,7 +25,7 @@
 
 -(int)getAnswerCountAtIndex:(int)index;
 
-
+@property (nonatomic, strong) NSMutableArray *questions; //array of class Question
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic) BOOL isQuiz; //otherwise poll

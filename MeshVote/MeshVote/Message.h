@@ -12,17 +12,18 @@
 //messageType
 #define MSG_QUESTION_SET     1
 #define MSG_QUESTION_SET_ACK 2
-#define MSG_ANSWER       3
-#define MSG_ANSWER_ACK   4
-#define MSG_ACTION       5
-#define MSG_ACTION_ACK   6
+#define MSG_ANSWER           3
+#define MSG_ANSWER_ACK       4
+#define MSG_ACTION           5
+#define MSG_ACTION_ACK       6
+#define MSG_POLL_RESULTS     7
 
 //actionType
-#define AT_REWIND       7
-#define AT_PLAY         8
-#define AT_PAUSE        9
-#define AT_FORWARD     10
-#define AT_DONE        11
+#define AT_REWIND      10
+#define AT_PLAY        11
+#define AT_PAUSE       12
+#define AT_FORWARD     13
+#define AT_DONE        14
 
 @interface Message : NSObject <NSCoding>
 

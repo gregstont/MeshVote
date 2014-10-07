@@ -9,6 +9,8 @@
 #import "EditQuestionViewController.h"
 #import "BackgroundLayer.h"
 #import "SpacedUITableViewCell.h"
+#import "Results.h"
+#import "ResultsPollViewController.h"
 
 @interface EditQuestionViewController ()
 
@@ -94,7 +96,7 @@
         NSInteger seconds = time % 60;
         
         self.timeTextField.delegate = self;
-        self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02ld%02ld", minutes, seconds] doubleValue])];
+        self.timeTextField.text = [self.numberFormatter stringFromNumber:@([[NSString stringWithFormat:@"%02ld%02ld", (long)minutes, (long)seconds] doubleValue])];
         
         //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", [_delegate getSelectedQuestion] + 1];
     }
@@ -383,7 +385,7 @@
 
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -391,8 +393,14 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([segue.identifier isEqualToString:@"showPeerResultsPollSegue"]){
+        //NSLog(@"prepareForSegue");
+        ResultsPollViewController *controller = (ResultsPollViewController *)segue.destinationViewController;
+        controller.questionSet = _questionSet;
+    }
 }
-*/
+
 
 -(BOOL)automaticallyAdjustsScrollViewInsets {
     return NO;
@@ -405,6 +413,7 @@
     else { //save/add new question
         NSLog(@"submitted:%@", _currentQuestion.questionText);
         [_questionSet addQuestion:_currentQuestion];
+
         //[self.delegate addQuestionToSet:_currentQuestion];
         [self.navigationController popViewControllerAnimated:YES];
         
@@ -600,6 +609,32 @@
         else if(message.actionType == AT_DONE) { //poll is over
             
         }
+    }
+    else if(message.messageType == MSG_POLL_RESULTS) {
+        NSLog(@"got poll results");
+        Results* results = (Results*)message;
+        NSLog(@"results size:%lu", (unsigned long)results.votes.count);
+        int i = 0;
+        for(Question* runner in _questionSet.questions) {
+            /*NSArray* votesForQ = [results.votes objectAtIndex:i];
+            NSLog(@"questio");
+            for(NSNumber* num in votesForQ) {
+                NSLog(@"vote:%d", [num intValue]);
+            }*/
+            runner.voteCounts = [results.votes objectAtIndex:i];
+            ++i;
+            
+            int sum = 0;
+            for(NSNumber* num in runner.voteCounts) {
+                sum += [num intValue];
+            }
+            runner.voteCount = sum;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [self performSegueWithIdentifier:@"showPeerResultsPollSegue" sender:self];
+        });
+        //[self performSegueWithIdentifier:@"showPeerResultsPollSegue" sender:self];
+        
     }
     else {
         NSLog(@"received invalid message");

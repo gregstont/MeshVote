@@ -255,7 +255,7 @@
                 });
                 //NSLog(@"times up");
             }
-            NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+            NSLog(@"times up, questionNum:%d votecount:%d",_currentQuestionNumber,_voteCount);
             
             
             _currentQuestion.voteCount = _voteCount;
@@ -345,6 +345,7 @@
         //NSLog(@"prepareForSegue");
         ResultsPollViewController *controller = (ResultsPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
+        controller.session = _session;
         NSLog(@"vote history cout:");
         //controller.voteHistory = _voteHistory;
     }
@@ -492,6 +493,7 @@
         
         //new vote
         if([[_peerList objectForKey:peerID.displayName] isEqualToNumber:[NSNumber numberWithInt:-1]]) {
+            NSLog(@"new vote");
             ++_voteCount;
             [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
             int currentCount = [[_currentQuestion.voteCounts objectAtIndex:message.answerNumber] intValue];
@@ -507,7 +509,7 @@
         }
         else { //someone changed their vote
             //NSNumber *oldAnswer = [_peerList objectForKey:peerID.displayName];
-            
+            NSLog(@"change vote");
             //remove the old vote
             int oldAnswer = [[_peerList objectForKey:peerID.displayName] intValue];
             int oldVoteCount = [[_currentQuestion.voteCounts objectAtIndex:oldAnswer] intValue];
@@ -540,6 +542,8 @@
         answerAck.answerNumber = message.answerNumber;
         [Message sendMessage:answerAck toPeers:[_session connectedPeers] inSession:_session];
         
+        //NSLog(@"vote count:%d", _voteCount);
+        _currentQuestion.voteCount = _voteCount;
         
         [_peerList setObject:[NSNumber numberWithInt:message.answerNumber] forKey:peerID.displayName];
         //++_voteCount;

@@ -38,6 +38,7 @@
 		34A5A24919DA4F1600887C1A /* KAProgressLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A5A24619DA4F1600887C1A /* KAProgressLabel.m */; };
 		34A5A24A19DA4F1600887C1A /* TPPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A5A24819DA4F1600887C1A /* TPPropertyAnimation.m */; };
 		34AC916419DB660200D8BE5B /* ResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34AC916319DB660200D8BE5B /* ResultsViewController.m */; };
+		34BD0E5619E3B7DA006AFB21 /* Results.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BD0E5519E3B7DA006AFB21 /* Results.m */; };
 		34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34BE302319D7D38700C9F149 /* RunningPollViewController.m */; };
 		34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C4768819D8FC350087D3F8 /* check_icon128x128.png */; };
 		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
@@ -109,6 +110,8 @@
 		34A5A24819DA4F1600887C1A /* TPPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPropertyAnimation.m; sourceTree = "<group>"; };
 		34AC916219DB660200D8BE5B /* ResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsViewController.h; sourceTree = "<group>"; };
 		34AC916319DB660200D8BE5B /* ResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsViewController.m; sourceTree = "<group>"; };
+		34BD0E5419E3B7DA006AFB21 /* Results.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Results.h; sourceTree = "<group>"; };
+		34BD0E5519E3B7DA006AFB21 /* Results.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Results.m; sourceTree = "<group>"; };
 		34BE302219D7D38700C9F149 /* RunningPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunningPollViewController.h; sourceTree = "<group>"; };
 		34BE302319D7D38700C9F149 /* RunningPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunningPollViewController.m; sourceTree = "<group>"; };
 		34C4768819D8FC350087D3F8 /* check_icon128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_icon128x128.png; sourceTree = "<group>"; };
@@ -263,6 +266,8 @@
 				3405169C19CBE094004360E8 /* QuestionSet.m */,
 				3405169E19CBE1B0004360E8 /* Question.h */,
 				3405169F19CBE1B0004360E8 /* Question.m */,
+				34BD0E5419E3B7DA006AFB21 /* Results.h */,
+				34BD0E5519E3B7DA006AFB21 /* Results.m */,
 				348A1DD319D87BF6002E6FAE /* Message.h */,
 				348A1DD419D87BF6002E6FAE /* Message.m */,
 				340C245B19DBE21000F9EB94 /* Colors.h */,
@@ -401,6 +406,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34BD0E5619E3B7DA006AFB21 /* Results.m in Sources */,
 				34AC916419DB660200D8BE5B /* ResultsViewController.m in Sources */,
 				340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */,
 				34BE302419D7D38700C9F149 /* RunningPollViewController.m in Sources */,

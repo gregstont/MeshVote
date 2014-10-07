@@ -9,6 +9,8 @@
 #import "ResultsPollViewController.h"
 #import "Colors.h"
 #import "RunningAnswerTableViewCell.h"
+#import "Results.h"
+
 
 @interface ResultsPollViewController ()
 
@@ -36,6 +38,20 @@
     
     [_resultsTable setDataSource:self];
     [_resultsTable setDelegate:self];
+    
+    //send out results to peers
+    if(_questionSet.showResults) {
+        NSMutableArray* votesArray = [[NSMutableArray alloc] initWithCapacity:[_questionSet getQuestionCount]];
+        for(Question* runner in _questionSet.questions) {
+            [votesArray addObject:[runner.voteCounts copy]];
+        }
+        NSArray* sendArray = [votesArray copy];
+        
+        Results* results = [[Results alloc] init];
+        results.messageType = MSG_POLL_RESULTS;
+        results.votes = sendArray;
+        [Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
+    }
     
 }
 
@@ -148,7 +164,7 @@
     //color fades from red to green indicating how many missed
     //high percentage  will be green and low red
     
-    NSLog(@"newPercent:%f and %f", newPercent, (1 - newPercent));
+    //NSLog(@"newPercent:%f and %f", newPercent, (1 - newPercent));
     UIColor *fadedColor = [UIColor colorWithRed:red green:green blue:0.0 alpha:alpha];
     cell.answerProgress.progressTintColor = fadedColor;
     

@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) QuestionSet* questionSet;
 @property (nonatomic, strong) MCSession* session;
-@property (nonatomic, strong) NSMutableDictionary *peerList;
+@property (atomic, strong) NSMutableDictionary *peerList;
 @property (weak, nonatomic) IBOutlet KAProgressLabel *votesProgressLabel;
 @property (weak, nonatomic) IBOutlet KAProgressLabel *timeProgressLabel;
 

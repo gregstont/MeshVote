@@ -58,12 +58,6 @@
 
     NSLog(@"question viewdidload, userName:%@", self.userName);
     
-    //preemptively send out this set to all peers anticipating this poll to start
-    if(_questionSet == nil)
-        NSLog(@"sdfsdfsdf");
-    _questionSet.messageType = MSG_QUESTION_SET;
-    [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
-    
     //_questionSet = [[QuestionSet alloc] init];
     //_peerList = [[NSMutableDictionary alloc] init];
     
@@ -151,6 +145,11 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     _session.delegate = self;
+    
+    //send out updated question set to peers
+    _questionSet.messageType = MSG_QUESTION_SET;
+    [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
+    
     //[self.navigationController setNavigationBarHidden:NO];
     //[self.navigationController setToolbarHidden:NO];
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
@@ -399,6 +398,7 @@
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
+        controller.session = _session;
         controller.questionSet = _questionSet;
         //NSLog(@"segue isquiz:%d", _questionSet.isQuiz);
         //controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
@@ -407,6 +407,7 @@
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_EDIT_QUESTION;
+        controller.session = _session;
         controller.questionSet = _questionSet;
         controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }

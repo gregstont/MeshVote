@@ -51,7 +51,7 @@
     
     QuestionSet *tt = [[QuestionSet alloc] init];
     tt.name = @"Quiz 1";
-    tt.isQuiz = YES;
+    tt.isQuiz = NO;
     tt.showResults = YES;
     tt.shareScores = YES;
     
