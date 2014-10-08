@@ -78,12 +78,15 @@
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //create new question
         _currentQuestion = [[Question alloc] init];
         _currentQuestion.questionNumber = [_questionSet getQuestionCount] + 1;
+        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestion.questionNumber]];
         [_questionTextLabel setText:@"Question..."];
         //[_doneButton setHidden:NO];
         [_doneButton setTitle:@"Save"];
         [_doneButton setEnabled:YES];
         self.navigationItem.title = @"New question";
-        self.timeTextField.delegate = self;
+        _timeTextField.delegate = self;
+        _timeTextField.text = [NSString stringWithFormat:@"%d:%02d", _currentQuestion.timeLimit / 60, _currentQuestion.timeLimit % 60];
+        
     }
     else if(_viewMode == VIEWMODE_EDIT_QUESTION) { //edit existing question
         //_currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
@@ -478,7 +481,10 @@
     }
     return YES;
 }
+
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    _questionTextLabel.editable = NO;
     //if(_viewMode == VIEWMODE_ADD_NEW_QUESTION || textField.tag == 2) {
         [_doneButton setTitle:@"Done"];
         [_doneButton setEnabled:YES];
@@ -508,7 +514,7 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField { //TODO: rewrite this 
     //if([textView. isEqualToString:@)
-    
+     _questionTextLabel.editable = YES;
     
     if(textField.tag == 2) { //time field text
         NSLog(@"text:%@", [textField.text stringByReplacingOccurrencesOfString:@":" withString:@""]);
