@@ -121,6 +121,7 @@
         NSLog(@"  got the question set");
         
         _questionSet = (QuestionSet*)message;
+        //NSLog(@"questionnum:%d",[_questionSet getQuestionAtIndex:1].questionNumber);
         
         
         //received new question, ready to begin

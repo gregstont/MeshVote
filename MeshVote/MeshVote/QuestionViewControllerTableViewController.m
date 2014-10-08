@@ -146,6 +146,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     _session.delegate = self;
     
+    //NSLog(@"question number:%d", [_questionSet getQuestionAtIndex:1].questionNumber);
+    
     //send out updated question set to peers
     _questionSet.messageType = MSG_QUESTION_SET;
     [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
@@ -259,8 +261,12 @@
 
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete) { //delete a question
         [_questionSet removeQuestionAtIndex:(int)indexPath.row];
+        for(int i = (int)indexPath.row; i < [_questionSet getQuestionCount]; ++i) { //re-number the remaining questions
+            [_questionSet getQuestionAtIndex:i].questionNumber = i + 1;
+        }
+        
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         //[self.tableView reloadData];
         //[_tableView reloadData];
