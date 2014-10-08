@@ -62,7 +62,7 @@
     [tempQuestion1 addAnswer:@"purple"];
     [tempQuestion1 addAnswer:@"stripes"];
     [tempQuestion1 setCorrectAnswer:2];
-    [tempQuestion1 setTimeLimit:2];
+    [tempQuestion1 setTimeLimit:10];
     [tempQuestion1 setQuestionNumber:1];
     
     
@@ -74,7 +74,7 @@
     [tempQuestion2 addAnswer:@"peanut"];
     [tempQuestion2 addAnswer:@"banana pie"];
     [tempQuestion2 setCorrectAnswer:1];
-    [tempQuestion2 setTimeLimit:2];
+    [tempQuestion2 setTimeLimit:10];
     [tempQuestion2 setQuestionNumber:2];
     
     

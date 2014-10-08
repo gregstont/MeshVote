@@ -20,7 +20,7 @@
 @interface RunningPollViewController ()
 
 @property (nonatomic, strong) Question* currentQuestion;
-@property (nonatomic) int currentQuestionNumber; //starts at 0
+@property (atomic) int currentQuestionNumber; //starts at 0
 
 @property (nonatomic) int timeRemaining;
 //@property (nonatomic) BOOL hasBegunPoll;
@@ -196,6 +196,14 @@
             // do stuff
         }
     }
+    if(_currentQuestionNumber > 0)
+        _rewind.enabled = YES;
+    else
+        _rewind.enabled = NO;
+    if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1)
+        _forward.enabled = YES;
+    else
+        _forward.enabled = NO;
     
     
     //TODO: need to verify all peers have acknowledged the question
@@ -232,13 +240,14 @@
     //self.pollQuestionText.text = _currentQuestion.questionText;
     if(_pollRunning) {
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            int beginQuestionNumber = _currentQuestionNumber;
             // background thread
             //NSLog(@"Background thread 1: waiting 5 seconds");
             // wait 5 seconds
             while(_timeRemaining > 0 && _pollRunning) {
                 [NSThread sleepForTimeInterval:1.0f];
                 
-                if(_pollRunning == NO)
+                if(_pollRunning == NO || (beginQuestionNumber != _currentQuestionNumber))
                     return;
                 
                 --_timeRemaining;
@@ -260,7 +269,7 @@
             
             _currentQuestion.voteCount = _voteCount;
             [NSThread sleepForTimeInterval:(double)QUESTION_DELAY];
-            if(_pollRunning == NO) {
+            if(_pollRunning == NO || (beginQuestionNumber != _currentQuestionNumber)) {
                 //catch the back
             }
             else if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1) {
@@ -294,7 +303,11 @@
 //
 
 - (IBAction)rewindPressed:(UIButton *)sender {
-    //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
+    //_pollRunning = YES;
+    --_currentQuestionNumber; //changing this number will stop previous questions thread
+    _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+    _timeRemaining = _currentQuestion.timeLimit;
+    [self beginPollAndClearVotes:YES];
 }
 - (IBAction)playPressed:(UIButton *)sender {
     NSLog(@"playPressed in RunningPoll");
@@ -319,6 +332,12 @@
 }
 - (IBAction)forwardPressed:(UIButton *)sender {
     //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
+    //_pollRunning = YES;
+    
+    ++_currentQuestionNumber; //incrementing this number will stop previous questions thread
+    _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+    _timeRemaining = _currentQuestion.timeLimit;
+    [self beginPollAndClearVotes:YES];
 }
 
 /*

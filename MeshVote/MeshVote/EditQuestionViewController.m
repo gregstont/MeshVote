@@ -18,10 +18,13 @@
 @property (atomic) BOOL currentAnswerAcked;
 
 @property (atomic) int timeRemaining;
+@property (atomic) BOOL pollRunning;
 
 @property (nonatomic, strong) Colors* colors;
 
 @property (nonatomic, strong) NSNumberFormatter* numberFormatter;
+
+@property (atomic) int questionCount; //counter used to prevent multiple threads from updating counter
 @end
 
 @implementation EditQuestionViewController
@@ -52,7 +55,7 @@
     [self.numberFormatter setMaximumIntegerDigits:3];
     
     
-    
+    _questionCount = 0;
     
     
     
@@ -105,40 +108,14 @@
     }
     else { // VIEWMODE_ASK_QUESTION
         
-        
+        _pollRunning = YES;
         //send action-ack
         [Message sendMessageType:MSG_ACTION withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
         
         [_timeTextField setBackgroundColor:[UIColor clearColor]];
         //NSLog(@"here");
         //_questionSet = (QuestionSet*)_questionSet;
-        _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
-        //NSLog(@"not here");
-        
-        [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1]];
-        //self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
-        _questionTextLabel.text = _currentQuestion.questionText; //[NSString stringWithFormat:@"%d:%02d",time / 60, time % 60];
-        //_currentQuestion.t
-        _timeRemaining = _currentQuestion.timeLimit;
-        [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
-        //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
-        
-        //start timer TODO: move this to moveToNextQuestion
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            while(_timeRemaining > 0) {
-                [NSThread sleepForTimeInterval:1.0f];
-                --_timeRemaining;
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    // GUI thread
-                    //NSLog(@"GUI thread 1");
-                    // update label 1 text
-                    [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
-                    //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
-                });
-                //NSLog(@"times up");
-            }
-            //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
-        });
+        [self moveToNextQuestion];
     }
     
     // Do any additional setup after loading the view.
@@ -361,20 +338,7 @@
     });
     
     //start the timer
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        // background thread
-        //NSLog(@"Background thread 1: waiting 5 seconds");
-        // wait 5 seconds
-        while(_timeRemaining > 0) {
-            [NSThread sleepForTimeInterval:1.0f];
-            --_timeRemaining;
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
-                //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
-            });
-        }
-        //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
-    });
+    [self startTimer];
     
     
     //when we are done here, send the action-ack TODO funccall here
@@ -384,6 +348,29 @@
     [Message sendMessageType:MSG_ACTION_ACK withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
     
     
+}
+
+-(void)startTimer {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        // background thread
+        //NSLog(@"Background thread 1: waiting 5 seconds");
+        // wait 5 seconds
+        int beginQuestionCount = _questionCount;
+        while(_timeRemaining > 0) {
+            [NSThread sleepForTimeInterval:1.0f];
+            
+            if(!_pollRunning || beginQuestionCount != _questionCount) {
+                return;
+            }
+            
+            --_timeRemaining;
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [_timeTextField setText:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+                //[_doneButton setTitle:[NSString stringWithFormat:@"%d:%02d", _timeRemaining / 60, _timeRemaining % 60]];
+            });
+        }
+        //NSLog(@"times up, questionNum:%d",_currentQuestionNumber);
+    });
 }
 
 
@@ -601,12 +588,21 @@
         }
         else if(message.actionType == AT_PLAY) {
             NSLog(@"  action play");
-            _currentQuestionNumber = message.questionNumber;
-            [self moveToNextQuestion];
+            ++_questionCount;
+            if(!_pollRunning) { //meaning we were paused
+                _pollRunning = YES;
+                [self startTimer];
+            }
+            else {
+                _currentQuestionNumber = message.questionNumber;
+                [self moveToNextQuestion];
+            }
             
             
         }
         else if(message.actionType == AT_PAUSE) {
+            _pollRunning = NO;
+            
             
         }
         else if(message.actionType == AT_FORWARD) {
