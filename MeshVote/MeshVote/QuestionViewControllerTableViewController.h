@@ -21,7 +21,8 @@
 
 @property (nonatomic, strong) NSMutableDictionary *peerList;
 
-@property (nonatomic, strong) QuestionSet *questionSet; //change this later
+@property (nonatomic, strong) QuestionSet *questionSet; 
+@property (nonatomic, strong) NSMutableArray *pollSet; //the root array of QuestionSet
 
 
 @end

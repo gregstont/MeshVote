@@ -406,6 +406,7 @@
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
         controller.session = _session;
         controller.questionSet = _questionSet;
+        controller.pollSet = _pollSet;
         //NSLog(@"segue isquiz:%d", _questionSet.isQuiz);
         //controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
@@ -415,6 +416,7 @@
         controller.viewMode = VIEWMODE_EDIT_QUESTION;
         controller.session = _session;
         controller.questionSet = _questionSet;
+        controller.pollSet = _pollSet;
         controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
     //showQuestion

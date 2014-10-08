@@ -21,7 +21,7 @@
 
 @property (nonatomic, strong) UILabel *connectedPeersLabel;
 
-@property (nonatomic, strong) NSMutableArray *pollSet;
+@property (nonatomic, strong) NSMutableArray *pollSet; //the root array of QuestionSet
 
 @property (nonatomic) int selectedPollNumber;
 
@@ -42,7 +42,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _pollSet = [[NSMutableArray alloc] init];
+    
+    /*
+     NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
+     NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+     NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
+     */
+    NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
+    //NSData* pollData = [NSData dataWithContentsOfFile:databasePath];
+    
+    _pollSet = [NSKeyedUnarchiver unarchiveObjectWithFile:databasePath];
+    
+    if(_pollSet == nil)
+        _pollSet = [[NSMutableArray alloc] init];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -54,7 +67,7 @@
     tt.isQuiz = NO;
     tt.showResults = YES;
     tt.shareScores = YES;
-    
+    /*
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
     [tempQuestion1 addAnswer:@"science"];
@@ -81,7 +94,7 @@
     [tt addQuestion:tempQuestion1];
     [tt addQuestion:tempQuestion2];
     
-    [_pollSet addObject:tt];
+    [_pollSet addObject:tt];*/
     
     /////
     _peerList = [[NSMutableDictionary alloc] init];
@@ -161,6 +174,7 @@
         controller.questionSet = [_pollSet objectAtIndex:selectedIndexPath.row]; //TODO: change
         controller.session = _session;
         controller.peerList = _peerList;
+        controller.pollSet = _pollSet;
     }
     else if([segue.identifier isEqualToString:@"createPollSegue"]){
         //NSLog(@"prepareForSegue");

@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
 @property (nonatomic, strong) QuestionSet* questionSet;
+@property (nonatomic, strong) NSMutableArray *pollSet; //the root array of QuestionSet
 
 @property (nonatomic, strong) Question* currentQuestion;
 @property (nonatomic) int currentQuestionNumber;
