@@ -206,13 +206,15 @@
         _forward.enabled = NO;
     
     
-    //TODO: need to verify all peers have acknowledged the question
-    Message *beginMessage = [[Message alloc] init];
-    beginMessage.messageType = MSG_ACTION;
-    beginMessage.questionNumber = _currentQuestionNumber;
-    beginMessage.actionType = AT_PLAY;
-    
-    [Message sendMessage:beginMessage toPeers:[_session connectedPeers] inSession:_session];
+    //TODO: need to verify all peers have acknowledged the question'
+    if(_pollRunning) {
+        Message *beginMessage = [[Message alloc] init];
+        beginMessage.messageType = MSG_ACTION;
+        beginMessage.questionNumber = _currentQuestionNumber;
+        beginMessage.actionType = AT_PLAY;
+        
+        [Message sendMessage:beginMessage toPeers:[_session connectedPeers] inSession:_session];
+    }
     
     
     
@@ -308,6 +310,12 @@
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
     _timeRemaining = _currentQuestion.timeLimit;
     [self beginPollAndClearVotes:YES];
+    
+    Message *rewind = [[Message alloc] init];
+    rewind.messageType = MSG_ACTION;
+    rewind.actionType = AT_REWIND;
+    rewind.questionNumber = _currentQuestionNumber;
+    [Message sendMessage:rewind toPeers:[_session connectedPeers] inSession:_session];
 }
 - (IBAction)playPressed:(UIButton *)sender {
     NSLog(@"playPressed in RunningPoll");
@@ -338,6 +346,12 @@
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
     _timeRemaining = _currentQuestion.timeLimit;
     [self beginPollAndClearVotes:YES];
+    
+    Message *forward = [[Message alloc] init];
+    forward.messageType = MSG_ACTION;
+    forward.actionType = AT_FORWARD;
+    forward.questionNumber = _currentQuestionNumber;
+    [Message sendMessage:forward toPeers:[_session connectedPeers] inSession:_session];
 }
 
 /*

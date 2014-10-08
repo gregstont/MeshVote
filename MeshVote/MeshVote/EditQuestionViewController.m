@@ -584,7 +584,9 @@
     else if(message.messageType == MSG_ACTION) { //[messageType isEqualToString:@"action"]) {
         NSLog(@"  action:%d",message.actionType);
         if(message.actionType == AT_REWIND) {
-            
+            ++_questionCount;
+            _currentQuestionNumber = message.questionNumber;
+            [self moveToNextQuestion];
         }
         else if(message.actionType == AT_PLAY) {
             NSLog(@"  action play");
@@ -606,6 +608,10 @@
             
         }
         else if(message.actionType == AT_FORWARD) {
+            ++_questionCount;
+            _currentQuestionNumber = message.questionNumber;
+            [self moveToNextQuestion];
+            
             
         }
         else if(message.actionType == AT_DONE) { //poll is over
