@@ -227,7 +227,7 @@
         [self.answerTable reloadData];
         self.navigationItem.title = [NSString stringWithFormat:@"Question %d", _currentQuestionNumber + 1];
         
-        [_votesProgressLabel setProgress:0.0
+        [_votesProgressLabel setProgress:(_voteCount + 0.0)/[[_peerList allKeys] count]
                                   timing:TPPropertyAnimationTimingEaseOut
                                 duration:1.0
                                    delay:0.0];
