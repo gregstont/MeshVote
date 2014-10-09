@@ -114,7 +114,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"sdfdsf");
+    //NSLog(@"sdfdsf");
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCell" forIndexPath:indexPath];
     
     if(cell == nil) {

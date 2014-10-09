@@ -92,17 +92,43 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+
+    
+    //new
+    UIView *view = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)]; //18
+    [view setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
+    UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
-    NSString* labelString;
+    //[label setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
     
-    labelString = [NSString stringWithFormat:@"Question %d", [_questionSet getQuestionAtIndex:(int)section].questionNumber];
+    NSString* text = [_questionSet getQuestionTextAtIndex:(int)section];
     
-    [label setText:labelString];
-    [label setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
+    CGSize maxSize = CGSizeMake(260, 410);
+    CGRect labrect = [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:label.font} context:Nil];
+    
+    label.text = text;
+    label.numberOfLines = 0;
+    label.frame = CGRectMake(10, 0, 260, labrect.size.height + 8);
+    
     [view addSubview:label];
+
     return view;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+    
+    UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
+    NSString *text = [_questionSet getQuestionTextAtIndex:(int)section];
+
+    
+    CGSize maxSize = CGSizeMake(260, 410);
+    CGRect labrect = [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:label.font} context:Nil];
+    
+
+    
+    NSLog(@"get height:%d",(int)labrect.size.height + 8);
+    return labrect.size.height + 8;
 }
 
 
