@@ -222,12 +222,13 @@
     double alpha = 1.0;
     if(indexPath.section == 0) {
         Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
-        int correctCount = [[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue];
-        NSLog(@"corC:%d and voteC:%d",correctCount, cur.voteCount);
-        if(cur.voteCount == 0)
+        if(cur.correctAnswer == -1) { //no correct answer selected
+            newPercent = 1.0;
+        }
+        else if(cur.voteCount == 0)
             newPercent = 0.0;
         else
-            newPercent = (correctCount + 0.0) / cur.voteCount;
+            newPercent = ([[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue] + 0.0) / cur.voteCount; //this is the percent correct
     }
     else { //personal results
         

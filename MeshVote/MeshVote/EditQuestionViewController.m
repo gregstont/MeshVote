@@ -44,6 +44,7 @@
 {
     [super viewDidLoad];
     
+    
     //time input stuff
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     [self.numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
@@ -491,7 +492,13 @@
         [UIView beginAnimations:@"registerScroll" context:NULL];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         [UIView setAnimationDuration:0.4];
-        self.view.transform = CGAffineTransformMakeTranslation(0, -34.0 * (clickedButtonPath.row/2));
+        
+        int screenOffset = 0;
+        if([[UIScreen mainScreen] bounds].size.height < 568) { //3.5 inch screen
+            screenOffset = 568 - [[UIScreen mainScreen] bounds].size.height;
+        }
+        //NSLog(@"screen offset:%d", (int)screenHeight);
+        self.view.transform = CGAffineTransformMakeTranslation(0, (-34.0 * (clickedButtonPath.row/2)) - screenOffset);
         [UIView commitAnimations];
         
         if([textField.text isEqualToString:@"add answer"]) {

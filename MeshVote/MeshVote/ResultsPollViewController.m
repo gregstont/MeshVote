@@ -96,9 +96,10 @@
     
     //new
     UIView *view = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)]; //18
-    [view setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
+    [view setBackgroundColor:[UIColor colorWithRed:224.0/255 green:224.0/255 blue:224.0/255 alpha:1.0]];//[UIColor colorWithRed:1 green:1 blue:1 alpha:0.8]];
     UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
+    label.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
     //[label setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
     
     NSString* text = [_questionSet getQuestionTextAtIndex:(int)section];
@@ -116,7 +117,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 
-    
+    //calculate the height based on the amount of text we are going to display
     UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
     NSString *text = [_questionSet getQuestionTextAtIndex:(int)section];
