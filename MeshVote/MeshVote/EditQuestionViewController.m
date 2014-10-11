@@ -12,6 +12,8 @@
 #import "Results.h"
 #import "ResultsPollViewController.h"
 
+#define PLACE_HOLDER_TEXT @"enter question here"
+
 @interface EditQuestionViewController ()
 
 @property (atomic) int currentAnswer;
@@ -81,9 +83,11 @@
     
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) { //create new question
         _currentQuestion = [[Question alloc] init];
+        _currentQuestion.questionText = @"";
         _currentQuestion.questionNumber = [_questionSet getQuestionCount] + 1;
         [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestion.questionNumber]];
-        [_questionTextLabel setText:@"Question..."];
+        [_questionTextLabel setText:PLACE_HOLDER_TEXT];
+        _questionTextLabel.textColor = [UIColor lightGrayColor];
         //[_doneButton setHidden:NO];
         [_doneButton setTitle:@"Save"];
         [_doneButton setEnabled:YES];
@@ -425,8 +429,10 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [_doneButton setTitle:@"Done"];
-    if([_questionTextLabel.text isEqualToString:@"Question..."])
+    if([_questionTextLabel.text isEqualToString:PLACE_HOLDER_TEXT]) {
         [_questionTextLabel setText:@""];
+        _questionTextLabel.textColor = [UIColor blackColor];
+    }
     return YES;
 }
 
@@ -434,6 +440,10 @@
     //if([textView. isEqualToString:@)
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) {
         [_doneButton setTitle:@"Save"];
+        if([_questionTextLabel.text isEqualToString:@""]) {
+            [_questionTextLabel setText:PLACE_HOLDER_TEXT];
+            _questionTextLabel.textColor = [UIColor lightGrayColor];
+        }
     }
     else {
         [_doneButton setTitle:nil];
