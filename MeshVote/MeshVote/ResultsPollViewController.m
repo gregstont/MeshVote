@@ -195,13 +195,14 @@
     UIColor *fadedColor = [UIColor colorWithRed:red green:green blue:0.0 alpha:alpha];
     cell.answerProgress.progressTintColor = fadedColor;
     
-    [cell.answerProgress setProgress:newPercent animated:YES];
+    [cell.answerProgress setProgress:newPercent animated:!cell.doneLoading];
     cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     
     CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 10.0f);
     cell.answerProgress.transform = transform;
     cell.backgroundColor = [UIColor clearColor];
     
+    cell.doneLoading = YES;
     //cell.answerProgress.progressTintColor
     /*
      cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];

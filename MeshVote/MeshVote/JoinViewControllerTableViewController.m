@@ -117,7 +117,14 @@
     //NSLog(@"sdfdsf");
     
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCell" forIndexPath:indexPath];
+    UITableViewCell *cell;
+
+    if(indexPath.row < _sessionList.count) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCell" forIndexPath:indexPath];
+    }
+    else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCellProgress" forIndexPath:indexPath];
+    }
     
     if(cell == nil) {
         NSLog(@"nil sessionNameCell");
@@ -125,8 +132,10 @@
     
     if(indexPath.row < _sessionList.count) {
         cell.textLabel.text = [_sessionList objectAtIndex:indexPath.row];
+        cell.userInteractionEnabled = YES;
     }
     else { //animated circle thing
+        
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         cell.contentView.backgroundColor=[UIColor whiteColor];
         cell.userInteractionEnabled = NO;
@@ -141,6 +150,7 @@
         [spinner startAnimating];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         
+        //return cell;
         
     }
     

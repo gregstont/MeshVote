@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *answerProgress;
 @property (weak, nonatomic) IBOutlet UILabel *answerPercentLabel;
 
+@property (nonatomic, assign) BOOL doneLoading;
+
 @end
