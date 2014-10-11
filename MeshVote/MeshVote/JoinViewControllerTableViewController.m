@@ -307,7 +307,9 @@
 
 // A nearby peer has stopped advertising
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
-    NSLog(@"LOST PEER!! IN JOINVIEW");
+    NSLog(@"LOST PEER!! IN JOINVIEW: %@", peerID.displayName);
+    [_sessionList removeObject:peerID.displayName];
+    [self.tableView reloadData];
 }
 
 //@optional

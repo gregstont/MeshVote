@@ -103,7 +103,7 @@
     _peerList = [[NSMutableDictionary alloc] init];
     
     //create my (host) peerID
-    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
+    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:self.userName];
     _session = [[MCSession alloc] initWithPeer:me];
     _session.delegate = self;
     

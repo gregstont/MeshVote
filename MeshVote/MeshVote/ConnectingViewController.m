@@ -262,6 +262,17 @@
         //[_statusLabel setText:@"connected!"];
         //[_statusLabel reloadInputViews];
     }
+    else if(state == MCSessionStateNotConnected) {
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            _checkImage.image = [UIImage imageNamed:@"x_icon128.png"];
+            [_statusLabel setText:@"disconnected"];
+            [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{ _statusLabelBottom.alpha = 0;}
+                             completion:^(BOOL finished){
+                                 [self.navigationController popViewControllerAnimated:YES];
+                             }];
+        });
+    }
 }
 
 @end
