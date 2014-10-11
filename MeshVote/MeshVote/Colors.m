@@ -24,40 +24,49 @@ NSArray* letters;
                          [UIColor colorWithRed:0.905 green:0.713 blue:0.231 alpha:1.0], //yellow
                          [UIColor colorWithRed:1 green:0.278 blue:0.309 alpha:1.0], //red
                          [UIColor colorWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:1.0], //purple
-                         [UIColor colorWithRed:1 green:149.0/255 blue:0 alpha:1.0] ]; //orange
+                         [UIColor colorWithRed:1 green:149.0/255 blue:0 alpha:1.0], //orange
+                         [UIColor colorWithRed:0 green:122.0/255 blue:1 alpha:1.0], //blue
+                         [UIColor colorWithRed:1 green:59.0/255 blue:48.0/255 alpha:1.0] ]; //red
         
         alphaColors = @[ [UIColor colorWithRed:0.258 green:0.756 blue:0.631 alpha:0.3], //green
                          [UIColor colorWithRed:0 green:0.592 blue:0.929 alpha:0.3], //blue
                          [UIColor colorWithRed:0.905 green:0.713 blue:0.231 alpha:0.3], //yellow
                          [UIColor colorWithRed:1 green:0.278 blue:0.309 alpha:0.3], //red
                          [UIColor colorWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:0.3], //purple
-                         [UIColor colorWithRed:1 green:149.0/255 blue:0 alpha:0.3] ]; //orange
+                         [UIColor colorWithRed:1 green:149.0/255 blue:0 alpha:0.3], //orange
+                         [UIColor colorWithRed:0 green:122.0/255 blue:1 alpha:0.3], //blue
+                         [UIColor colorWithRed:1 green:59.0/255 blue:48.0/255 alpha:0.3] ]; //red
+        
+        
         alphaColors2 =@[ [UIColor colorWithRed:0.258 green:0.756 blue:0.631 alpha:0.5], //green
                          [UIColor colorWithRed:0 green:0.592 blue:0.929 alpha:0.5], //blue
                          [UIColor colorWithRed:0.905 green:0.713 blue:0.231 alpha:0.5], //yellow
                          [UIColor colorWithRed:1 green:0.278 blue:0.309 alpha:0.5], //red
                          [UIColor colorWithRed:88.0/255 green:86.0/255 blue:214.0/255 alpha:0.5], //purple
-                         [UIColor colorWithRed:1 green:149.0/255 blue:0 alpha:0.5] ]; //orange
-        letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G"];
+                         [UIColor colorWithRed:1 green:149.0/255 blue:0 alpha:0.5], //orange
+                         [UIColor colorWithRed:0 green:122.0/255 blue:1 alpha:0.5], //blue
+                         [UIColor colorWithRed:1 green:59.0/255 blue:48.0/255 alpha:0.5] ]; //red
+        
+        letters = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
     }
     return self;
 }
 
 - (UIColor*)getColorAtIndex:(long)index {
-    return [colors objectAtIndex:index];
+    return [colors objectAtIndex:index % 8];
     
 }
 
 - (UIColor*)getAlphaColorAtIndex:(long)index {
-    return [alphaColors objectAtIndex:index];
+    return [alphaColors objectAtIndex:index % 8];
     
 }
 - (UIColor*)getAlphaColor2AtIndex:(long)index {
-    return [alphaColors2 objectAtIndex:index];
+    return [alphaColors2 objectAtIndex:index % 8];
     
 }
 - (NSString*)getLetterAtIndex:(long)index {
-    return [letters objectAtIndex:index];
+    return [letters objectAtIndex:index % 26];
     
 }
 

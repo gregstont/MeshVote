@@ -498,7 +498,8 @@
             screenOffset = 568 - [[UIScreen mainScreen] bounds].size.height;
         }
         //NSLog(@"screen offset:%d", (int)screenHeight);
-        self.view.transform = CGAffineTransformMakeTranslation(0, (-34.0 * (clickedButtonPath.row/2)) - screenOffset);
+        int scale = MIN(clickedButtonPath.row/2, 5);
+        self.view.transform = CGAffineTransformMakeTranslation(0, (-34.0 * scale) - screenOffset);
         [UIView commitAnimations];
         
         if([textField.text isEqualToString:@"add answer"]) {
@@ -558,6 +559,13 @@
         
         [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         
+        /*
+        //scroll answers to bottom so we dont hide the "add answer" button
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([_currentQuestion getAnswerCount] * 2) + 1 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:indexPath
+                              atScrollPosition:UITableViewScrollPositionTop
+                                      animated:YES];
+        */
     }
     
     //[_doneButton setTitle:@"Save"];
