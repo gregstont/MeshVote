@@ -113,55 +113,6 @@
             </objects>
             <point key="canvasLocation" x="1095" y="376"/>
         </scene>
-        <!--Question View Controller Table View Controller - Add Questions-->
-        <scene sceneID="Rl5-1j-Biy">
-            <objects>
-                <tableViewController id="Fb5-mu-rlG" customClass="QuestionViewControllerTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aIM-Iv-usp">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <toolbar key="tableFooterView" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="aMm-I3-6vg">
-                            <rect key="frame" x="0.0" y="66" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            <items/>
-                        </toolbar>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="qcellid" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid" id="oLg-FT-SVD">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oLg-FT-SVD" id="L6m-rs-rNg">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="9vv-Mo-udS" kind="push" identifier="showQuestion" id="pkq-jV-hku"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Fb5-mu-rlG" id="ruh-ah-LaI"/>
-                            <outlet property="delegate" destination="Fb5-mu-rlG" id="V6V-e4-8Ys"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Add Questions" id="kyE-EV-ZbL">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="BH6-Yp-Eno">
-                            <connections>
-                                <action selector="addNewQuestion:" destination="Fb5-mu-rlG" id="5ru-Lc-nVC"/>
-                                <segue destination="9vv-Mo-udS" kind="push" identifier="addNewQuestionSegue" id="Xtn-mO-XRj"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="tableView" destination="aIM-Iv-usp" id="N89-aD-cze"/>
-                        <segue destination="kNH-1b-uJ6" kind="push" identifier="startPollSegue" id="e70-Ct-PBA"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FWl-MV-N47" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2191" y="811"/>
-        </scene>
         <!--Edit Question View Controller-->
         <scene sceneID="ITX-Hu-gHA">
             <objects>
@@ -342,7 +293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2798" y="376"/>
+            <point key="canvasLocation" x="2870" y="331"/>
         </scene>
         <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
@@ -867,7 +818,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Fb5-mu-rlG" kind="push" identifier="showPollQuestionSegue" id="gDE-5u-uuM"/>
+                                            <segue destination="30E-IH-scN" kind="push" identifier="showPollQuestionSegue" id="swo-3I-Yba"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1020,6 +971,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zw6-7I-2IB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2191" y="1509"/>
+        </scene>
+        <!--Question View Controller Table View Controller - Add Questions-->
+        <scene sceneID="kBe-QV-8mE">
+            <objects>
+                <viewController id="30E-IH-scN" customClass="QuestionViewControllerTableViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ndV-BF-KFa"/>
+                        <viewControllerLayoutGuide type="bottom" id="s5P-yL-Q7e"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="p46-Yh-vny">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Sg7-eX-TKh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid" id="NZq-wR-UVp">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NZq-wR-UVp" id="sXI-K5-xI2">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="9vv-Mo-udS" kind="push" identifier="showQuestion" id="gSM-jh-RNS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <imageView userInteractionEnabled="NO" alpha="0.15000000596046448" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow90degreeblack_256.png" translatesAutoresizingMaskIntoConstraints="NO" id="IvN-Jx-TPR">
+                                <rect key="frame" x="274" y="7" width="38" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="click to add a new question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5Y-bK-QPv">
+                                <rect key="frame" x="11" y="-12" width="320" height="99"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="19"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Questions" id="pIY-l1-fCP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ehR-ti-FSs">
+                            <connections>
+                                <action selector="addNewQuestion:" destination="30E-IH-scN" id="Tu9-50-FS3"/>
+                                <segue destination="9vv-Mo-udS" kind="push" identifier="addNewQuestionSegue" id="bQQ-Vg-Hvb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="createQuestionHintArrow" destination="IvN-Jx-TPR" id="7Ee-D8-7br"/>
+                        <outlet property="createQuestionHintLabel" destination="X5Y-bK-QPv" id="3g7-QR-wyE"/>
+                        <outlet property="tableView" destination="Sg7-eX-TKh" id="hDT-p8-nqg"/>
+                        <segue destination="kNH-1b-uJ6" kind="push" identifier="startPollSegue" id="ZfR-Lk-JVy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oEF-bN-Ejd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2191" y="811"/>
         </scene>
         <!--Join View Controller Table View Controller - Join session-->
         <scene sceneID="QQE-lV-kzY">
@@ -1253,7 +1267,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Xtn-mO-XRj"/>
+        <segue reference="gSM-jh-RNS"/>
         <segue reference="HFz-Rd-2G9"/>
     </inferredMetricsTieBreakers>
 </document>

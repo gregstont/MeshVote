@@ -10,11 +10,13 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "EditQuestionViewController.h"
 
-@interface QuestionViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface QuestionViewControllerTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
 
 - (IBAction)addNewQuestion:(id)sender;
 - (IBAction)playPressed:(UIButton *)sender;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *createQuestionHintLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *createQuestionHintArrow;
 
 @property (nonatomic, strong) NSString* userName;
 @property (nonatomic, NS_NONATOMIC_IOSONLY) MCSession *session;

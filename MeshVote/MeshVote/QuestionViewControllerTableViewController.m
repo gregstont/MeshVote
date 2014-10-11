@@ -34,6 +34,7 @@
     }
     return self;
 }
+/*
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -44,6 +45,7 @@
     }
     return self;
 }
+ */
 
 - (void)viewDidLoad
 {
@@ -139,6 +141,8 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 
 }
 
@@ -146,11 +150,25 @@
 -(void)viewWillAppear:(BOOL)animated {
     _session.delegate = self;
     
-    //NSLog(@"question number:%d", [_questionSet getQuestionAtIndex:1].questionNumber);
+    NSLog(@"question count:%d", [_questionSet getQuestionCount]);
     
     //send out updated question set to peers
     _questionSet.messageType = MSG_QUESTION_SET;
     [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
+    
+    if([_questionSet getQuestionCount] == 0) {
+        
+        _createQuestionHintLabel.alpha = 0.0;
+        _createQuestionHintArrow.alpha = 0.0;
+        
+        [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ _createQuestionHintArrow.alpha = 0.15; _createQuestionHintLabel.alpha = 0.65;}
+                         completion:nil];
+    }
+    else {
+        _createQuestionHintLabel.alpha = 0.0;
+        _createQuestionHintArrow.alpha = 0.0;
+    }
     
     //[self.navigationController setNavigationBarHidden:NO];
     //[self.navigationController setToolbarHidden:NO];
@@ -221,6 +239,8 @@
 {
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
+    // Return the number of rows in the section.
+    NSLog(@"number of rows:" );
     return 1;
 }
 

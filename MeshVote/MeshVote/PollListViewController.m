@@ -145,6 +145,10 @@
                          animations:^{ _createPollHintArrow.alpha = 0.15; _createPollHintLabel.alpha = 0.65;}
                          completion:nil];
     }
+    else {
+        _createPollHintLabel.alpha = 0.0;
+        _createPollHintArrow.alpha = 0.0;
+    }
     [_tableView reloadData];
     //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
