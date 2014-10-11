@@ -498,7 +498,7 @@
             screenOffset = 568 - [[UIScreen mainScreen] bounds].size.height;
         }
         //NSLog(@"screen offset:%d", (int)screenHeight);
-        int scale = MIN(clickedButtonPath.row/2, 5);
+        int scale = MIN((int)clickedButtonPath.row/2, 5); //dont need to lift more than 5 or so cells
         self.view.transform = CGAffineTransformMakeTranslation(0, (-34.0 * scale) - screenOffset);
         [UIView commitAnimations];
         

@@ -14,5 +14,7 @@
 
 @property (nonatomic, strong) NSString* userName;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *createPollHintLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *createPollHintArrow;
 
 @end

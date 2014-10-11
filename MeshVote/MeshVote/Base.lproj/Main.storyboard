@@ -872,6 +872,17 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" alpha="0.14999999999999969" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow90degreeblack_256.png" translatesAutoresizingMaskIntoConstraints="NO" id="oeo-L3-hEv">
+                                <rect key="frame" x="273" y="4" width="38" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999999999999969" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="click to create a new poll" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6n-ch-b7x">
+                                <rect key="frame" x="19" y="-14" width="320" height="99"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="19"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -883,6 +894,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="createPollHintArrow" destination="oeo-L3-hEv" id="fgv-rY-MSc"/>
+                        <outlet property="createPollHintLabel" destination="R6n-ch-b7x" id="InT-jt-fab"/>
                         <outlet property="tableView" destination="TEj-pg-CpW" id="zvB-hZ-vFk"/>
                     </connections>
                 </viewController>
@@ -1228,6 +1241,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow90degreeblack_256.png" width="256" height="256"/>
         <image name="check_icon128x128.png" width="128" height="128"/>
         <image name="check_icon_outline130.png" width="130" height="130"/>
         <image name="i_icon_large.png" width="512" height="512"/>

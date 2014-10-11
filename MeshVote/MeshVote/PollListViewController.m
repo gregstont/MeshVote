@@ -60,6 +60,9 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
+
+    /*
+     
     ///temp for testing onlee
     
     QuestionSet *tt = [[QuestionSet alloc] init];
@@ -67,7 +70,7 @@
     tt.isQuiz = NO;
     tt.showResults = YES;
     tt.shareScores = YES;
-    /*
+    
     Question *tempQuestion1 = [[Question alloc] init];
     [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
     [tempQuestion1 addAnswer:@"science"];
@@ -133,6 +136,15 @@
     _session.delegate = self;
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController setToolbarHidden:NO];
+    if(_pollSet.count == 0) {
+        
+        _createPollHintLabel.alpha = 0.0;
+        _createPollHintArrow.alpha = 0.0;
+        
+        [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{ _createPollHintArrow.alpha = 0.15; _createPollHintLabel.alpha = 0.65;}
+                         completion:nil];
+    }
     [_tableView reloadData];
     //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
