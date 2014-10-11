@@ -115,6 +115,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //NSLog(@"sdfdsf");
+    
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sessionNameCell" forIndexPath:indexPath];
     
     if(cell == nil) {
@@ -127,6 +129,9 @@
     else { //animated circle thing
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         cell.contentView.backgroundColor=[UIColor whiteColor];
+        cell.userInteractionEnabled = NO;
+        //cell.alpha = 0.1;
+        spinner.alpha = 0.7;
         [cell.contentView addSubview:spinner];
         spinner.tag = 123;
         CGRect _frame = [spinner frame];

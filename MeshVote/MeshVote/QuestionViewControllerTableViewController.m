@@ -20,6 +20,7 @@
 
 @property (nonatomic) int selectedQuestion;
 @property (nonatomic, strong) UILabel *connectedPeersLabel;
+@property (nonatomic, strong) UIBarButtonItem *play;
 
 @end
 
@@ -123,12 +124,14 @@
     //create toolbar buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:nil];
-    UIBarButtonItem *play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPressed:)];
+    _play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPressed:)];
     UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:nil];
     forward.enabled = NO;
     rewind.enabled = NO;
+    if([_questionSet getQuestionCount] == 0)
+        _play.enabled = NO;
     
-    NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, play, spacer, forward, spacer, nil];
+    NSArray *buttonItems = [NSArray arrayWithObjects:spacer, rewind, spacer, _play, spacer, forward, spacer, nil];
     self.toolbarItems = buttonItems;
 
     
@@ -146,6 +149,41 @@
 
 }
 
+-(void)reloadTable {
+    
+    //[_tableView reloadData];
+    
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        if([_questionSet getQuestionCount] == 0)
+            _play.enabled = NO;
+        else
+            _play.enabled = YES;
+        
+        _createQuestionHintLabel.alpha = 0.0;
+        _createQuestionHintArrow.alpha = 0.0;
+        _tipTextView.alpha = 0.0;
+        
+        if([_questionSet getQuestionCount] == 0) { //show creat question hint
+            
+            [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{ _createQuestionHintArrow.alpha = 0.15; _createQuestionHintLabel.alpha = 0.65;}
+                             completion:nil];
+        }
+        else if([_questionSet getQuestionCount] == 1) { //show (and hide) pull down hint
+            
+            [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{  _tipTextView.alpha = 0.65;}
+                             completion:^(BOOL finished){
+                                 [UIView animateWithDuration:2.0 delay:4.0 options:UIViewAnimationOptionCurveEaseIn
+                                                  animations:^{  _tipTextView.alpha = 0.0;}
+                                                  completion:nil];
+                             }];
+            
+        }
+    //});
+    
+}
+
 
 -(void)viewWillAppear:(BOOL)animated {
     _session.delegate = self;
@@ -156,31 +194,12 @@
     _questionSet.messageType = MSG_QUESTION_SET;
     [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
     
-    _createQuestionHintLabel.alpha = 0.0;
-    _createQuestionHintArrow.alpha = 0.0;
-    _tipTextView.alpha = 0.0;
-    
-    if([_questionSet getQuestionCount] == 0) { //show creat question hint
-        
-        [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{ _createQuestionHintArrow.alpha = 0.15; _createQuestionHintLabel.alpha = 0.65;}
-                         completion:nil];
-    }
-    else if([_questionSet getQuestionCount] == 1) { //show (and hide) pull down hint
-    
-        [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{  _tipTextView.alpha = 0.65;}
-                         completion:^(BOOL finished){
-                             [UIView animateWithDuration:2.0 delay:4.0 options:UIViewAnimationOptionCurveEaseIn
-                                              animations:^{  _tipTextView.alpha = 0.0;}
-                                              completion:nil];
-                         }];
-   
-    }
     
     //[self.navigationController setNavigationBarHidden:NO];
     //[self.navigationController setToolbarHidden:NO];
+    
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    [self reloadTable];
 }
 
 
@@ -298,6 +317,7 @@
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         //[self.tableView reloadData];
         //[_tableView reloadData];
+        [self reloadTable];
     }
 }
 
