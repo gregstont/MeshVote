@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *createQuestionHintLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *createQuestionHintArrow;
+@property (weak, nonatomic) IBOutlet UITextView *tipTextView;
 
 @property (nonatomic, strong) NSString* userName;
 @property (nonatomic, NS_NONATOMIC_IOSONLY) MCSession *session;

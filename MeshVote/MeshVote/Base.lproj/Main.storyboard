@@ -1013,6 +1013,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="tip: pull down to see how many peers are connected" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPX-yB-Tx2">
+                                <rect key="frame" x="136" y="95" width="155" height="98"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1028,6 +1035,7 @@
                         <outlet property="createQuestionHintArrow" destination="IvN-Jx-TPR" id="7Ee-D8-7br"/>
                         <outlet property="createQuestionHintLabel" destination="X5Y-bK-QPv" id="3g7-QR-wyE"/>
                         <outlet property="tableView" destination="Sg7-eX-TKh" id="hDT-p8-nqg"/>
+                        <outlet property="tipTextView" destination="iPX-yB-Tx2" id="5cw-8F-eDM"/>
                         <segue destination="kNH-1b-uJ6" kind="push" identifier="startPollSegue" id="ZfR-Lk-JVy"/>
                     </connections>
                 </viewController>

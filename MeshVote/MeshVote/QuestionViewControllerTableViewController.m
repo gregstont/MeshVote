@@ -156,18 +156,26 @@
     _questionSet.messageType = MSG_QUESTION_SET;
     [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
     
-    if([_questionSet getQuestionCount] == 0) {
-        
-        _createQuestionHintLabel.alpha = 0.0;
-        _createQuestionHintArrow.alpha = 0.0;
+    _createQuestionHintLabel.alpha = 0.0;
+    _createQuestionHintArrow.alpha = 0.0;
+    _tipTextView.alpha = 0.0;
+    
+    if([_questionSet getQuestionCount] == 0) { //show creat question hint
         
         [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
                          animations:^{ _createQuestionHintArrow.alpha = 0.15; _createQuestionHintLabel.alpha = 0.65;}
                          completion:nil];
     }
-    else {
-        _createQuestionHintLabel.alpha = 0.0;
-        _createQuestionHintArrow.alpha = 0.0;
+    else if([_questionSet getQuestionCount] == 1) { //show (and hide) pull down hint
+    
+        [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{  _tipTextView.alpha = 0.65;}
+                         completion:^(BOOL finished){
+                             [UIView animateWithDuration:2.0 delay:4.0 options:UIViewAnimationOptionCurveEaseIn
+                                              animations:^{  _tipTextView.alpha = 0.0;}
+                                              completion:nil];
+                         }];
+   
     }
     
     //[self.navigationController setNavigationBarHidden:NO];
