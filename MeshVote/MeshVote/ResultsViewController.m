@@ -162,23 +162,24 @@
 {
     //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    if(_voteHistory)
-        return 2;
-    else
-        return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    if(section == 0) {
-        NSLog(@"number of rows in results:%d",[_questionSet getQuestionCount]);
+    if(section == 0) { //individual results section
+        //NSLog(@"number of rows in results:%d",[_questionSet getQuestionCount]);
         //return [_questionSet getQuestionCount];
-        return [_questionSet getQuestionCount];
+        if(_voteHistory)
+            return [_voteHistory count];
+        else
+            return 1;
     }
-    else { //individual results section
-        return [_voteHistory count];
+    else { //per question
+        return [_questionSet getQuestionCount];
+
     }
 }
 
@@ -189,10 +190,13 @@
     NSString* labelString;
     
     if(section == 0) {
-        labelString = @" per question results";
+        if(_voteHistory)
+            labelString = @" individual peer results";
+        else
+            labelString = @" your score";
     }
     else if(section == 1) {
-        labelString =@" individual peer results";
+        labelString = @" average peer score per question";
     }
 
 
@@ -219,6 +223,21 @@
     //cell.textLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     //cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
     cell.answerLetterLabel.text = [NSString stringWithFormat:@"%zd",indexPath.row + 1];
+    if(_voteHistory == nil && indexPath.section == 1) { //show peer results, so highlight wrong answers
+        if(!cell.doneLoading) {
+            cell.gradeImage.alpha = 0;
+            [UIView animateWithDuration:0.8 delay:indexPath.row/4.0 + 0.2 options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{  cell.gradeImage.alpha = 0.6;}
+                             completion:nil];
+        }
+        cell.doneLoading = YES;
+        
+        Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
+        if(cur.givenAnswer == cur.correctAnswer)
+          [cell.gradeImage setImage:[UIImage imageNamed:@"check_icon128x128.png"]];
+    }
+    else
+        cell.gradeImage.alpha = 0.0;
     
     
     //cell.answerProgress.progressTintColor = [_colors objectAtIndex:indexPath.row];
@@ -227,7 +246,7 @@
     
     double newPercent = 0.5;
     double alpha = 1.0;
-    if(indexPath.section == 0) {
+    if(indexPath.section == 1) {
         Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
         if(cur.correctAnswer == -1) { //no correct answer selected
             newPercent = 1.0;
@@ -238,12 +257,24 @@
             newPercent = ([[cur.voteCounts objectAtIndex:cur.correctAnswer] intValue] + 0.0) / cur.voteCount; //this is the percent correct
     }
     else { //personal results
-        
-        //NSLog(@"name:%@ score:%f", key, [[[_peerResults allKeys] objectAtIndex:indexPath.row] doubleValue]);
-        NSString* key = [[_peerResults allKeys] objectAtIndex:indexPath.row];
-        newPercent = [[_peerResults objectForKey:key] doubleValue]; //TODO: dont use allkeys here
-        cell.answerLabel.text = [key substringToIndex:[key length] - 6];
-        cell.answerLabel.hidden = NO;
+        if(_voteHistory) { //host results
+            //NSLog(@"name:%@ score:%f", key, [[[_peerResults allKeys] objectAtIndex:indexPath.row] doubleValue]);
+            NSString* key = [[_peerResults allKeys] objectAtIndex:indexPath.row];
+            newPercent = [[_peerResults objectForKey:key] doubleValue]; //TODO: dont use allkeys here
+            cell.answerLabel.text = [key substringToIndex:[key length] - 6];
+            cell.answerLabel.hidden = NO;
+        }
+        else { //peer results
+            NSLog(@"here");
+            int correctCount = 0;
+            for(Question* cur in _questionSet.questions) {
+                NSLog(@"given answer:%d",cur.givenAnswer);
+                if(cur.givenAnswer == cur.correctAnswer)
+                    ++correctCount;
+            }
+            newPercent = (correctCount + 0.0) / [_questionSet getQuestionCount];
+            cell.answerLetterLabel.text = @"";
+        }
         
     }
 
@@ -269,7 +300,7 @@
     //color fades from red to green indicating how many missed
     //high percentage  will be green and low red
     
-    NSLog(@"newPercent:%f and %f", newPercent, (1 - newPercent));
+    //NSLog(@"newPercent:%f and %f", newPercent, (1 - newPercent));
     UIColor *fadedColor = [UIColor colorWithRed:red green:green blue:0.0 alpha:alpha];
     cell.answerProgress.progressTintColor = fadedColor;
     

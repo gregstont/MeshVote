@@ -121,58 +121,15 @@
         NSLog(@"  got the question set");
         
         _questionSet = (QuestionSet*)message;
-        //NSLog(@"questionnum:%d",[_questionSet getQuestionAtIndex:1].questionNumber);
-        
-        
-        //received new question, ready to begin
-        //_tempQuestion = (Question*)message;
-        //Question *recQuestion = (Question*)message;
-        //NSLog(@"  question message:%@", _tempQuestion.questionText);
-        //[_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
         
         
         //send question-ack to host //TODO: this should be in statis message class
         [Message sendMessageType:MSG_QUESTION_SET_ACK toPeers:@[_host] inSession:_session];
         
-        /*
-        NSLog(@"send question-set-ack to host...");
-        Message *questionAck = [[Message alloc] init];
-        questionAck.messageType = @"question-set-ack";
-        //questionAck.questionNumber = _tempQuestion.questionNum;
-        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:questionAck];
-        NSError *error;
-        
-        
-        
-        [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
-        }*/
-    }
-    /*else if([messageType isEqualToString:@"question"]) {
-        
-        //received new question, ready to begin
-        _tempQuestion = (Question*)message;
-        //Question *recQuestion = (Question*)message;
-        NSLog(@"  question message:%@", _tempQuestion.questionText);
-        //[_session sendData:testAck toPeers:peers withMode:MCSessionSendDataReliable error:&error];
-        
-        
-        //send question-ack to host
-        NSLog(@"send question-ack to host...");
-        Message *questionAck = [[Message alloc] init];
-        questionAck.messageType = @"question-ack";
-        questionAck.questionNumber = _tempQuestion.questionNum;
-        NSData *ackData = [NSKeyedArchiver archivedDataWithRootObject:questionAck];
-        NSError *error;
-        
-        
-        
-        [_session sendData:ackData toPeers:@[_host] withMode:MCSessionSendDataReliable error:&error];
-        if(error) {
-            NSLog(@"Error sending data");
+        for(Question* cur in _questionSet.questions) { //no given answers yet
+            cur.givenAnswer = -1;
         }
-    }*/
+    }
     
     else if(message.messageType == MSG_ANSWER_ACK) { //[messageType isEqualToString:@"answer-ack"]) {
         NSLog(@"  answer-ack");
@@ -185,8 +142,6 @@
         else if(message.actionType == AT_PLAY) {
             
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                // GUI thread
-                //NSLog(@"GUI thread 1");
                 // update label 1 text
                 _currentQuestionNumber = message.questionNumber;
                 [self performSegueWithIdentifier:@"startTakingPollSegue" sender:self];
@@ -205,10 +160,8 @@
         }
     }
     else {
-        NSLog(@"!!!! received invalid message");
+        NSLog(@"!!!! received invalid message467");
     }
-    //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     //NSLog(@"  message:%@", recQuestion.questionText);
     
     

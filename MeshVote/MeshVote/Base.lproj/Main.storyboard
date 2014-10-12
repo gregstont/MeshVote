@@ -576,7 +576,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <progressView opaque="NO" alpha="0.40000000596046448" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="a0l-XF-7EN">
-                                                    <rect key="frame" x="31" y="10" width="229" height="3"/>
+                                                    <rect key="frame" x="29" y="10" width="229" height="3"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.31219788459999998" green="0.879683514" blue="0.21684011789999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </progressView>
@@ -604,6 +604,10 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="x_icon128.png" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-dl-Zbm">
+                                                    <rect key="frame" x="260" y="14" width="22" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="zhx-0u-WLu" firstAttribute="baseline" secondItem="Gof-Ly-Oro" secondAttribute="baseline" id="1Bf-31-bsQ"/>
@@ -613,14 +617,14 @@
                                                 <constraint firstItem="a0l-XF-7EN" firstAttribute="top" secondItem="hql-rb-uRQ" secondAttribute="top" constant="10" id="Hb7-Dz-gH0"/>
                                                 <constraint firstAttribute="bottom" secondItem="zhx-0u-WLu" secondAttribute="bottom" constant="6" id="I0f-Ae-deF"/>
                                                 <constraint firstAttribute="trailing" secondItem="Gof-Ly-Oro" secondAttribute="trailing" constant="36" id="Qch-u2-6gC"/>
-                                                <constraint firstAttribute="trailing" secondItem="a0l-XF-7EN" secondAttribute="trailing" constant="20" symbolic="YES" id="Qyy-bq-VU8"/>
+                                                <constraint firstAttribute="trailing" secondItem="a0l-XF-7EN" secondAttribute="trailing" constant="22" id="Qyy-bq-VU8"/>
                                                 <constraint firstItem="Gof-Ly-Oro" firstAttribute="top" secondItem="zhx-0u-WLu" secondAttribute="top" id="TNR-xN-3oe"/>
                                                 <constraint firstItem="1wO-od-crQ" firstAttribute="bottom" secondItem="Gof-Ly-Oro" secondAttribute="bottom" id="UxT-qI-ASz"/>
                                                 <constraint firstItem="1wO-od-crQ" firstAttribute="leading" secondItem="zhx-0u-WLu" secondAttribute="trailing" constant="13" id="ewu-WM-Ie9"/>
                                                 <constraint firstItem="1wO-od-crQ" firstAttribute="top" secondItem="Gof-Ly-Oro" secondAttribute="top" id="hYd-oO-JFj"/>
                                                 <constraint firstItem="zhx-0u-WLu" firstAttribute="top" secondItem="hql-rb-uRQ" secondAttribute="top" constant="11" id="hf9-11-5Np"/>
-                                                <constraint firstItem="a0l-XF-7EN" firstAttribute="trailing" secondItem="1wO-od-crQ" secondAttribute="trailing" id="jRF-Pf-sZR"/>
-                                                <constraint firstItem="a0l-XF-7EN" firstAttribute="leading" secondItem="hql-rb-uRQ" secondAttribute="leading" constant="31" id="kEG-rv-YSP"/>
+                                                <constraint firstItem="a0l-XF-7EN" firstAttribute="trailing" secondItem="1wO-od-crQ" secondAttribute="trailing" constant="-2" id="jRF-Pf-sZR"/>
+                                                <constraint firstItem="a0l-XF-7EN" firstAttribute="leading" secondItem="hql-rb-uRQ" secondAttribute="leading" constant="29" id="kEG-rv-YSP"/>
                                                 <constraint firstItem="zhx-0u-WLu" firstAttribute="leading" secondItem="hql-rb-uRQ" secondAttribute="leading" id="tTQ-2u-YpK"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -629,6 +633,7 @@
                                             <outlet property="answerLetterLabel" destination="zhx-0u-WLu" id="JE3-7n-CC9"/>
                                             <outlet property="answerPercentLabel" destination="Gof-Ly-Oro" id="VkO-aZ-t0X"/>
                                             <outlet property="answerProgress" destination="a0l-XF-7EN" id="n3i-XF-Zbk"/>
+                                            <outlet property="gradeImage" destination="5kh-dl-Zbm" id="5xP-gB-XWk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1283,6 +1288,7 @@
         <image name="check_icon_outline130.png" width="130" height="130"/>
         <image name="i_icon_large.png" width="512" height="512"/>
         <image name="icon_new.png" width="600" height="600"/>
+        <image name="x_icon128.png" width="128" height="128"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

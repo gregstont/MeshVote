@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *answerLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *answerProgress;
 @property (weak, nonatomic) IBOutlet UILabel *answerPercentLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *gradeImage;
 
 @property (nonatomic, assign) BOOL doneLoading;
 

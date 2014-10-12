@@ -318,6 +318,7 @@
             
             [Message sendMessage:answerMessage toPeers:@[_host] inSession:_session];
             
+
             _currentAnswer = answerMessage.answerNumber;
             _currentAnswerAcked = NO;
             dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -617,6 +618,7 @@
         NSLog(@"  answer-ack");
         if(message.questionNumber == _currentQuestionNumber && message.answerNumber == _currentAnswer) {
             _currentAnswerAcked = YES;
+            _currentQuestion.givenAnswer = message.answerNumber;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [_tableView reloadData];
             });
