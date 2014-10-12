@@ -371,6 +371,7 @@
         //NSLog(@"prepareForSegue");
         ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
+        controller.session = _session;
         NSLog(@"vote history cout:%lu", (unsigned long)_voteHistory.count);
         controller.voteHistory = _voteHistory;
     }

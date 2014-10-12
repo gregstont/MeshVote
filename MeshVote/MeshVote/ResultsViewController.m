@@ -9,6 +9,7 @@
 #import "ResultsViewController.h"
 #import "RunningAnswerTableViewCell.h"
 #import "Colors.h"
+#import "Results.h"
 
 @interface ResultsViewController ()
 
@@ -39,28 +40,35 @@
     // Do any additional setup after loading the view.
     NSLog(@"count:%lul",(unsigned long)[[_voteHistory allKeys] count]);
     
-    if(_questionSet.isQuiz) {
-        _peerResults = [[NSMutableDictionary alloc] initWithCapacity:[[_voteHistory allKeys] count]];
+    
+    _peerResults = [[NSMutableDictionary alloc] initWithCapacity:[[_voteHistory allKeys] count]];
+    
+    //calculate the peer results from the voteHistory
+    //iterate over each peer in the history
+    for(NSString* key in _voteHistory) {
+        NSLog(@"here!");
         
-        //calculate the peer results from the voteHistory
-        //iterate over each peer in the history
-        for(NSString* key in _voteHistory) {
-            NSLog(@"here!");
-            
-            NSMutableArray* curPeerHistory = [_voteHistory objectForKey:key];
-            
-            int numberCorrect = 0;
-            //iterate over each question
-            for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
-                if([_questionSet getQuestionAtIndex:i].correctAnswer == [[curPeerHistory objectAtIndex:i] intValue]) {
-                    ++numberCorrect;
-                }
+        NSMutableArray* curPeerHistory = [_voteHistory objectForKey:key];
+        
+        int numberCorrect = 0;
+        //iterate over each question
+        for(int i = 0; i < [_questionSet getQuestionCount]; ++i) {
+            if([_questionSet getQuestionAtIndex:i].correctAnswer == [[curPeerHistory objectAtIndex:i] intValue]) {
+                ++numberCorrect;
             }
-            NSLog(@"score..numCorect:%d questcount:%d", numberCorrect, [_questionSet getQuestionCount]);
-            double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
-            [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
         }
-        
+        NSLog(@"score..numCorect:%d questcount:%d", numberCorrect, [_questionSet getQuestionCount]);
+        double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
+        [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
+    }
+    
+    if(_stats) {
+        self.meanLabel.text = [_stats objectAtIndex:0];
+        self.minLabel.text = [_stats objectAtIndex:1];
+        self.maxLabel.text = [_stats objectAtIndex:2];
+        self.medianLabel.text = [_stats objectAtIndex:3];
+    }
+    else {
         //calculate mean, median, min and max
         NSArray* scores = [[_peerResults allValues] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"doubleValue" ascending:YES]]];
         
@@ -85,33 +93,29 @@
             }
             self.medianLabel.text = [NSString stringWithFormat:@"%d", median];
         }
-        
-        
-        
-        for(NSString* key in _peerResults) {
-            NSLog(@"name:%@ score:%f", key, [[_peerResults objectForKey:key] doubleValue]);
+    }
+    
+    //send out results to peers
+    if(_questionSet.showResults) {
+        NSMutableArray* votesArray = [[NSMutableArray alloc] initWithCapacity:[_questionSet getQuestionCount]];
+        for(Question* runner in _questionSet.questions) {
+            [votesArray addObject:[runner.voteCounts copy]];
         }
+        NSArray* sendArray = [votesArray copy];
+        
+        Results* results = [[Results alloc] init];
+        results.messageType = MSG_POLL_RESULTS;
+        results.votes = sendArray;
+        results.stats = @[_meanLabel.text, _minLabel.text, _maxLabel.text, _medianLabel.text];
+        [Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
     }
-    else { //poll mode
-        NSLog(@"poll mode results");
-        /*
-        CGRect bounds = [self.resultsTable bounds];
-        [self.resultsTable setBounds:CGRectMake(bounds.origin.x,
-                                        bounds.origin.y + 30,
-                                        bounds.size.width,
-                                        bounds.size.height + 30)];
-         */
-        //self.resultsTable.contentSize// = CGRectMake(0,0,320,480);
+    
+    
+    
+    for(NSString* key in _peerResults) {
+        NSLog(@"name:%@ score:%f", key, [[_peerResults objectForKey:key] doubleValue]);
+    }
 
-        //self.resultsTable.frame = CGRectMake(0,0,320,480);
-        //[self.resultsTable setContentInset:UIEdgeInsetsMake(-50,0,0,0)];
-        //self.resultsTable.contentOffset = CGPointMake( 0,  100);
-        //self.resultsTable.contentSize = CGSizeMake(100, 200);
-        //CGPoint _contentOffset = CGPointMake(_resultsTable.contentOffset.x, -100);
-        //_resultsTable.contentOffset = _contentOffset;
-        //_resultsTable.frame = CGRectOffset(_resultsTable.frame, 100, 200);
-        //view.frame = CGRectOffset(view.frame, 5, 10);
-    }
     
 }
 /*
@@ -158,7 +162,10 @@
 {
     //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 2;
+    if(_voteHistory)
+        return 2;
+    else
+        return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

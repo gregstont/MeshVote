@@ -11,6 +11,7 @@
 #import "SpacedUITableViewCell.h"
 #import "Results.h"
 #import "ResultsPollViewController.h"
+#import "ResultsViewController.h"
 
 #define PLACE_HOLDER_TEXT @"enter question here"
 
@@ -27,6 +28,8 @@
 @property (nonatomic, strong) NSNumberFormatter* numberFormatter;
 
 @property (atomic) int questionCount; //counter used to prevent multiple threads from updating counter
+
+@property (strong, nonatomic) NSArray* stats; //for receiving results
 @end
 
 @implementation EditQuestionViewController
@@ -306,19 +309,21 @@
     if(_viewMode == VIEWMODE_ASK_QUESTION) { //submit answer
         NSLog(@"clicked answer to submit");
         
-        Message *answerMessage = [[Message alloc] init];
-        //answerMessage.messageType = @"answer";
-        answerMessage.messageType = MSG_ANSWER;
-        answerMessage.questionNumber = _currentQuestionNumber;
-        answerMessage.answerNumber = (int)indexPath.row/2;
-        
-        [Message sendMessage:answerMessage toPeers:@[_host] inSession:_session];
-        
-        _currentAnswer = answerMessage.answerNumber;
-        _currentAnswerAcked = NO;
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [_tableView reloadData];
-        });
+        if(_timeRemaining > 0) { //closes issue #4
+            Message *answerMessage = [[Message alloc] init];
+            //answerMessage.messageType = @"answer";
+            answerMessage.messageType = MSG_ANSWER;
+            answerMessage.questionNumber = _currentQuestionNumber;
+            answerMessage.answerNumber = (int)indexPath.row/2;
+            
+            [Message sendMessage:answerMessage toPeers:@[_host] inSession:_session];
+            
+            _currentAnswer = answerMessage.answerNumber;
+            _currentAnswerAcked = NO;
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [_tableView reloadData];
+            });
+        }
         
     }
    
@@ -396,6 +401,13 @@
         //NSLog(@"prepareForSegue");
         ResultsPollViewController *controller = (ResultsPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
+    }
+    else if([segue.identifier isEqualToString:@"showPeerResultsSegue"]){
+        //NSLog(@"prepareForSegue");
+        ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
+        controller.questionSet = _questionSet;
+        controller.stats = _stats;
+
     }
 }
 
@@ -651,6 +663,7 @@
     else if(message.messageType == MSG_POLL_RESULTS) {
         NSLog(@"got poll results");
         Results* results = (Results*)message;
+        _stats = results.stats;
         NSLog(@"results size:%lu", (unsigned long)results.votes.count);
         int i = 0;
         for(Question* runner in _questionSet.questions) {
@@ -669,7 +682,10 @@
             runner.voteCount = sum;
         }
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self performSegueWithIdentifier:@"showPeerResultsPollSegue" sender:self];
+            if(_questionSet.isQuiz)
+                 [self performSegueWithIdentifier:@"showPeerResultsSegue" sender:self];
+            else
+                [self performSegueWithIdentifier:@"showPeerResultsPollSegue" sender:self];
         });
         //[self performSegueWithIdentifier:@"showPeerResultsPollSegue" sender:self];
         

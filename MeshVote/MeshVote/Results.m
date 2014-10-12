@@ -19,6 +19,7 @@
     if(self) {
         [super setMessageType:[decoder decodeIntForKey:@"messageType"]];
         _votes = [decoder decodeObjectForKey:@"votes"];
+        _stats = [decoder decodeObjectForKey:@"stats"];
     }
     
     return self;
@@ -28,6 +29,7 @@
     //NSLog(@"ENCODE:%d", [super messageType]);
     [encoder encodeInt:[super messageType] forKey:@"messageType"];
     [encoder encodeObject:_votes forKey:@"votes"];
+    [encoder encodeObject:_stats forKey:@"stats"];
     
 }
 

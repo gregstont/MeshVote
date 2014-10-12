@@ -11,5 +11,6 @@
 @interface Results : Message <NSCoding>
 
 @property (nonatomic, strong) NSArray* votes;
+@property (nonatomic, strong) NSArray* stats;
 
 @end

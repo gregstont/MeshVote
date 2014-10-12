@@ -12,6 +12,7 @@
 @interface ResultsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) QuestionSet *questionSet;
+@property (nonatomic, strong) MCSession* session;
 @property (nonatomic, strong) NSMutableDictionary *voteHistory;
 
 @property (weak, nonatomic) IBOutlet UILabel *meanLabel;
@@ -20,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *medianLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
+
+@property (strong, nonatomic) NSArray* stats; //for results when receiving stats from host
 
 @property (nonatomic) BOOL isQuiz;
 

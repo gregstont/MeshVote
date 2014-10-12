@@ -289,11 +289,12 @@
                         <outlet property="tableView" destination="vKW-tg-0ou" id="4E4-F8-mys"/>
                         <outlet property="timeTextField" destination="26h-En-D74" id="We1-MU-1dB"/>
                         <segue destination="ubM-MB-g11" kind="modal" identifier="showPeerResultsPollSegue" modalTransitionStyle="flipHorizontal" id="HFz-Rd-2G9"/>
+                        <segue destination="5Hn-AN-gVk" kind="modal" identifier="showPeerResultsSegue" modalTransitionStyle="flipHorizontal" id="Jzv-6g-iFf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2870" y="331"/>
+            <point key="canvasLocation" x="2823" y="352"/>
         </scene>
         <!--Running Poll View Controller - Question 1-->
         <scene sceneID="jED-Iq-mtk">
@@ -1290,6 +1291,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="gSM-jh-RNS"/>
-        <segue reference="HFz-Rd-2G9"/>
+        <segue reference="kRY-DZ-lG6"/>
+        <segue reference="Jzv-6g-iFf"/>
     </inferredMetricsTieBreakers>
 </document>
