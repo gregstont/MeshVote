@@ -105,15 +105,15 @@
     _tempQuestionSet.isQuiz = [_modeSwitchOutlet isOn];
     if(_tempQuestionSet.isQuiz) {
         [_modeSwitchText setText:@"quiz"];
-        _shareScoresTextTitle.hidden = NO;
-        _shareScoresTextDetail.hidden = NO;
-        _shareScoresOutlet.hidden = NO;
+        //_shareScoresTextTitle.hidden = NO;
+        //_shareScoresTextDetail.hidden = NO;
+        //_shareScoresOutlet.hidden = NO;
     }
     else {
         [_modeSwitchText setText:@"poll"];
-        _shareScoresTextTitle.hidden = YES;
-        _shareScoresTextDetail.hidden = YES;
-        _shareScoresOutlet.hidden = YES;
+        //_shareScoresTextTitle.hidden = YES;
+        //_shareScoresTextDetail.hidden = YES;
+        //_shareScoresOutlet.hidden = YES;
     }
     
 }

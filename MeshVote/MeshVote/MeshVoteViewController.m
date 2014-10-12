@@ -56,9 +56,9 @@
     return YES;
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    if([textField.text isEqualToString:@"Name"]) {
+    /*if([textField.text isEqualToString:@"Name"]) {
         textField.text = @"";
-    }
+    }*/
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -81,6 +81,10 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
+    if([_nameInput.text isEqualToString:@""]) { //TODO: alert user to input name
+        _nameInput.text = [NSString stringWithFormat:@"User%d",arc4random_uniform(9999)];
+    }
+    
     if([segue.identifier isEqualToString:@"showPollListSegue"]){
         //NSLog(@"prepareForSegue");
         PollListViewController *controller = (PollListViewController *)segue.destinationViewController;
