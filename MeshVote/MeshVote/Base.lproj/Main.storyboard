@@ -1000,26 +1000,41 @@
                                             <segue destination="9vv-Mo-udS" kind="push" identifier="showQuestion" id="gSM-jh-RNS"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid-tip" rowHeight="300" id="0o0-y4-Udz" customClass="TipTableViewCell">
+                                        <rect key="frame" x="0.0" y="66" width="320" height="300"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0o0-y4-Udz" id="qyU-vT-mUT">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="299"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.14999999999999969" contentMode="scaleToFill" fixedFrame="YES" text="tip: pull down to see how many peers are connected" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnM-eJ-whY">
+                                                    <rect key="frame" x="131" y="105" width="161" height="59"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="13"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <imageView userInteractionEnabled="NO" alpha="0.15000000596046448" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow90degreeblack_256.png" translatesAutoresizingMaskIntoConstraints="NO" id="IvN-Jx-TPR">
+                                                    <rect key="frame" x="275" y="7" width="38" height="38"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="click to add a new question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5Y-bK-QPv">
+                                                    <rect key="frame" x="12" y="-12" width="320" height="99"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="19"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="createQuestionHintArrow" destination="IvN-Jx-TPR" id="9rC-XS-w3M"/>
+                                            <outlet property="createQuestionHintLabel" destination="X5Y-bK-QPv" id="zjq-IY-KD6"/>
+                                            <outlet property="tipTextView" destination="KnM-eJ-whY" id="hDy-4c-VKs"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" alpha="0.15000000596046448" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow90degreeblack_256.png" translatesAutoresizingMaskIntoConstraints="NO" id="IvN-Jx-TPR">
-                                <rect key="frame" x="274" y="7" width="38" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.64999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="click to add a new question" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5Y-bK-QPv">
-                                <rect key="frame" x="11" y="-12" width="320" height="99"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="tip: pull down to see how many peers are connected" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPX-yB-Tx2">
-                                <rect key="frame" x="136" y="95" width="155" height="98"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="13"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1032,10 +1047,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createQuestionHintArrow" destination="IvN-Jx-TPR" id="7Ee-D8-7br"/>
-                        <outlet property="createQuestionHintLabel" destination="X5Y-bK-QPv" id="3g7-QR-wyE"/>
-                        <outlet property="tableView" destination="Sg7-eX-TKh" id="hDT-p8-nqg"/>
-                        <outlet property="tipTextView" destination="iPX-yB-Tx2" id="5cw-8F-eDM"/>
+                        <outlet property="tableView" destination="Sg7-eX-TKh" id="aRt-ye-QSD"/>
                         <segue destination="kNH-1b-uJ6" kind="push" identifier="startPollSegue" id="ZfR-Lk-JVy"/>
                     </connections>
                 </viewController>
@@ -1277,7 +1289,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xDm-yi-HV8"/>
+        <segue reference="gSM-jh-RNS"/>
         <segue reference="HFz-Rd-2G9"/>
     </inferredMetricsTieBreakers>
 </document>

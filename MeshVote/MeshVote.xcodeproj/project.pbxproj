@@ -13,6 +13,7 @@
 		340C245A19DBCF0C00F9EB94 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */; };
 		340C245D19DBE21000F9EB94 /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C245C19DBE21000F9EB94 /* Colors.m */; };
 		3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */; };
+		342325C319E9E5AC00CF145D /* TipTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342325C219E9E5AC00CF145D /* TipTableViewCell.m */; };
 		3424FDF819C806BA003C3BEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF719C806BA003C3BEE /* Foundation.framework */; };
 		3424FDFA19C806BA003C3BEE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDF919C806BA003C3BEE /* CoreGraphics.framework */; };
 		3424FDFC19C806BA003C3BEE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3424FDFB19C806BA003C3BEE /* UIKit.framework */; };
@@ -77,6 +78,8 @@
 		340C245C19DBE21000F9EB94 /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		3412F4F419CD31EB00D1048E /* SpacedUITableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpacedUITableViewCell.h; sourceTree = "<group>"; };
 		3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpacedUITableViewCell.m; sourceTree = "<group>"; };
+		342325C119E9E5AC00CF145D /* TipTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipTableViewCell.h; sourceTree = "<group>"; };
+		342325C219E9E5AC00CF145D /* TipTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipTableViewCell.m; sourceTree = "<group>"; };
 		3424FDF419C806BA003C3BEE /* MeshVote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeshVote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3424FDF719C806BA003C3BEE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3424FDF919C806BA003C3BEE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -208,6 +211,8 @@
 				3476719119DC9C4A005456D1 /* AboutViewController.m */,
 				3412F4F419CD31EB00D1048E /* SpacedUITableViewCell.h */,
 				3412F4F519CD31EB00D1048E /* SpacedUITableViewCell.m */,
+				342325C119E9E5AC00CF145D /* TipTableViewCell.h */,
+				342325C219E9E5AC00CF145D /* TipTableViewCell.m */,
 				3424FE0C19C806BA003C3BEE /* MeshVoteViewController.h */,
 				3424FE0D19C806BA003C3BEE /* MeshVoteViewController.m */,
 				3424FE2C19C80928003C3BEE /* BackgroundLayer.h */,
@@ -441,6 +446,7 @@
 				3476719219DC9C4A005456D1 /* AboutViewController.m in Sources */,
 				34F22D3C19DE6936004C904F /* PollListViewController.m in Sources */,
 				340C245D19DBE21000F9EB94 /* Colors.m in Sources */,
+				342325C319E9E5AC00CF145D /* TipTableViewCell.m in Sources */,
 				3412F4F619CD31EB00D1048E /* SpacedUITableViewCell.m in Sources */,
 				3405169D19CBE094004360E8 /* QuestionSet.m in Sources */,
 				3424FE0E19C806BA003C3BEE /* MeshVoteViewController.m in Sources */,

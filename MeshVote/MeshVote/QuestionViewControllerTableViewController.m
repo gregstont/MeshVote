@@ -10,6 +10,7 @@
 #import "QuestionSet.h"
 #import "Question.h"
 #import "RunningPollViewController.h"
+#import "TipTableViewCell.h"
 
 
 //#import <malloc/malloc.h> //TODO: remove on release
@@ -158,7 +159,7 @@
             _play.enabled = NO;
         else
             _play.enabled = YES;
-        
+        /*
         _createQuestionHintLabel.alpha = 0.0;
         _createQuestionHintArrow.alpha = 0.0;
         _tipTextView.alpha = 0.0;
@@ -180,6 +181,7 @@
                              }];
             
         }
+         */
     //});
     
 }
@@ -276,12 +278,66 @@
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
     NSLog(@"number of rows:%d",[_questionSet getQuestionCount]);
-    return [_questionSet getQuestionCount];
+    /*if([_questionSet getQuestionCount] == 1)
+        return 2;*/
+    return [_questionSet getQuestionCount] + 1;
 }
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row == [_questionSet getQuestionCount]) //hide last seperator
+        return 1000;
+    else
+        return 44;
+}*/
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if(indexPath.row == [_questionSet getQuestionCount]) { //show tip cell cellid-tip
+        TipTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid-tip"]; //forIndexPath:indexPath];
+        
+        // Configure the cell...
+        if (cell == nil) {
+            //NSLog(@"Shouldnt be here!!!!!!!!!!!");
+            cell = [[TipTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellid-tip"];
+        }
+        
+        NSLog(@"loaded:::%d",cell.loaded);
+        
+        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width);
+        
+        cell.createQuestionHintLabel.alpha = 0.0;
+        cell.createQuestionHintArrow.alpha = 0.0;
+        cell.tipTextView.alpha = 0.0;
+        cell.tipTextView.hidden = NO;
+        
+        if(cell.loaded) {
+            if([_questionSet getQuestionCount] == 0) { //show creat question hint
+                
+                [UIView animateWithDuration:2.0 delay:0.6 options:UIViewAnimationOptionCurveEaseIn
+                                 animations:^{ cell.createQuestionHintArrow.alpha = 0.15; cell.createQuestionHintLabel.alpha = 0.65;}
+                                 completion:nil];
+            }
+            else if([_questionSet getQuestionCount] == 1) { //show (and hide) pull down hint
+                
+                [UIView animateWithDuration:2.0 delay:0.6 options:UIViewAnimationOptionCurveEaseIn
+                                 animations:^{  cell.tipTextView.alpha = 0.65;}
+                                 completion:^(BOOL finished){
+                                     [UIView animateWithDuration:2.0 delay:4.0 options:UIViewAnimationOptionCurveEaseIn
+                                                      animations:^{  cell.tipTextView.alpha = 0.0;}
+                                                      completion:nil];
+                                 }];
+            }
+        }
+        
+        cell.loaded = YES;
+        //cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+        //cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
+        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        return cell;
+    }
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"qcellid"]; //forIndexPath:indexPath];
     
     // Configure the cell...
@@ -307,7 +363,11 @@
     
 
 }
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) { //delete a question
         [_questionSet removeQuestionAtIndex:(int)indexPath.row];
         for(int i = (int)indexPath.row; i < [_questionSet getQuestionCount]; ++i) { //re-number the remaining questions
