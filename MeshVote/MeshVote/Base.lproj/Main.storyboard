@@ -1096,6 +1096,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Join session" id="iF0-Vq-kgd"/>
+                    <connections>
+                        <outlet property="tableView" destination="yDd-MQ-Ob5" id="Zle-94-gAO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F2n-4l-Wo3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

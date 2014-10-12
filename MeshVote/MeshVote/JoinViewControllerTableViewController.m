@@ -38,6 +38,8 @@
     
     NSLog(@"in JOIN viewDidLoad");
     
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -140,6 +142,7 @@
         cell.contentView.backgroundColor=[UIColor whiteColor];
         cell.userInteractionEnabled = NO;
         //cell.alpha = 0.1;
+        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width); //hide seperator
         spinner.alpha = 0.7;
         [cell.contentView addSubview:spinner];
         spinner.tag = 123;
@@ -308,7 +311,11 @@
 // A nearby peer has stopped advertising
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
     NSLog(@"LOST PEER!! IN JOINVIEW: %@", peerID.displayName);
-    [_sessionList removeObject:peerID.displayName];
+    int index = [_sessionList indexOfObject:peerID.displayName];
+    if(index != NSNotFound) {
+        [_sessionList removeObjectAtIndex:index];
+    }
+    //[_sessionList removeObject:peerID.displayName];
     [self.tableView reloadData];
 }
 

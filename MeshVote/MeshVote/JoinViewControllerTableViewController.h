@@ -13,6 +13,7 @@
 @interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate>
 
 @property (nonatomic, strong) NSString* userName;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 
 @end
