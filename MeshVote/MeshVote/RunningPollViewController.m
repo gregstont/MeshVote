@@ -196,14 +196,18 @@
             // do stuff
         }
     }
-    if(_currentQuestionNumber > 0)
-        _rewind.enabled = YES;
-    else
-        _rewind.enabled = NO;
-    if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1)
-        _forward.enabled = YES;
-    else
-        _forward.enabled = NO;
+    
+    //update the toolbar buttons
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        if(_currentQuestionNumber > 0)
+            _rewind.enabled = YES;
+        else
+            _rewind.enabled = NO;
+        if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1)
+            _forward.enabled = YES;
+        else
+            _forward.enabled = NO;
+    });
     
     
     //TODO: need to verify all peers have acknowledged the question'
