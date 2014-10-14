@@ -138,6 +138,8 @@
     //[_timeTextField setDelegate:self];
     
     //NSLog(@"selectedQuestion:%d", temp);
+    
+    self.tableView.panGestureRecognizer.delaysTouchesBegan = YES; //this fixes bug where delete-swipes not detected over UITextField
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -327,9 +329,39 @@
         }
         
     }
-   
+}
 
-    
+// Override to support conditional editing of the table view.
+// This only needs to be implemented if you are going to be returning NO
+// for some items. By default, all items are editable.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    if(indexPath.row == [_currentQuestion getAnswerCount] * 2 || _viewMode == VIEWMODE_ASK_QUESTION)
+        return NO;
+    else
+        return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+
+        //update the correct answer if needed
+        if(_questionSet.isQuiz) {
+            if(_currentQuestion.correctAnswer == indexPath.row/2)
+                _currentQuestion.correctAnswer = -1;
+            else if(_currentQuestion.correctAnswer > indexPath.row/2)
+                --_currentQuestion.correctAnswer;
+        }
+        
+        
+        [_currentQuestion.answerText removeObjectAtIndex:indexPath.row/2];
+        //[_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        NSIndexPath *p = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0];
+
+        [_tableView deleteRowsAtIndexPaths:@[indexPath, p] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [_tableView reloadData];
+    }
     
 }
 
