@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import "BigMCSession.h"
 
 //messageType
 #define MSG_QUESTION_SET     1
@@ -32,6 +33,7 @@
 @property (nonatomic) int answerNumber;
 @property (nonatomic) int actionType; //can I use a union here?
 
++ (BOOL)broadcastMessage:(Message*)message inSession:(BigMCSession*)bigSession;
 + (BOOL)sendMessage:(Message*)message toPeers:(NSArray*)peers inSession:(MCSession*)session;
 + (BOOL)sendMessageType:(int)messageType toPeers:(NSArray*)peers inSession:(MCSession*)session;
 + (BOOL)sendMessageType:(int)messageType withActionType:(int)actionType toPeers:(NSArray*)peers inSession:(MCSession*)session;

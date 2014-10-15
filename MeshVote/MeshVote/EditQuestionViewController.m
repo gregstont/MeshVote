@@ -736,7 +736,7 @@
         _questionSet = (QuestionSet*)message;
         
         //send question-ack to host 
-        [Message sendMessageType:MSG_QUESTION_SET_ACK toPeers:@[_host] inSession:_session];
+        [Message sendMessageType:MSG_QUESTION_SET_ACK toPeers:@[_host] inSession:session];
         
         for(Question* cur in _questionSet.questions) { //no given answers yet
             cur.givenAnswer = -1;

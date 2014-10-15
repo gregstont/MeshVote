@@ -10,12 +10,15 @@
 #import "QuestionSet.h"
 #import "QuestionViewControllerTableViewController.h"
 #import "CreatePollViewController.h"
+#import "BigMCSession.h"
 
 @interface PollListViewController ()
 
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
-@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+//@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+@property (nonatomic, strong) BigMCSession* bigSession;
+
 
 @property (nonatomic, strong) NSMutableDictionary *peerList;
 
@@ -104,8 +107,11 @@
     
     //create my (host) peerID
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:self.userName];
-    _session = [[MCSession alloc] initWithPeer:me];
-    _session.delegate = self;
+    //_session = [[MCSession alloc] initWithPeer:me];
+    //_session.delegate = self;
+    
+    _bigSession = [[BigMCSession alloc] initWithPeer:me];
+    _bigSession.delegate = self;
     
     
     //advertise on the main channel our new session name
@@ -133,7 +139,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    _session.delegate = self;
+    //_session.delegate = self;
+    _bigSession.delegate = self;
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController setToolbarHidden:NO];
     if(_pollSet.count == 0) {
@@ -163,7 +171,8 @@
     NSLog(@"dealloc");
     [_browser stopBrowsingForPeers];
     [_advertiser stopAdvertisingPeer];
-    [_session disconnect];
+    //[_session disconnect];
+    [_bigSession disconnect];
 }
 
 /*
@@ -188,7 +197,8 @@
         
         QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
         controller.questionSet = [_pollSet objectAtIndex:selectedIndexPath.row]; //TODO: change
-        controller.session = _session;
+        //controller.session = _session;
+        controller.bigSession = _bigSession;
         controller.peerList = _peerList;
         controller.pollSet = _pollSet;
     }
@@ -207,7 +217,7 @@
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
     
     NSLog(@"FOUND PEER!! in PollListView");
-    [_browser invitePeer:peerID toSession:_session withContext:nil timeout:17];
+    [_browser invitePeer:peerID toSession:[_bigSession getAvailableSession] withContext:nil timeout:17]; //getSession
     
 }
 
@@ -222,6 +232,10 @@
     NSLog(@"error starting browser");
 }
 
+
+//
+//  methods for maintaing the list of sessions
+//
 
 
 

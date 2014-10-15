@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
+#import "BigMCSession.h"
 
 @interface ResultsPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
 
-@property (nonatomic, strong) MCSession* session;
+//@property (nonatomic, strong) MCSession* session;
+@property (nonatomic, strong) BigMCSession* bigSession;
 
 @property (nonatomic, strong) QuestionSet *questionSet;
 - (IBAction)resultsDoneButton:(id)sender;

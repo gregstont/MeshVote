@@ -188,13 +188,15 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
-    _session.delegate = self;
+    //_session.delegate = self;
+    _bigSession.delegate = self;
     
     NSLog(@"question count:%d", [_questionSet getQuestionCount]);
     
     //send out updated question set to peers
     _questionSet.messageType = MSG_QUESTION_SET;
-    [Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
+    [Message broadcastMessage:_questionSet inSession:_bigSession];
+    //[Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
     
     
     //[self.navigationController setNavigationBarHidden:NO];
@@ -410,7 +412,7 @@
         });
         
         _questionSet.messageType = MSG_QUESTION_SET;
-        [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
+        [Message sendMessage:_questionSet toPeers:@[peerID] inSession:session];
         
     }
     else if(state == MCSessionStateNotConnected) {
@@ -511,14 +513,16 @@
         //NSLog(@"prepareForSegue");
         RunningPollViewController *controller = (RunningPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
-        controller.session = _session;
+        //controller.session = _session;
+        controller.bigSession = _bigSession;
         controller.peerList = _peerList;
     }
     else if([segue.identifier isEqualToString:@"addNewQuestionSegue"]){
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
-        controller.session = _session;
+        //controller.session = _session;
+        //controller.bigSession = _bigSession;
         controller.questionSet = _questionSet;
         controller.pollSet = _pollSet;
         //NSLog(@"segue isquiz:%d", _questionSet.isQuiz);
@@ -528,7 +532,8 @@
         //NSLog(@"prepareForSegue");
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_EDIT_QUESTION;
-        controller.session = _session;
+        //controller.session = _session;
+        //controller.bigSession = _bigSession;
         controller.questionSet = _questionSet;
         controller.pollSet = _pollSet;
         controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];

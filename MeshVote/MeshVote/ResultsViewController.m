@@ -107,7 +107,8 @@
         results.messageType = MSG_POLL_RESULTS;
         results.votes = sendArray;
         results.stats = @[_meanLabel.text, _minLabel.text, _maxLabel.text, _medianLabel.text];
-        [Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
+        [Message broadcastMessage:results inSession:_bigSession];
+        //[Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
     }
     
     

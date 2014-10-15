@@ -28,9 +28,26 @@
 
 @implementation Message
 
++ (BOOL)broadcastMessage:(Message*)message inSession:(BigMCSession*)bigSession {
+    
+    if(bigSession.peerCount == 0)
+        return YES;
+    
+    BOOL all_sent = YES;
+    for(MCSession* cur in bigSession.sessionList) {
+        if([self sendMessage:message toPeers:[cur connectedPeers] inSession:cur] == NO)
+            all_sent = NO;
+    }
+    return all_sent;
+    
+}
+
+
 + (BOOL)sendMessageType:(int)messageType toPeers:(NSArray*)peers inSession:(MCSession*)session {
     return [self sendMessageType:messageType withActionType:-1 toPeers:peers inSession:session];
 }
+
+
 + (BOOL)sendMessageType:(int)messageType withActionType:(int)actionType toPeers:(NSArray*)peers inSession:(MCSession*)session {
     Message *message = [[Message alloc] init];
     message.messageType = messageType;
@@ -38,6 +55,8 @@
     
     return [self sendMessage:message toPeers:peers inSession:session];
 }
+
+
 + (BOOL)sendMessage:(Message*)message toPeers:(NSArray*)peers inSession:(MCSession*)session {
     NSData *messageData = [NSKeyedArchiver archivedDataWithRootObject:message];
     NSError *error;

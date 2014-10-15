@@ -10,7 +10,7 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Message.h"
 
-@interface PollListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface PollListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, BigMCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
 
 @property (nonatomic, strong) NSString* userName;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

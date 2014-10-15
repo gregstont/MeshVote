@@ -11,14 +11,16 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "KAProgressLabel.h"
 #import "Colors.h"
+#import "BigMCSession.h"
 
 
-@interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCSessionDelegate>
+@interface RunningPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BigMCSessionDelegate>
 
 - (NSString*)timeAsString:(int)time;
 
 @property (nonatomic, strong) QuestionSet* questionSet;
-@property (nonatomic, strong) MCSession* session;
+//@property (nonatomic, strong) MCSession* session;
+@property (nonatomic, strong) BigMCSession* bigSession;
 @property (atomic, strong) NSMutableDictionary *peerList;
 @property (weak, nonatomic) IBOutlet KAProgressLabel *votesProgressLabel;
 @property (weak, nonatomic) IBOutlet KAProgressLabel *timeProgressLabel;

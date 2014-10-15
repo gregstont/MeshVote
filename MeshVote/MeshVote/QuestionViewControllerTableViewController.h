@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "EditQuestionViewController.h"
+#import "BigMCSession.h"
 
-@interface QuestionViewControllerTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
+@interface QuestionViewControllerTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, BigMCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
 
 - (IBAction)addNewQuestion:(id)sender;
 - (IBAction)playPressed:(UIButton *)sender;
@@ -20,7 +21,8 @@
 //@property (weak, nonatomic) IBOutlet UITextView *tipTextView;
 
 @property (nonatomic, strong) NSString* userName;
-@property (nonatomic, NS_NONATOMIC_IOSONLY) MCSession *session;
+//@property (nonatomic, NS_NONATOMIC_IOSONLY) MCSession *session;
+@property (nonatomic, strong) BigMCSession* bigSession;
 
 @property (nonatomic, strong) NSMutableDictionary *peerList;
 

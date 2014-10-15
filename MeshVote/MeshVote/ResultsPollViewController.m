@@ -50,7 +50,8 @@
         Results* results = [[Results alloc] init];
         results.messageType = MSG_POLL_RESULTS;
         results.votes = sendArray;
-        [Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
+        [Message broadcastMessage:results inSession:_bigSession];
+        //[Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
     }
     
 }

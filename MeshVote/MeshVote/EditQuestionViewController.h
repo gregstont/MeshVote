@@ -10,6 +10,7 @@
 #import "QuestionSet.h"
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Colors.h"
+#import "BigMCSession.h"
 
 
 #define VIEWMODE_ADD_NEW_QUESTION   0
@@ -37,6 +38,8 @@
 @property (nonatomic) int viewMode;
 
 @property (nonatomic, strong) MCSession *session;
+@property (nonatomic, strong) BigMCSession* bigSession;
+
 @property (nonatomic, strong) MCPeerID* host;
 
 - (IBAction)doneButtonPressed:(id)sender;

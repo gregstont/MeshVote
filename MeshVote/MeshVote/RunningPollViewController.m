@@ -126,7 +126,8 @@
     _voteCount = 0;
     
     
-    _session.delegate = self;
+    _bigSession.delegate = self;
+    //_session.delegate = self;
     
     //
     // setup circular progress bars for time and votes received (KAProgressLabel)
@@ -163,7 +164,8 @@
     [self beginPollAndClearVotes:YES];
 }
 - (void)viewWillAppear:(BOOL)animated {
-    _session.delegate = self;
+    //_session.delegate = self;
+    _bigSession.delegate = self;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
     self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:(190/255.0)  green:(190/255.0)  blue:(190/255.0)  alpha:1.0];
 }
@@ -217,7 +219,8 @@
         beginMessage.questionNumber = _currentQuestionNumber;
         beginMessage.actionType = AT_PLAY;
         
-        [Message sendMessage:beginMessage toPeers:[_session connectedPeers] inSession:_session];
+        [Message broadcastMessage:beginMessage inSession:_bigSession];
+        //[Message sendMessage:beginMessage toPeers:[_session connectedPeers] inSession:_session];
     }
     
     
@@ -319,7 +322,8 @@
     rewind.messageType = MSG_ACTION;
     rewind.actionType = AT_REWIND;
     rewind.questionNumber = _currentQuestionNumber;
-    [Message sendMessage:rewind toPeers:[_session connectedPeers] inSession:_session];
+    [Message broadcastMessage:rewind inSession:_bigSession];
+    //[Message sendMessage:rewind toPeers:[_session connectedPeers] inSession:_session];
 }
 - (IBAction)playPressed:(UIButton *)sender {
     NSLog(@"playPressed in RunningPoll");
@@ -335,7 +339,11 @@
     NSLog(@"pausePressed in RunningPoll");
     _pollRunning = NO;
     
-    [Message sendMessageType:MSG_ACTION withActionType:AT_PAUSE toPeers:[_session connectedPeers] inSession:_session];
+    Message *message = [[Message alloc] init];
+    message.messageType = MSG_ACTION;
+    message.actionType = AT_PAUSE;
+    [Message broadcastMessage:message inSession:_bigSession];
+    //[Message sendMessageType:MSG_ACTION withActionType:AT_PAUSE toPeers:[_session connectedPeers] inSession:_session];
     
     NSMutableArray *newToolbar = [self.toolbarItems mutableCopy];
     [newToolbar removeObject:_pause];
@@ -355,7 +363,8 @@
     forward.messageType = MSG_ACTION;
     forward.actionType = AT_FORWARD;
     forward.questionNumber = _currentQuestionNumber;
-    [Message sendMessage:forward toPeers:[_session connectedPeers] inSession:_session];
+    [Message broadcastMessage:forward inSession:_bigSession];
+    //[Message sendMessage:forward toPeers:[_session connectedPeers] inSession:_session];
 }
 
 /*
@@ -375,7 +384,8 @@
         //NSLog(@"prepareForSegue");
         ResultsViewController *controller = (ResultsViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
-        controller.session = _session;
+        //controller.session = _session;
+        controller.bigSession = _bigSession;
         NSLog(@"vote history cout:%lu", (unsigned long)_voteHistory.count);
         controller.voteHistory = _voteHistory;
     }
@@ -383,7 +393,8 @@
         //NSLog(@"prepareForSegue");
         ResultsPollViewController *controller = (ResultsPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
-        controller.session = _session;
+        //controller.session = _session;
+        controller.bigSession = _bigSession;
         NSLog(@"vote history cout:");
         //controller.voteHistory = _voteHistory;
     }
@@ -483,7 +494,7 @@
         //_questionSet.messageType = @"question-set";
         _questionSet.messageType = MSG_QUESTION_SET;
         
-        [Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
+        [Message sendMessage:_questionSet toPeers:@[peerID] inSession:session]; //session !!!
         
         
         NSLog(@"HEREEEEE1");
@@ -578,7 +589,7 @@
         answerAck.messageType = MSG_ANSWER_ACK;
         answerAck.questionNumber = _currentQuestionNumber;
         answerAck.answerNumber = message.answerNumber;
-        [Message sendMessage:answerAck toPeers:@[peerID] inSession:_session];
+        [Message sendMessage:answerAck toPeers:@[peerID] inSession:session];
         
         //NSLog(@"vote count:%d", _voteCount);
         _currentQuestion.voteCount = _voteCount;

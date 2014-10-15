@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionSet.h"
+#import "BigMCSession.h"
 
 @interface ResultsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) QuestionSet *questionSet;
-@property (nonatomic, strong) MCSession* session;
+//@property (nonatomic, strong) MCSession* session;
+@property (nonatomic, strong) BigMCSession* bigSession;
 @property (nonatomic, strong) NSMutableDictionary *voteHistory;
 
 @property (weak, nonatomic) IBOutlet UILabel *meanLabel;

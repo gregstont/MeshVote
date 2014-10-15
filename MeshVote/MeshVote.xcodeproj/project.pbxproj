@@ -48,6 +48,7 @@
 		34C4768919D8FC350087D3F8 /* check_icon128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C4768819D8FC350087D3F8 /* check_icon128x128.png */; };
 		34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */; };
 		34DF551619C80CBB00D9BBFB /* mesh_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 34DF551519C80CBB00D9BBFB /* mesh_logo.png */; };
+		34E298DF19EE1E950072C5E7 /* BigMCSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E298DE19EE1E950072C5E7 /* BigMCSession.m */; };
 		34E3D77619C8CFA70063A4F4 /* i_icon_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E3D77519C8CFA70063A4F4 /* i_icon_large.png */; };
 		34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */; };
 		34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E3D78119C956300063A4F4 /* JoinViewControllerTableViewController.m */; };
@@ -129,6 +130,8 @@
 		34DD9D3019D78E5C00C5CFB2 /* ConnectingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectingViewController.h; sourceTree = "<group>"; };
 		34DD9D3119D78E5C00C5CFB2 /* ConnectingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectingViewController.m; sourceTree = "<group>"; };
 		34DF551519C80CBB00D9BBFB /* mesh_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_logo.png; sourceTree = "<group>"; };
+		34E298DD19EE1E950072C5E7 /* BigMCSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigMCSession.h; sourceTree = "<group>"; };
+		34E298DE19EE1E950072C5E7 /* BigMCSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigMCSession.m; sourceTree = "<group>"; };
 		34E3D77519C8CFA70063A4F4 /* i_icon_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = i_icon_large.png; sourceTree = "<group>"; };
 		34E3D77719C942010063A4F4 /* QuestionViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewControllerTableViewController.h; sourceTree = "<group>"; };
 		34E3D77819C942010063A4F4 /* QuestionViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewControllerTableViewController.m; sourceTree = "<group>"; };
@@ -285,6 +288,8 @@
 				348A1DD419D87BF6002E6FAE /* Message.m */,
 				340C245B19DBE21000F9EB94 /* Colors.h */,
 				340C245C19DBE21000F9EB94 /* Colors.m */,
+				34E298DD19EE1E950072C5E7 /* BigMCSession.h */,
+				34E298DE19EE1E950072C5E7 /* BigMCSession.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				348A1DD519D87BF6002E6FAE /* Message.m in Sources */,
 				34DD9D3219D78E5C00C5CFB2 /* ConnectingViewController.m in Sources */,
 				3424FE2E19C80928003C3BEE /* BackgroundLayer.m in Sources */,
+				34E298DF19EE1E950072C5E7 /* BigMCSession.m in Sources */,
 				3424FE0819C806BA003C3BEE /* MeshVoteAppDelegate.m in Sources */,
 				34E3D77919C942010063A4F4 /* QuestionViewControllerTableViewController.m in Sources */,
 				34FEEE3919D7E0B0000E128F /* RunningAnswerTableViewCell.m in Sources */,
