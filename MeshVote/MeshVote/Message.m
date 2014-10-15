@@ -11,12 +11,17 @@
 
 /*
  
+ // message types
+ 
  #define MT_QUESTION     1
  #define MT_QUESTION_ACK 2
  #define MT_ANSWER       3
  #define MT_ANSWER_ACK   4
  #define MT_ACTION       5
  #define MT_ACTION_ACK   6
+ 
+ 
+ // message action types
  
  #define AT_REWIND       7
  #define AT_PLAY         8
@@ -34,7 +39,7 @@
         return YES;
     
     BOOL all_sent = YES;
-    for(MCSession* cur in bigSession.sessionList) {
+    for(MCSession* cur in bigSession.sessionList) { //TODO: encapsulate this in BigMCSession
         if([self sendMessage:message toPeers:[cur connectedPeers] inSession:cur] == NO)
             all_sent = NO;
     }
@@ -86,7 +91,6 @@
 }
 
 - (void)encodeWithCoder:(NSCoder*)encoder {
-    //NSLog(@"encode:%@", [super messageType]);
     [encoder encodeInt:_messageType forKey:@"messageType"];
     [encoder encodeInt:_questionNumber forKey:@"questionNumber"];
     [encoder encodeInt:_answerNumber forKey:@"answerNumber"];

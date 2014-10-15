@@ -772,6 +772,14 @@
     if(state == MCSessionStateConnected) {
         NSLog(@"connected1");
     }
+    else if(state == MCSessionStateNotConnected) {
+        if([peerID isEqual:_host]) {
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [self.navigationController popViewControllerAnimated:NO];
+                [self.navigationController popViewControllerAnimated:NO];
+            });
+        }
+    }
 
 }
 

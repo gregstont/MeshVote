@@ -21,7 +21,7 @@
     if(self) {
         
         _correctAnswer = -1;
-        _timeLimit = 5;
+        _timeLimit = 60;
         //_givenAnswer = -1;
         //_questionNumber = -1;
         

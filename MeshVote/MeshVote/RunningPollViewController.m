@@ -205,10 +205,12 @@
             _rewind.enabled = YES;
         else
             _rewind.enabled = NO;
+        /*
         if(_currentQuestionNumber < [_questionSet getQuestionCount] - 1)
             _forward.enabled = YES;
         else
             _forward.enabled = NO;
+         */
     });
     
     
@@ -289,20 +291,21 @@
             }
             else { //poll is over
                 NSLog(@"Poll over");
-                if(_questionSet.isQuiz) {
-                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                        [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
-                    });
-                }
-                else { //poll
-                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                        [self performSegueWithIdentifier:@"showResultsPollSegue" sender:self];
-                    });
-                }
+                [self showResults];
             }
         });
     }
     //NSLog(@"times up");
+}
+
+-(void)showResults {
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        if(_questionSet.isQuiz)
+            [self performSegueWithIdentifier:@"showResultsSegue" sender:self];
+        else
+            [self performSegueWithIdentifier:@"showResultsPollSegue" sender:self];
+            
+    });
 }
 
 
@@ -354,17 +357,22 @@
     //[self performSegueWithIdentifier:segueToWordCategoryView sender:self];
     //_pollRunning = YES;
     
-    ++_currentQuestionNumber; //incrementing this number will stop previous questions thread
-    _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
-    _timeRemaining = _currentQuestion.timeLimit;
-    [self beginPollAndClearVotes:YES];
-    
-    Message *forward = [[Message alloc] init];
-    forward.messageType = MSG_ACTION;
-    forward.actionType = AT_FORWARD;
-    forward.questionNumber = _currentQuestionNumber;
-    [Message broadcastMessage:forward inSession:_bigSession];
-    //[Message sendMessage:forward toPeers:[_session connectedPeers] inSession:_session];
+    if(_currentQuestionNumber == [_questionSet getQuestionCount] - 1) { //on last question
+        [self showResults];
+    }
+    else {
+        ++_currentQuestionNumber; //incrementing this number will stop previous questions thread
+        _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+        _timeRemaining = _currentQuestion.timeLimit;
+        [self beginPollAndClearVotes:YES];
+        
+        Message *forward = [[Message alloc] init];
+        forward.messageType = MSG_ACTION;
+        forward.actionType = AT_FORWARD;
+        forward.questionNumber = _currentQuestionNumber;
+        [Message broadcastMessage:forward inSession:_bigSession];
+        //[Message sendMessage:forward toPeers:[_session connectedPeers] inSession:_session];
+    }
 }
 
 /*
