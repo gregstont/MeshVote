@@ -653,7 +653,7 @@
     //NSLog(@"type:%d", messageType);
     
     if(message.messageType == MSG_ANSWER_ACK) { //[messageType isEqualToString:@"answer-ack"]) {
-        NSLog(@"  answer-ack");
+        NSLog(@"  answer-ack, qnum:%d, ans:%d", message.questionNumber, message.answerNumber);
         if(message.questionNumber == _currentQuestionNumber && message.answerNumber == _currentAnswer) {
             _currentAnswerAcked = YES;
             _currentQuestion.givenAnswer = message.answerNumber;

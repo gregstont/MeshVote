@@ -157,6 +157,7 @@
         _createPollHintLabel.alpha = 0.0;
         _createPollHintArrow.alpha = 0.0;
     }
+    _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
     [_tableView reloadData];
     //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }

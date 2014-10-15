@@ -38,7 +38,7 @@
 @interface BigMCSession : NSObject <MCSessionDelegate>
 
 @property (nonatomic) int peerCount;
-@property (strong, nonatomic) id <BigMCSessionDelegate> delegate;
+@property (weak, nonatomic) id <BigMCSessionDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray* sessionList;
 
 -(id)initWithPeer:(MCPeerID*)peerID;

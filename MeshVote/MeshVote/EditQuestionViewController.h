@@ -38,7 +38,6 @@
 @property (nonatomic) int viewMode;
 
 @property (nonatomic, strong) MCSession *session;
-@property (nonatomic, strong) BigMCSession* bigSession;
 
 @property (nonatomic, strong) MCPeerID* host;
 
