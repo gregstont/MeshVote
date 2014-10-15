@@ -33,6 +33,12 @@
     //for keyboard exit
     [self.nameInput setDelegate:self];
     
+    //load name from disk
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userName = [defaults objectForKey:@"userName"];
+    if(userName)
+        _nameInput.text = userName;
+    
     
 }
 
@@ -62,7 +68,10 @@
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    //if([textView. isEqualToString:@)
+    //save name to disk
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:textField.text forKey:@"userName"];
+    [defaults synchronize];
 }
 
 - (IBAction)joinSession:(id)sender {
