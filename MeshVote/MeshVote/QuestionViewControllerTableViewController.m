@@ -378,6 +378,12 @@
         //[self.tableView reloadData];
         //[_tableView reloadData];
         [self reloadTable];
+
+        //save to disk
+        NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
+        NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
+        [data writeToFile:databasePath atomically:YES];
     }
 }
 

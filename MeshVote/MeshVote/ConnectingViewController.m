@@ -39,16 +39,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"sessionName:%@", _sessionName);
-    _currentQuestionNumber = 0;
     // Do any additional setup after loading the view.
-    //MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi"];
+    
+    _currentQuestionNumber = 0;
+
     //(arc4random() % y) + x;
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:[NSString stringWithFormat:@"%@%d",_userName,((arc4random() % 999999) + 100000)]]; //last 6 chars will be "unique" id
     
+    
     _session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
-    // Set ourselves as the MCSessionDelegate
     _session.delegate = self;
+
     
     _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:_sessionName];
     _advertiser.delegate = self;

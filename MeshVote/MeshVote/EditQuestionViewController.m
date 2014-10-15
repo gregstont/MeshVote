@@ -103,6 +103,7 @@
         //_currentQuestion = [_delegate getQuestionAtIndex:[_delegate getSelectedQuestion]];
         [_questionTextLabel setText:_currentQuestion.questionText];
         [_questionNumberLabel setText:[NSString stringWithFormat:@"Question %d", _currentQuestion.questionNumber]];
+        [_doneButton setEnabled:YES];
         
         NSInteger time = _currentQuestion.timeLimit;
         //NSInteger hours = (time / 3600) % 3600;
@@ -121,6 +122,8 @@
         [Message sendMessageType:MSG_ACTION withActionType:AT_PLAY toPeers:@[_host] inSession:_session];
         
         [_timeTextField setBackgroundColor:[UIColor clearColor]];
+        [_questionTextLabel setSelectable:NO];
+        [_timeTextField setEnabled:NO];
         //NSLog(@"here");
         //_questionSet = (QuestionSet*)_questionSet;
         [self moveToNextQuestion];
@@ -536,10 +539,9 @@
     _questionTextLabel.editable = NO;
     [self.navigationItem setHidesBackButton:YES animated:YES];
     
-    //if(_viewMode == VIEWMODE_ADD_NEW_QUESTION || textField.tag == 2) {
-        [_doneButton setTitle:@"Done"];
-        [_doneButton setEnabled:YES];
-    //}
+    [_doneButton setTitle:@"Done"];
+    [_doneButton setEnabled:YES];
+    
     //SpacedUITableViewCell *clickedC = (SpacedUITableViewCell*)[[]]
     if(textField.tag != 2) { //if not time field
         SpacedUITableViewCell *clickedCell = (SpacedUITableViewCell *)[[[textField superview] superview] superview];
@@ -727,6 +729,18 @@
         });
         //[self performSegueWithIdentifier:@"showPeerResultsPollSegue" sender:self];
         
+    }
+    else if(message.messageType == MSG_QUESTION_SET) {
+        NSLog(@"  got the question set");
+        
+        _questionSet = (QuestionSet*)message;
+        
+        //send question-ack to host 
+        [Message sendMessageType:MSG_QUESTION_SET_ACK toPeers:@[_host] inSession:_session];
+        
+        for(Question* cur in _questionSet.questions) { //no given answers yet
+            cur.givenAnswer = -1;
+        }
     }
     else {
         NSLog(@"received invalid message");
