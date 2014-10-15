@@ -578,7 +578,7 @@
         answerAck.messageType = MSG_ANSWER_ACK;
         answerAck.questionNumber = _currentQuestionNumber;
         answerAck.answerNumber = message.answerNumber;
-        [Message sendMessage:answerAck toPeers:[_session connectedPeers] inSession:_session];
+        [Message sendMessage:answerAck toPeers:@[peerID] inSession:_session];
         
         //NSLog(@"vote count:%d", _voteCount);
         _currentQuestion.voteCount = _voteCount;

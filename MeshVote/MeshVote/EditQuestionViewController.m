@@ -450,7 +450,7 @@
 }
 
 - (IBAction)doneButtonPressed:(id)sender {
-    if([_doneButton.title isEqualToString:@"Done"]) { //in edit text view
+    if([_doneButton.title isEqualToString:@"Done"]) { //in edit text view .. _viewMode == EDIT OR NEW?
         [self.view endEditing:YES];
     }
     else { //save/add new question
@@ -473,6 +473,7 @@
 //
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    [self.navigationItem setHidesBackButton:YES animated:YES];
     [_doneButton setTitle:@"Done"];
     if([_questionTextLabel.text isEqualToString:PLACE_HOLDER_TEXT]) {
         [_questionTextLabel setText:@""];
@@ -482,7 +483,7 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    //if([textView. isEqualToString:@)
+    [self.navigationItem setHidesBackButton:NO animated:YES];
     if(_viewMode == VIEWMODE_ADD_NEW_QUESTION) {
         [_doneButton setTitle:@"Save"];
         if([_questionTextLabel.text isEqualToString:@""]) {
@@ -533,6 +534,8 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     _questionTextLabel.editable = NO;
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    
     //if(_viewMode == VIEWMODE_ADD_NEW_QUESTION || textField.tag == 2) {
         [_doneButton setTitle:@"Done"];
         [_doneButton setEnabled:YES];
@@ -570,6 +573,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField { //TODO: rewrite this 
     //if([textView. isEqualToString:@)
      _questionTextLabel.editable = YES;
+    [self.navigationItem setHidesBackButton:NO animated:YES];
     
     if(textField.tag == 2) { //time field text
         NSLog(@"text:%@", [textField.text stringByReplacingOccurrencesOfString:@":" withString:@""]);
