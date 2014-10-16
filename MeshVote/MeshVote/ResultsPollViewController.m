@@ -110,7 +110,7 @@
     
     label.text = text;
     label.numberOfLines = 0;
-    label.frame = CGRectMake(10, 0, 260, labrect.size.height + 8);
+    label.frame = CGRectMake(10, 17, 260, labrect.size.height + 8);
     
     [view addSubview:label];
 
@@ -130,7 +130,7 @@
 
     
     NSLog(@"get height:%d",(int)labrect.size.height + 8);
-    return labrect.size.height + 8;
+    return labrect.size.height + 25;
 }
 
 
