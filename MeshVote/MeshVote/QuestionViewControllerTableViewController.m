@@ -317,16 +317,16 @@
         if(cell.loaded) {
             if([_questionSet getQuestionCount] == 0) { //show creat question hint
                 
-                [UIView animateWithDuration:2.0 delay:0.6 options:UIViewAnimationOptionCurveEaseIn
+                [UIView animateWithDuration:1.3 delay:0.3 options:UIViewAnimationOptionCurveEaseIn
                                  animations:^{ cell.createQuestionHintArrow.alpha = 0.15; cell.createQuestionHintLabel.alpha = 0.65;}
                                  completion:nil];
             }
-            else if([_questionSet getQuestionCount] == 1) { //show (and hide) pull down hint
+            if([_questionSet getQuestionCount] < 3) { //show (and hide) pull down hint
                 
-                [UIView animateWithDuration:2.0 delay:0.6 options:UIViewAnimationOptionCurveEaseIn
-                                 animations:^{  cell.tipTextView.alpha = 0.65;}
+                [UIView animateWithDuration:1.3 delay:0.3 options:UIViewAnimationOptionCurveEaseIn
+                                 animations:^{  cell.tipTextView.alpha = 0.75;}
                                  completion:^(BOOL finished){
-                                     [UIView animateWithDuration:2.0 delay:4.0 options:UIViewAnimationOptionCurveEaseIn
+                                     [UIView animateWithDuration:2.0 delay:10.0 options:UIViewAnimationOptionCurveEaseIn
                                                       animations:^{  cell.tipTextView.alpha = 0.0;}
                                                       completion:nil];
                                  }];

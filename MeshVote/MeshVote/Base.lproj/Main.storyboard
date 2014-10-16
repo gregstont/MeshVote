@@ -1014,10 +1014,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.14999999999999969" contentMode="scaleToFill" fixedFrame="YES" text="tip: pull down to see how many peers are connected" textAlignment="right" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnM-eJ-whY">
-                                                    <rect key="frame" x="131" y="105" width="161" height="59"/>
+                                                    <rect key="frame" x="99" y="105" width="193" height="59"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <imageView userInteractionEnabled="NO" alpha="0.15000000596046448" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow90degreeblack_256.png" translatesAutoresizingMaskIntoConstraints="NO" id="IvN-Jx-TPR">
