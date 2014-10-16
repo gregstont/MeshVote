@@ -122,7 +122,8 @@
     
     
     //start browsing for question takers
-    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:self.userName];
+    NSString* st = [self getServiceTypeFromName:self.userName];
+    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:st];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
     
@@ -136,6 +137,26 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
+}
+
+//translates name into service-type
+//Must be 1–15 characters long
+//Can contain only ASCII lowercase letters, numbers, and hyphens. hyphens must be single and interior
+-(NSString*)getServiceTypeFromName:(NSString*)input {
+    const char* c_string = [[input lowercaseString] UTF8String];
+    char new_string[16];
+    const char* runner = c_string;
+    int newStringIndex = 0;
+    while(*runner != '\0' && newStringIndex < 16) {
+        
+        if((*runner >= 'a' && *runner <= 'z') || (*runner >= 0 && *runner <= 9)) {
+            new_string[newStringIndex] = *runner;
+            ++newStringIndex;
+        }
+        ++runner;
+    }
+    new_string[newStringIndex] = '\0';
+    return [NSString stringWithUTF8String:new_string];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -297,9 +318,19 @@
         [_pollSet removeObjectAtIndex:indexPath.row];
         [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         //[_tableView reloadData];
+        [self saveDataToPhone];
     }
     
 }
+
+-(void)saveDataToPhone {
+    //dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
+    NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
+    [data writeToFile:databasePath atomically:YES];
+}
+
 
 
 
