@@ -7,7 +7,8 @@ MeshVote is a bluetooth powered voting system for iOS 7 and above.  It enables u
 
 ## How to Use
 
-![Login screen](/../screenshots/HomeScreen.png?raw=true "Home Screen")
+<img src="screenshots/HomeScreen.png" height="600px" />
+
 
 Taylor Gregston
 
