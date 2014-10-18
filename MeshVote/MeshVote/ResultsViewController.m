@@ -42,6 +42,7 @@
     [self.view.layer insertSublayer:bgLayer atIndex:0];
     
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    [[self navigationController] setToolbarHidden:YES animated:YES];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@" Done" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
     

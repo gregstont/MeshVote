@@ -193,6 +193,8 @@
     
     NSLog(@"question count:%d", [_questionSet getQuestionCount]);
     
+    [[self navigationController] setToolbarHidden:NO animated:YES];
+    
     //send out updated question set to peers
     _questionSet.messageType = MSG_QUESTION_SET;
     [Message broadcastMessage:_questionSet inSession:_bigSession];
