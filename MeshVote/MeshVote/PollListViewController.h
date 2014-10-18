@@ -17,4 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *createPollHintLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *createPollHintArrow;
 
+@property (nonatomic) BOOL returningFromAdd;
+
 @end

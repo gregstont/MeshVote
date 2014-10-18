@@ -7,6 +7,7 @@
 //
 
 #import "CreatePollViewController.h"
+#import "PollListViewController.h"
 
 @interface CreatePollViewController ()
 
@@ -138,9 +139,28 @@
     if([_saveButton.title isEqualToString:@"Done"]) {
         [_pollNameTextField resignFirstResponder];
     }
-    else {
+    else { // save
         [_pollSet addObject:_tempQuestionSet];
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+        // get the index of the visible VC on the stack
+        int currentVCIndex = (int)[self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
+        // get a reference to the previous VC
+        //UITabBarController *prevVC = (UITabBarController *)[self.navigationController.viewControllers objectAtIndex:currentVCIndex - 1];
+        
+        PollListViewController* pollListVC = [self.navigationController.viewControllers objectAtIndex:currentVCIndex - 1];
+        pollListVC.returningFromAdd = YES;
+
+        //[pollListVC performSegueWithIdentifier:@"showPollQuestionSegue" sender:pollListVC];
+        //[self performSegueWithIdentifier:@"startTakingPollSegue" sender:self];
+        
+        // get the VC shown by the previous VC
+        //EventInformationViewController *prevShownVC = (EventInformationViewController *)prevVC.selectedViewController;
+        //[prevShownVC performSelector:@selector(rateCurrentEvent:)];
+        
+        [self.navigationController popViewControllerAnimated:NO];
+        
+        [pollListVC performSegueWithIdentifier:@"showPollQuestionSegue" sender:pollListVC];
     }
 }
 @end

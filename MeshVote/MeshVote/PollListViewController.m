@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong) NSMutableArray *pollSet; //the root array of QuestionSet
 
-@property (nonatomic) int selectedPollNumber;
+//@property (nonatomic) int selectedPollNumber;
 
 @end
 
@@ -137,6 +137,8 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    
+    _returningFromAdd = NO;
 }
 
 //translates name into service-type
@@ -215,10 +217,17 @@
         //UITableViewCell *clickedCell = (UITableViewCell *)[[[sender superview] superview] superview];
         //NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
         
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        unsigned long selectedIndex;
+        if(_returningFromAdd) { // if returing from creating a new poll, we are transfered to that new poll
+            _returningFromAdd = NO;
+            selectedIndex = _pollSet.count - 1;
+        }
+        else { //default action, user selected a cell
+            selectedIndex = [self.tableView indexPathForSelectedRow].row;
+        }
         
         QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
-        controller.questionSet = [_pollSet objectAtIndex:selectedIndexPath.row]; //TODO: change
+        controller.questionSet = [_pollSet objectAtIndex:selectedIndex];
         //controller.session = _session;
         controller.bigSession = _bigSession;
         controller.peerList = _peerList;
@@ -230,6 +239,7 @@
         controller.pollSet = _pollSet;
     }
 }
+
 
 
 //
@@ -304,7 +314,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
-    _selectedPollNumber = (int)indexPath.row;
+    //_selectedPollNumber = (int)indexPath.row;
     /*_selectedQuestion = (int)indexPath.row;
     
     [self performSegueWithIdentifier:@"showQuestion" sender:self];
