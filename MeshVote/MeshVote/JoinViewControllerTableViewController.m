@@ -81,6 +81,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     
     [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.navigationBar.barTintColor = nil;
+    //self.navigationController.toolbar.barTintColor = nil;
 }
 
 

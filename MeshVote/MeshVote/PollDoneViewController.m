@@ -37,6 +37,17 @@
     // Do any additional setup after loading the view.
     [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController setToolbarHidden:YES];
+    
+    _checkImage.alpha = 0.0;
+    _doneText.alpha = 0.0;
+    
+    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{ _checkImage.alpha = 0.6;}
+                     completion:nil];
+    [UIView animateWithDuration:1.0 delay:0.3 options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{ _doneText.alpha = 1.0;}
+                     completion:nil];
+    
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
 
         [NSThread sleepForTimeInterval:5.0f];

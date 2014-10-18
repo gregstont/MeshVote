@@ -10,6 +10,8 @@
 #import "Colors.h"
 #import "RunningAnswerTableViewCell.h"
 #import "Results.h"
+#import "UINavigationController+popTwice.h"
+#import "BackgroundLayer.h"
 
 
 @interface ResultsPollViewController ()
@@ -33,6 +35,18 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //bg gradient
+    CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
+    bgLayer.frame = self.view.bounds;
+    [self.view.layer insertSublayer:bgLayer atIndex:0];
+    
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@" Done" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
+    
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = item;
     
     _colors = [[Colors alloc] init];
     
@@ -62,6 +76,11 @@
     }
     
 }
+
+-(void)goBack {
+    [self.navigationController popTwoViewControllersAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

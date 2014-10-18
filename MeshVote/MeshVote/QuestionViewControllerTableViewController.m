@@ -201,6 +201,8 @@
     
     //[self.navigationController setNavigationBarHidden:NO];
     //[self.navigationController setToolbarHidden:NO];
+    self.navigationController.navigationBar.barTintColor = nil;
+    self.navigationController.toolbar.barTintColor = nil;
     
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     [self reloadTable];

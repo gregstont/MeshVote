@@ -63,6 +63,8 @@
 {
     [super viewDidLoad];
     
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    
     //_hasBegunPoll = NO;
     _pollRunning = YES;
     _colors = [[Colors alloc] init];
@@ -172,8 +174,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     _pollRunning = NO;
-    self.navigationController.navigationBar.barTintColor = nil;
-    self.navigationController.toolbar.barTintColor = nil;
+    //self.navigationController.navigationBar.barTintColor = nil;
+    //self.navigationController.toolbar.barTintColor = nil;
 }
 
 - (void)didReceiveMemoryWarning
