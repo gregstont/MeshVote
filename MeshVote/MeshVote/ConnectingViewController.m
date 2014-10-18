@@ -9,6 +9,7 @@
 #import "ConnectingViewController.h"
 #import "Message.h"
 #import "EditQuestionViewController.h"
+#import "BackgroundLayer.h"
 #include <stdlib.h>
 
 @interface ConnectingViewController ()
@@ -41,6 +42,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
+    //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
+    bgLayer.frame = self.view.bounds;
+    [self.view.layer insertSublayer:bgLayer atIndex:0];
+    
     _currentQuestionNumber = 0;
 
     //(arc4random() % y) + x;
@@ -56,6 +62,14 @@
     _advertiser.delegate = self;
     [_advertiser startAdvertisingPeer];
     
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    _session.delegate = self;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:(235/255.0) green:(235/255.0) blue:(235/255.0) alpha:1.0];
+    self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:(190/255.0)  green:(190/255.0)  blue:(190/255.0)  alpha:1.0];
 }
 
 //translates name into service-type
@@ -76,10 +90,6 @@
     }
     new_string[newStringIndex] = '\0';
     return [NSString stringWithUTF8String:new_string];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    _session.delegate = self;
 }
 
 - (void)dealloc {

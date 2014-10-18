@@ -697,7 +697,11 @@
             
         }
         else if(message.actionType == AT_DONE) { //poll is over
-            
+            NSLog(@"Poll done");
+            dispatch_async(dispatch_get_main_queue(), ^(void){ //TODO: goto poll complete screen
+                //[self.navigationController popViewControllerAnimated:YES];
+                [self performSegueWithIdentifier:@"pollDoneSegue" sender:self];
+            });
         }
     }
     else if(message.messageType == MSG_POLL_RESULTS) {

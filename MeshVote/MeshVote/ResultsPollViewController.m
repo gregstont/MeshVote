@@ -53,6 +53,13 @@
         [Message broadcastMessage:results inSession:_bigSession];
         //[Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
     }
+    else { //dont show results for peers
+        NSLog(@"sending done message");
+        Message* doneMessage = [[Message alloc] init];
+        doneMessage.messageType = MSG_ACTION;
+        doneMessage.actionType = AT_DONE;
+        [Message broadcastMessage:doneMessage inSession:_bigSession];
+    }
     
 }
 

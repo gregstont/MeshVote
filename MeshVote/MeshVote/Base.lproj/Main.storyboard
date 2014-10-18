@@ -290,6 +290,7 @@
                         <outlet property="timeTextField" destination="26h-En-D74" id="We1-MU-1dB"/>
                         <segue destination="ubM-MB-g11" kind="modal" identifier="showPeerResultsPollSegue" modalTransitionStyle="flipHorizontal" id="HFz-Rd-2G9"/>
                         <segue destination="5Hn-AN-gVk" kind="modal" identifier="showPeerResultsSegue" modalTransitionStyle="flipHorizontal" id="Jzv-6g-iFf"/>
+                        <segue destination="PZj-hz-tdf" kind="push" identifier="pollDoneSegue" id="bqY-bO-Yzh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ON-we-3ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -703,6 +704,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kwM-3a-xhW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3393" y="1067"/>
+        </scene>
+        <!--Poll Done View Controller-->
+        <scene sceneID="NJS-qe-vNZ">
+            <objects>
+                <viewController id="PZj-hz-tdf" customClass="PollDoneViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cZI-WO-utx"/>
+                        <viewControllerLayoutGuide type="bottom" id="LF4-vr-cHT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jeN-yk-2fi">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Done!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O13-vm-WQK">
+                                <rect key="frame" x="20" y="244" width="280" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" red="0.4928651148" green="0.4928651148" blue="0.4928651148" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView appearanceType="aqua" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="check_icon128x128.png" translatesAutoresizingMaskIntoConstraints="NO" id="pi2-03-rmR">
+                                <rect key="frame" x="141" y="199" width="39" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.84183673469999998" green="0.84183673469999998" blue="0.84183673469999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hru-iL-KBs"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NQP-yJ-QJZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3393" y="-325"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5X-sh-eJD">
@@ -1300,8 +1333,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="xDm-yi-HV8"/>
         <segue reference="HFz-Rd-2G9"/>
-        <segue reference="gSM-jh-RNS"/>
         <segue reference="Jzv-6g-iFf"/>
     </inferredMetricsTieBreakers>
 </document>
