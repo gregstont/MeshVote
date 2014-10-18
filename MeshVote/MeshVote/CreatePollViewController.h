@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSMutableArray *pollSet; //handed down from PollListVC
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *modeControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *shareResultsControl;
 
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitchOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *modeSwitchText;
@@ -25,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *shareScoresTextDetail;
 
 
+- (IBAction)modeControlClicked:(id)sender;
+- (IBAction)shareResultsControlClicked:(id)sender;
 
 - (IBAction)saveButton:(id)sender;
 - (IBAction)modeSwitch:(id)sender;

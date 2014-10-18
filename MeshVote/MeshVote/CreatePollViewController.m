@@ -45,7 +45,7 @@
     _tempQuestionSet = [[QuestionSet alloc] init];
     _tempQuestionSet.isQuiz = YES;
     _tempQuestionSet.showResults = YES;
-    _tempQuestionSet.shareScores = NO;
+    _tempQuestionSet.shareScores = NO; //not implemented
     
     if(_tempQuestionSet.isQuiz)
         [_modeSwitchText setText:@"quiz"];
@@ -101,11 +101,19 @@
     _tempQuestionSet.name = textField.text;
 }
 
+- (IBAction)modeControlClicked:(id)sender {
+    _tempQuestionSet.isQuiz = !_modeControl.selectedSegmentIndex;
+}
+
+- (IBAction)shareResultsControlClicked:(id)sender {
+    _tempQuestionSet.showResults = !_shareResultsControl.selectedSegmentIndex;
+}
+
 - (IBAction)modeSwitch:(id)sender {
     _tempQuestionSet.isQuiz = [_modeSwitchOutlet isOn];
     if(_tempQuestionSet.isQuiz) {
         [_modeSwitchText setText:@"quiz"];
-        //_shareScoresTextTitle.hidden = NO;
+        //_shareScoresTextTitle.hidden = NO; //deprecated
         //_shareScoresTextDetail.hidden = NO;
         //_shareScoresOutlet.hidden = NO;
     }
