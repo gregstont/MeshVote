@@ -10,6 +10,7 @@
 		340200FE19CBF5A4005ADAE6 /* EditQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 340200FD19CBF5A4005ADAE6 /* EditQuestionViewController.m */; };
 		34022D4119F2EF7300B92942 /* PollDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34022D4019F2EF7300B92942 /* PollDoneViewController.m */; };
 		34022D4419F2F2C700B92942 /* UINavigationController+popTwice.m in Sources */ = {isa = PBXBuildFile; fileRef = 34022D4319F2F2C700B92942 /* UINavigationController+popTwice.m */; };
+		34022D4719F3337200B92942 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 34022D4619F3337200B92942 /* Util.m */; };
 		3405169D19CBE094004360E8 /* QuestionSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169C19CBE094004360E8 /* QuestionSet.m */; };
 		340516A019CBE1B0004360E8 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 3405169F19CBE1B0004360E8 /* Question.m */; };
 		340C245A19DBCF0C00F9EB94 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340C245919DBCF0C00F9EB94 /* MultipeerConnectivity.framework */; };
@@ -76,6 +77,8 @@
 		34022D4019F2EF7300B92942 /* PollDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollDoneViewController.m; sourceTree = "<group>"; };
 		34022D4219F2F2C700B92942 /* UINavigationController+popTwice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+popTwice.h"; sourceTree = "<group>"; };
 		34022D4319F2F2C700B92942 /* UINavigationController+popTwice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+popTwice.m"; sourceTree = "<group>"; };
+		34022D4519F3337200B92942 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		34022D4619F3337200B92942 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		3405169B19CBE094004360E8 /* QuestionSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionSet.h; sourceTree = "<group>"; };
 		3405169C19CBE094004360E8 /* QuestionSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionSet.m; sourceTree = "<group>"; };
 		3405169E19CBE1B0004360E8 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
@@ -300,6 +303,8 @@
 				340C245C19DBE21000F9EB94 /* Colors.m */,
 				34E298DD19EE1E950072C5E7 /* BigMCSession.h */,
 				34E298DE19EE1E950072C5E7 /* BigMCSession.m */,
+				34022D4519F3337200B92942 /* Util.h */,
+				34022D4619F3337200B92942 /* Util.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				34A5A24A19DA4F1600887C1A /* TPPropertyAnimation.m in Sources */,
 				34E3D78219C956300063A4F4 /* JoinViewControllerTableViewController.m in Sources */,
 				340516A019CBE1B0004360E8 /* Question.m in Sources */,
+				34022D4719F3337200B92942 /* Util.m in Sources */,
 				3476719219DC9C4A005456D1 /* AboutViewController.m in Sources */,
 				34F22D3C19DE6936004C904F /* PollListViewController.m in Sources */,
 				340C245D19DBE21000F9EB94 /* Colors.m in Sources */,

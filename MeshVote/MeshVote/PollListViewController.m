@@ -7,26 +7,26 @@
 //
 
 #import "PollListViewController.h"
-#import "QuestionSet.h"
-#import "QuestionViewControllerTableViewController.h"
-#import "CreatePollViewController.h"
-#import "BigMCSession.h"
+
+
 
 @interface PollListViewController ()
 
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
-//@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
+
+//the main session containing all peers
 @property (nonatomic, strong) BigMCSession* bigSession;
 
-
+// list of connected peers mapping to current vote index
 @property (nonatomic, strong) NSMutableDictionary *peerList;
 
+//label hidden above table indicating how many peers are connected
 @property (nonatomic, strong) UILabel *connectedPeersLabel;
 
-@property (nonatomic, strong) NSMutableArray *pollSet; //the root array of QuestionSet
+//the root array of QuestionSet objects
+@property (nonatomic, strong) NSMutableArray *pollSet;
 
-//@property (nonatomic) int selectedPollNumber;
 
 @end
 
@@ -46,70 +46,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    /*
-     NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
-     NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-     NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
-     */
+    // load poll data from disk
     NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
-    //NSData* pollData = [NSData dataWithContentsOfFile:databasePath];
     
     _pollSet = [NSKeyedUnarchiver unarchiveObjectWithFile:databasePath];
     
     if(_pollSet == nil)
         _pollSet = [[NSMutableArray alloc] init];
     
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    
-
-    /*
-     
-    ///temp for testing onlee
-    
-    QuestionSet *tt = [[QuestionSet alloc] init];
-    tt.name = @"Quiz 1";
-    tt.isQuiz = NO;
-    tt.showResults = YES;
-    tt.shareScores = YES;
-    
-    Question *tempQuestion1 = [[Question alloc] init];
-    [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
-    [tempQuestion1 addAnswer:@"science"];
-    [tempQuestion1 addAnswer:@"flowers"];
-    [tempQuestion1 addAnswer:@"purple"];
-    [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setCorrectAnswer:2];
-    [tempQuestion1 setTimeLimit:10];
-    [tempQuestion1 setQuestionNumber:1];
-    
-    
-    Question *tempQuestion2 = [[Question alloc] init];
-    [tempQuestion2 setQuestionText:@"Why is UT better than A&M?"];
-    [tempQuestion2 addAnswer:@"grapefruit"];
-    [tempQuestion2 addAnswer:@"tangerine"];
-    [tempQuestion2 addAnswer:@"orange"];
-    [tempQuestion2 addAnswer:@"peanut"];
-    [tempQuestion2 addAnswer:@"banana pie"];
-    [tempQuestion2 setCorrectAnswer:1];
-    [tempQuestion2 setTimeLimit:10];
-    [tempQuestion2 setQuestionNumber:2];
-    
-    
-    [tt addQuestion:tempQuestion1];
-    [tt addQuestion:tempQuestion2];
-    
-    [_pollSet addObject:tt];*/
-    
-    /////
     _peerList = [[NSMutableDictionary alloc] init];
     
-    //create my (host) peerID
-    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:self.userName];
-    //_session = [[MCSession alloc] initWithPeer:me];
-    //_session.delegate = self;
+
     
+    //create the bigSession with myself (the host)
+    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:self.userName];
     _bigSession = [[BigMCSession alloc] initWithPeer:me];
     _bigSession.delegate = self;
     
@@ -122,10 +73,11 @@
     
     
     //start browsing for question takers
-    NSString* st = [self getServiceTypeFromName:self.userName];
+    NSString* st = [Util getServiceTypeFromName:_userName];
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:st];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
+
     
     
     //create "hidden" label above table cells
@@ -133,42 +85,30 @@
     _connectedPeersLabel.text = @"0 connected peers";
     _connectedPeersLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.0];
     _connectedPeersLabel.textAlignment = NSTextAlignmentCenter;
-    self.tableView.tableHeaderView = _connectedPeersLabel;
-    [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    _tableView.tableHeaderView = _connectedPeersLabel;
+    [_tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
+    _tableView.tableFooterView = [[UIView alloc] init];
+    _tableView.allowsMultipleSelectionDuringEditing = NO;
     
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    
+    //flag for when creating a new poll
     _returningFromAdd = NO;
 }
 
-//translates name into service-type
-//Must be 1–15 characters long
-//Can contain only ASCII lowercase letters, numbers, and hyphens. hyphens must be single and interior
--(NSString*)getServiceTypeFromName:(NSString*)input {
-    const char* c_string = [[input lowercaseString] UTF8String];
-    char new_string[16];
-    const char* runner = c_string;
-    int newStringIndex = 0;
-    while(*runner != '\0' && newStringIndex < 16) {
-        
-        if((*runner >= 'a' && *runner <= 'z') || (*runner >= 0 && *runner <= 9)) {
-            new_string[newStringIndex] = *runner;
-            ++newStringIndex;
-        }
-        ++runner;
-    }
-    new_string[newStringIndex] = '\0';
-    return [NSString stringWithUTF8String:new_string];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    //_session.delegate = self;
+-(void)viewWillAppear:(BOOL)animated
+{
     _bigSession.delegate = self;
     
-    [self.navigationController setNavigationBarHidden:NO];
-    [self.navigationController setToolbarHidden:NO];
-    if(_pollSet.count == 0) {
-        
+    self.navigationController.navigationBar.barTintColor = nil;
+    self.navigationController.toolbar.barTintColor = nil;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    if(_pollSet.count == 0)
+    {
+        // pollset empty, show hints
         _createPollHintLabel.alpha = 0.0;
         _createPollHintArrow.alpha = 0.0;
         
@@ -176,13 +116,14 @@
                          animations:^{ _createPollHintArrow.alpha = 0.15; _createPollHintLabel.alpha = 0.65;}
                          completion:nil];
     }
-    else {
+    else
+    {
+        // hide hints
         _createPollHintLabel.alpha = 0.0;
         _createPollHintArrow.alpha = 0.0;
     }
     _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
     [_tableView reloadData];
-    //[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -191,50 +132,45 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     NSLog(@"dealloc");
     [_browser stopBrowsingForPeers];
     [_advertiser stopAdvertisingPeer];
-    //[_session disconnect];
     [_bigSession disconnect];
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-} //showPollQuestionSegue
-*/
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
-    if([segue.identifier isEqualToString:@"showPollQuestionSegue"]){
-        //NSLog(@"prepareForSegue");
-        //UITableViewCell *clickedCell = (UITableViewCell *)[[[sender superview] superview] superview];
-        //NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
-        
+    if([segue.identifier isEqualToString:@"showPollQuestionSegue"])
+    {
         unsigned long selectedIndex;
-        if(_returningFromAdd) { // if returing from creating a new poll, we are transfered to that new poll
+        if(_returningFromAdd)
+        {
+            //if this flag was set, we are transfering to newly created poll
             _returningFromAdd = NO;
             selectedIndex = _pollSet.count - 1;
         }
-        else { //default action, user selected a cell
+        else
+        {
+            // default action, user selected a cell
             selectedIndex = [self.tableView indexPathForSelectedRow].row;
         }
         
         QuestionViewControllerTableViewController *controller = (QuestionViewControllerTableViewController *)segue.destinationViewController;
+        
         controller.questionSet = [_pollSet objectAtIndex:selectedIndex];
-        //controller.session = _session;
         controller.bigSession = _bigSession;
         controller.peerList = _peerList;
         controller.pollSet = _pollSet;
     }
-    else if([segue.identifier isEqualToString:@"createPollSegue"]){
-        //NSLog(@"prepareForSegue");
+    else if([segue.identifier isEqualToString:@"createPollSegue"])
+    {
         CreatePollViewController *controller = (CreatePollViewController *)segue.destinationViewController;
         controller.pollSet = _pollSet;
     }
@@ -246,31 +182,24 @@
 //  MCNearbyServiceBrowserDelegate
 //
 
-- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    
+- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info
+{
     NSLog(@"FOUND PEER!! in PollListView");
-    [_browser invitePeer:peerID toSession:[_bigSession getAvailableSession] withContext:nil timeout:17]; //getSession
-    
+    [_browser invitePeer:peerID toSession:[_bigSession getAvailableSession] withContext:nil timeout:17];
 }
 
 // A nearby peer has stopped advertising
-- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
+- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
+{
     NSLog(@"LOST PEER!! IN PollListView");
 }
 
 //@optional
 // Browsing did not start due to an error
-- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
+- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error
+{
     NSLog(@"error starting browser");
 }
-
-
-//
-//  methods for maintaing the list of sessions
-//
-
-
-
 
 
 //
@@ -297,44 +226,38 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pollListCell"]; //forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pollListCell"];
     
     // Configure the cell...
-    if (cell == nil) {
-        //NSLog(@"Shouldnt be here!!!!!!!!!!!");
+    if (cell == nil)
+    {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"pollListCell"];
     }
     cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-    cell.textLabel.text = ((QuestionSet*)[_pollSet objectAtIndex:indexPath.row]).name;//[_questions objectAtIndex:indexPath.row];
+    cell.textLabel.text = ((QuestionSet*)[_pollSet objectAtIndex:indexPath.row]).name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
-    //_selectedPollNumber = (int)indexPath.row;
-    /*_selectedQuestion = (int)indexPath.row;
-    
-    [self performSegueWithIdentifier:@"showQuestion" sender:self];
-    */
-    //TODO: this
-    
-    
 }
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_pollSet removeObjectAtIndex:indexPath.row];
         [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        //[_tableView reloadData];
         [self saveDataToPhone];
     }
     
 }
 
--(void)saveDataToPhone {
-    //dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+// saves poll data to disk
+-(void)saveDataToPhone
+{
     NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
     NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
@@ -350,46 +273,52 @@
 //
 
 // Remote peer changed state
-- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
+{
     
     NSLog(@"peer changed state:");
     
-    if(state == MCSessionStateConnected) {
+    if(state == MCSessionStateConnected)
+    {
         NSLog(@"  connected!");
         
+        // add peer to peerList, initial vote to -1
         [_peerList setObject:[NSNumber numberWithInt:-1] forKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
-        
-        //_questionSet.messageType = MSG_QUESTION_SET;
-        //[Message sendMessage:_questionSet toPeers:@[peerID] inSession:_session];
-        
     }
-    else if(state == MCSessionStateNotConnected) {
+    else if(state == MCSessionStateNotConnected)
+    {
         NSLog(@"  NOT connected!");
+        
+        // remove peer from peerList
         [_peerList removeObjectForKey:peerID.displayName];
         NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
     }
-    else if(state == MCSessionStateConnecting) {
+    else if(state == MCSessionStateConnecting)
+    {
         NSLog(@"  connecting...");
     }
 }
 
 // Received data from remote peer
-- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
+{
     NSLog(@"recieved data!");
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    //NSString *messageType = message.messageType;
-    //NSLog(@"type:%@", messageType);
-    if(message.messageType == MSG_QUESTION_SET_ACK) { //[messageType isEqualToString:@"question-ack"]) {
+    if(message.messageType == MSG_QUESTION_SET_ACK)
+    {
         NSLog(@" got question-set-ack");
-        //TODO: need to verify all peers have acknowledged the question
+        //TODO: need to verify all peers have acked the QuestionSet
         
         
     }
@@ -419,8 +348,8 @@
 //  MCNearbyServiceAdvertiser
 //
 
-- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
-    NSLog(@"recieved invite");
-    //invitationHandler([@YES boolValue], _session);
+- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler
+{
+    NSLog(@"recieved invite - shouldn't be here");
 }
 @end

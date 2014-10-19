@@ -30,28 +30,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
-    //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
-    
-    CGRect temp = CGRectZero;
-    temp.size.width = 640;
-    temp.size.height = 1136;
-    temp.origin.y = -90;
-    
-    
-    bgLayer.frame = temp;//self.view.bounds;
-    //bgLayer.frame.size.height = 990;
+    bgLayer.frame = self.view.bounds;
     [self.view.layer insertSublayer:bgLayer atIndex:0];
     
     _tempQuestionSet = [[QuestionSet alloc] init];
     _tempQuestionSet.isQuiz = YES;
     _tempQuestionSet.showResults = YES;
     _tempQuestionSet.shareScores = NO; //not implemented
-    
-    if(_tempQuestionSet.isQuiz)
-        [_modeSwitchText setText:@"quiz"];
-    else
-        [_modeSwitchText setText:@"poll"];
     
     
     _pollNameTextField.delegate = self;
@@ -97,7 +84,6 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    //if([textView. isEqualToString:@)
     [_saveButton setTitle:@"Save"];
     _tempQuestionSet.name = textField.text;
 }
@@ -110,28 +96,7 @@
     _tempQuestionSet.showResults = !_shareResultsControl.selectedSegmentIndex;
 }
 
-- (IBAction)modeSwitch:(id)sender {
-    _tempQuestionSet.isQuiz = [_modeSwitchOutlet isOn];
-    if(_tempQuestionSet.isQuiz) {
-        [_modeSwitchText setText:@"quiz"];
-        //_shareScoresTextTitle.hidden = NO; //deprecated
-        //_shareScoresTextDetail.hidden = NO;
-        //_shareScoresOutlet.hidden = NO;
-    }
-    else {
-        [_modeSwitchText setText:@"poll"];
-        //_shareScoresTextTitle.hidden = YES;
-        //_shareScoresTextDetail.hidden = YES;
-        //_shareScoresOutlet.hidden = YES;
-    }
-    
-}
-
-- (IBAction)showResultsSwitch:(id)sender {
-    _tempQuestionSet.showResults = [_showResultsOutlet isOn];
-}
-
-- (IBAction)shareScoresSwitch:(id)sender {
+- (IBAction)shareScoresSwitch:(id)sender { //not implemented
     _tempQuestionSet.shareScores = [_shareScoresOutlet isOn];
 }
 
@@ -142,24 +107,14 @@
     else { // save
         [_pollSet addObject:_tempQuestionSet];
         
-        
-        // get the index of the visible VC on the stack
+
+        // we want to automatically segue to the new poll...
         int currentVCIndex = (int)[self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
-        // get a reference to the previous VC
-        //UITabBarController *prevVC = (UITabBarController *)[self.navigationController.viewControllers objectAtIndex:currentVCIndex - 1];
         
         PollListViewController* pollListVC = [self.navigationController.viewControllers objectAtIndex:currentVCIndex - 1];
         pollListVC.returningFromAdd = YES;
 
-        //[pollListVC performSegueWithIdentifier:@"showPollQuestionSegue" sender:pollListVC];
-        //[self performSegueWithIdentifier:@"startTakingPollSegue" sender:self];
-        
-        // get the VC shown by the previous VC
-        //EventInformationViewController *prevShownVC = (EventInformationViewController *)prevVC.selectedViewController;
-        //[prevShownVC performSelector:@selector(rateCurrentEvent:)];
-        
         [self.navigationController popViewControllerAnimated:NO];
-        
         [pollListVC performSegueWithIdentifier:@"showPollQuestionSegue" sender:pollListVC];
     }
 }

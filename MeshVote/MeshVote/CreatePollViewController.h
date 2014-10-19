@@ -31,8 +31,6 @@
 - (IBAction)shareResultsControlClicked:(id)sender;
 
 - (IBAction)saveButton:(id)sender;
-- (IBAction)modeSwitch:(id)sender;
-- (IBAction)showResultsSwitch:(id)sender;
 - (IBAction)shareScoresSwitch:(id)sender;
 
 

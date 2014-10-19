@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+
+#import "QuestionViewControllerTableViewController.h"
+#import "CreatePollViewController.h"
+
 #import "Message.h"
+#import "QuestionSet.h"
+#import "BigMCSession.h"
+#import "Util.h"
 
 @interface PollListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, BigMCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
 

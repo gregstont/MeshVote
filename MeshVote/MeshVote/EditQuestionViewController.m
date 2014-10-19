@@ -155,7 +155,7 @@
     if(_viewMode == VIEWMODE_EDIT_QUESTION) {
         [self saveDataToPhone];
     }
-    self.navigationController.navigationBar.barTintColor = nil;
+    //self.navigationController.navigationBar.barTintColor = nil;
     self.navigationController.toolbar.barTintColor = nil;
 }
 

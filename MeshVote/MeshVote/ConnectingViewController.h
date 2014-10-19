@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Question.h"
+#import "Util.h"
 
 @interface ConnectingViewController : UIViewController <MCNearbyServiceAdvertiserDelegate, MCSessionDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;

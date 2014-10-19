@@ -22,7 +22,7 @@
         
         _correctAnswer = -1;
         _timeLimit = 60;
-        //_givenAnswer = -1;
+        _givenAnswer = -1;
         //_questionNumber = -1;
         
         _answerText = [[NSMutableArray alloc] init];
@@ -46,7 +46,7 @@
         _answerText = [decoder decodeObjectForKey:@"answerText"];
         //_questionNum = [decoder decodeIntForKey:@"questionNum"];
         _voteCount = [decoder decodeIntForKey:@"voteCount"];
-        //_givenAnswer = [decoder decodeIntForKey:@"givenAnswer"];
+        _givenAnswer = [decoder decodeIntForKey:@"givenAnswer"];
     }
     
     return self;
@@ -62,7 +62,7 @@
     [encoder encodeInt:_timeLimit forKey:@"timeLimit"];
     //[encoder encodeInt:_questionNum forKey:@"questionNum"];
     [encoder encodeInt:_voteCount forKey:@"voteCount"];
-    //[encoder encodeInt:_givenAnswer forKey:@"givenAnswer"];
+    [encoder encodeInt:_givenAnswer forKey:@"givenAnswer"];
     
 }
 -(void)addAnswer:(NSString*)text {
