@@ -70,4 +70,18 @@ NSArray* letters;
     
 }
 
++(UIColor*)getFadedColorFromPercent:(double)percent withAlpha:(double)alpha {
+    double red, green;
+    if(percent < 0.5) {
+        red = 1.0 - (percent / 4);
+        green = percent * 2;
+    }
+    else {
+        red = (1 - percent) * 2;
+        green = 1.0 - ((1 - percent) / 4);
+    }
+    
+    return [UIColor colorWithRed:red green:green blue:0.0 alpha:alpha];
+}
+
 @end

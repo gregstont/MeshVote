@@ -7,20 +7,18 @@
 //
 
 #import "QuestionViewControllerTableViewController.h"
-#import "QuestionSet.h"
-#import "Question.h"
-#import "RunningPollViewController.h"
-#import "TipTableViewCell.h"
 
 
-//#import <malloc/malloc.h> //TODO: remove on release
 
 @interface QuestionViewControllerTableViewController ()
 
-
-
+// index of question clicked, -1 if adding new question
 @property (nonatomic) int selectedQuestion;
+
+// label hidden above table indicating how many peers are connected
 @property (nonatomic, strong) UILabel *connectedPeersLabel;
+
+// play button on toolbar
 @property (nonatomic, strong) UIBarButtonItem *play;
 
 @end
@@ -36,18 +34,7 @@
     }
     return self;
 }
-/*
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-        NSLog(@"in init question view!");
-        
-    }
-    return self;
-}
- */
+
 
 - (void)viewDidLoad
 {
@@ -62,67 +49,8 @@
 
     NSLog(@"question viewdidload, userName:%@", self.userName);
     
-    //_questionSet = [[QuestionSet alloc] init];
-    //_peerList = [[NSMutableDictionary alloc] init];
     
-    /*
-    ////begin temporary debug stuff
-    Question *tempQuestion1 = [[Question alloc] init];
-    [tempQuestion1 setQuestionText:@"Why is the sky blue?"];
-    [tempQuestion1 addAnswer:@"science"];
-    [tempQuestion1 addAnswer:@"flowers"];
-    [tempQuestion1 addAnswer:@"purple"];
-    [tempQuestion1 addAnswer:@"stripes"];
-    [tempQuestion1 setCorrectAnswer:2];
-    [tempQuestion1 setTimeLimit:5];
-    
-    
-    Question *tempQuestion2 = [[Question alloc] init];
-    [tempQuestion2 setQuestionText:@"Why is UT better than A&M?"];
-    [tempQuestion2 addAnswer:@"grapefruit"];
-    [tempQuestion2 addAnswer:@"tangerine"];
-    [tempQuestion2 addAnswer:@"orange"];
-    [tempQuestion2 addAnswer:@"peanut"];
-    [tempQuestion2 addAnswer:@"banana pie"];
-    [tempQuestion2 setCorrectAnswer:1];
-    [tempQuestion2 setTimeLimit:5];
-    
-    
-    [_questionSet addQuestion:tempQuestion1];
-    [_questionSet addQuestion:tempQuestion2];*/
-      /*  [_questionSet addQuestion:tempQuestion2];
-        [_questionSet addQuestion:tempQuestion2];
-        [_questionSet addQuestion:tempQuestion2];
-        [_questionSet addQuestion:tempQuestion2];
-        [_questionSet addQuestion:tempQuestion2];
-        [_questionSet addQuestion:tempQuestion2];
-    [_questionSet addQuestion:tempQuestion2];
-    [_questionSet addQuestion:tempQuestion2];
-    [_questionSet addQuestion:tempQuestion2];*/
-    
-    //end temporaru debug stuff
-
-    /*
-    //create my (host) peerID
-    MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"mario"];
-    _session = [[MCSession alloc] initWithPeer:me];
-    _session.delegate = self;
-    
-    
-    //advertise on the main channel our new session name
-    NSDictionary *temp = [[NSDictionary alloc] initWithObjects:@[self.userName] forKeys:@[@"name"]];
-    _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:temp serviceType:@"mesh-vote"];
-    _advertiser.delegate = self;
-    [_advertiser startAdvertisingPeer];
-    
-    
-    //start browsing for question takers
-    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:self.userName];
-    _browser.delegate = self;
-    [_browser startBrowsingForPeers];
-*/
-    
-    //create toolbar buttons
+    // create toolbar buttons
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *rewind = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:nil];
     _play = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playPressed:)];
@@ -136,7 +64,7 @@
     self.toolbarItems = buttonItems;
 
     
-    //create "hidden" label above table cells
+    // create "hidden" label above table cells
     _connectedPeersLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
     _connectedPeersLabel.text = @"0 connected peers";
     _connectedPeersLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:18.0];
@@ -145,84 +73,51 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(-_connectedPeersLabel.bounds.size.height, 0.0f, 0.0f, 0.0f)];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
 }
 
--(void)reloadTable {
+-(void)reloadTable
+{
     
-    //[_tableView reloadData];
-    
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        if([_questionSet getQuestionCount] == 0)
-            _play.enabled = NO;
-        else
-            _play.enabled = YES;
-        /*
-        _createQuestionHintLabel.alpha = 0.0;
-        _createQuestionHintArrow.alpha = 0.0;
-        _tipTextView.alpha = 0.0;
-        
-        if([_questionSet getQuestionCount] == 0) { //show creat question hint
-            
-            [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{ _createQuestionHintArrow.alpha = 0.15; _createQuestionHintLabel.alpha = 0.65;}
-                             completion:nil];
-        }
-        else if([_questionSet getQuestionCount] == 1) { //show (and hide) pull down hint
-            
-            [UIView animateWithDuration:2.0 delay:1.0 options:UIViewAnimationOptionCurveEaseIn
-                             animations:^{  _tipTextView.alpha = 0.65;}
-                             completion:^(BOOL finished){
-                                 [UIView animateWithDuration:2.0 delay:4.0 options:UIViewAnimationOptionCurveEaseIn
-                                                  animations:^{  _tipTextView.alpha = 0.0;}
-                                                  completion:nil];
-                             }];
-            
-        }
-         */
-    //});
-    
+    if([_questionSet getQuestionCount] == 0)
+        _play.enabled = NO;
+    else
+        _play.enabled = YES;
+
 }
 
 
--(void)viewWillAppear:(BOOL)animated {
-    //_session.delegate = self;
-    _bigSession.delegate = self;
-    
+-(void)viewWillAppear:(BOOL)animated
+{
     NSLog(@"question count:%d", [_questionSet getQuestionCount]);
+
+    _bigSession.delegate = self;
     
     [[self navigationController] setToolbarHidden:NO animated:YES];
     
     //send out updated question set to peers
     _questionSet.messageType = MSG_QUESTION_SET;
     [Message broadcastMessage:_questionSet inSession:_bigSession];
-    //[Message sendMessage:_questionSet toPeers:[_session connectedPeers] inSession:_session];
     
     
-    //[self.navigationController setNavigationBarHidden:NO];
-    //[self.navigationController setToolbarHidden:NO];
+    // reset toolbar colors
     self.navigationController.navigationBar.barTintColor = nil;
     self.navigationController.toolbar.barTintColor = nil;
     
+    // reload data
     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     [self reloadTable];
 }
 
 
 
-- (void)dealloc {
-    NSLog(@"dealloc");
-    //[_browser stopBrowsingForPeers];
-    //[_advertiser stopAdvertisingPeer];
-    //[_session disconnect];
-}
-
-
-- (IBAction)playPressed:(UIButton *)sender {
+- (IBAction)playPressed:(UIButton *)sender
+{
     NSLog(@"playPressed");
-    //TODO: verify evyerbody has the questionSet
+    // TODO: verify evyerbody has the questionSet
     [self performSegueWithIdentifier:@"startPollSegue" sender:self];
     
 }
@@ -239,32 +134,6 @@
 
 
 //
-//  MCNearbyServiceBrowserDelegate
-//
-
-- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
-    
-    NSLog(@"FOUND PEER!! in QuestionView");
-    //[_browser invitePeer:peerID toSession:_session withContext:nil timeout:17];
-    
-}
-
-// A nearby peer has stopped advertising
-- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
-    NSLog(@"LOST PEER!! IN QUESTIONVIEW");
-}
-
-//@optional
-// Browsing did not start due to an error
-- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
-    NSLog(@"error starting browser");
-}
-
-
-
-
-
-//
 //  UITableViewDataSource, UITableViewDelegate
 //
 
@@ -272,45 +141,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    // Return the number of rows in the section.
-    NSLog(@"number of rows:" );
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    NSLog(@"number of rows:%d",[_questionSet getQuestionCount]);
-    /*if([_questionSet getQuestionCount] == 1)
-        return 2;*/
+    //NSLog(@"number of rows:%d",[_questionSet getQuestionCount]);
     return [_questionSet getQuestionCount] + 1;
 }
-/*
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.row == [_questionSet getQuestionCount]) //hide last seperator
-        return 1000;
-    else
-        return 44;
-}*/
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(indexPath.row == [_questionSet getQuestionCount]) { //show tip cell cellid-tip
-        TipTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid-tip"]; //forIndexPath:indexPath];
+    if(indexPath.row == [_questionSet getQuestionCount]) // show tip cell
+    {
+        TipTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellid-tip"];
         
         // Configure the cell...
-        if (cell == nil) {
-            //NSLog(@"Shouldnt be here!!!!!!!!!!!");
+        if (cell == nil)
+        {
             cell = [[TipTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellid-tip"];
         }
         
-        NSLog(@"loaded:::%d",cell.loaded);
-        
+        // hide seperator and oher things
         cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width);
         
         cell.createQuestionHintLabel.alpha = 0.0;
@@ -318,15 +172,16 @@
         cell.tipTextView.alpha = 0.0;
         cell.tipTextView.hidden = NO;
         
-        if(cell.loaded) {
-            if([_questionSet getQuestionCount] == 0) { //show creat question hint
-                
+        if(cell.loaded) // loaded flag added to prevent animation bug
+        {
+            if([_questionSet getQuestionCount] == 0) // show create question hint
+            {
                 [UIView animateWithDuration:1.3 delay:0.3 options:UIViewAnimationOptionCurveEaseIn
                                  animations:^{ cell.createQuestionHintArrow.alpha = 0.15; cell.createQuestionHintLabel.alpha = 0.65;}
                                  completion:nil];
             }
-            if([_questionSet getQuestionCount] < 3) { //show (and hide) pull down hint
-                
+            if([_questionSet getQuestionCount] < 3) // show (and hide) pull down hint
+            {
                 [UIView animateWithDuration:1.3 delay:0.3 options:UIViewAnimationOptionCurveEaseIn
                                  animations:^{  cell.tipTextView.alpha = 0.75;}
                                  completion:^(BOOL finished){
@@ -338,35 +193,32 @@
         }
         
         cell.loaded = YES;
-        //cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-        //cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }
+    else // normal cell
+    {
+    
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"qcellid"];
+        
+        // Configure the cell...
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"qcellid"];
+        }
+        cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
+        cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;
     }
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"qcellid"]; //forIndexPath:indexPath];
-    
-    // Configure the cell...
-    if (cell == nil) {
-        //NSLog(@"Shouldnt be here!!!!!!!!!!!");
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"qcellid"];
-    }
-    cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-    cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
+    
     _selectedQuestion = (int)indexPath.row;
     
     [self performSegueWithIdentifier:@"showQuestion" sender:self];
-    
-    //TODO: this
-    
 
 }
 
@@ -374,22 +226,22 @@
     
     
     
-    if (editingStyle == UITableViewCellEditingStyleDelete) { //delete a question
+    if (editingStyle == UITableViewCellEditingStyleDelete) // delete a question
+    {
+        // remove question from the set
         [_questionSet removeQuestionAtIndex:(int)indexPath.row];
-        for(int i = (int)indexPath.row; i < [_questionSet getQuestionCount]; ++i) { //re-number the remaining questions
+        
+        // re-number the remaining questions
+        for(int i = (int)indexPath.row; i < [_questionSet getQuestionCount]; ++i) {
             [_questionSet getQuestionAtIndex:i].questionNumber = i + 1;
         }
         
+        // reload table
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        //[self.tableView reloadData];
-        //[_tableView reloadData];
         [self reloadTable];
 
-        //save to disk
-        NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
-        NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
-        [data writeToFile:databasePath atomically:YES];
+        // save to disk
+        [Util savePollDataToPhone:_pollSet];
     }
 }
 
@@ -401,44 +253,55 @@
 //
 
 // Remote peer changed state
-- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
+{
 
     NSLog(@"peer changed state:");
     
-    if(state == MCSessionStateConnected) {
+    if(state == MCSessionStateConnected)
+    {
         NSLog(@"  connected!");
         
+        // add peer to peerlist with -1 vote
         [_peerList setObject:[NSNumber numberWithInt:-1] forKey:peerID.displayName];
-        NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
         
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
         
+        // send question set to newly connected peer
         _questionSet.messageType = MSG_QUESTION_SET;
         [Message sendMessage:_questionSet toPeers:@[peerID] inSession:session];
         
     }
-    else if(state == MCSessionStateNotConnected) {
+    else if(state == MCSessionStateNotConnected)
+    {
         NSLog(@"  NOT connected!");
+        
+        // remove from peerlist
         [_peerList removeObjectForKey:peerID.displayName];
-        NSLog(@"peerList count:%zd", [[_peerList allKeys] count]);
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
             _connectedPeersLabel.text = [NSString stringWithFormat:@"%zd connected peers", [[_peerList allKeys] count]];
         });
     }
-    else if(state == MCSessionStateConnecting) {
+    else if(state == MCSessionStateConnecting)
+    {
         NSLog(@"  connecting...");
     }
 }
 
 // Received data from remote peer
-- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
+{
     NSLog(@"recieved data!");
+    
     Message *message = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    //NSString *messageType = message.messageType;
-    //NSLog(@"type:%@", messageType);
-    if(message.messageType == MSG_QUESTION_SET_ACK) { //[messageType isEqualToString:@"question-ack"]) {
+
+    if(message.messageType == MSG_QUESTION_SET_ACK)
+    {
         NSLog(@" got question-set-ack");
         //TODO: need to verify all peers have acknowledged the question
 
@@ -501,63 +364,42 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
-    if([segue.identifier isEqualToString:@"startPollSegue"]){
-        //NSLog(@"prepareForSegue");
+    
+    if([segue.identifier isEqualToString:@"startPollSegue"])
+    {
         RunningPollViewController *controller = (RunningPollViewController *)segue.destinationViewController;
         controller.questionSet = _questionSet;
-        //controller.session = _session;
         controller.bigSession = _bigSession;
         controller.peerList = _peerList;
     }
-    else if([segue.identifier isEqualToString:@"addNewQuestionSegue"]){
-        //NSLog(@"prepareForSegue");
+    else if([segue.identifier isEqualToString:@"addNewQuestionSegue"])
+    {
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_ADD_NEW_QUESTION;
-        //controller.session = _session;
-        //controller.bigSession = _bigSession;
         controller.questionSet = _questionSet;
         controller.pollSet = _pollSet;
-        //NSLog(@"segue isquiz:%d", _questionSet.isQuiz);
-        //controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
-    else if([segue.identifier isEqualToString:@"showQuestion"]){
-        //NSLog(@"prepareForSegue");
+    else if([segue.identifier isEqualToString:@"showQuestion"])
+    {
         EditQuestionViewController *controller = (EditQuestionViewController *)segue.destinationViewController;
         controller.viewMode = VIEWMODE_EDIT_QUESTION;
-        //controller.session = _session;
-        //controller.bigSession = _bigSession;
         controller.questionSet = _questionSet;
         controller.pollSet = _pollSet;
         controller.currentQuestion = [_questionSet getQuestionAtIndex:_selectedQuestion];
     }
-    //showQuestion
-    
-    //addNewQuestionSegue
 }
 
-- (IBAction)addNewQuestion:(id)sender {
+- (IBAction)addNewQuestion:(id)sender
+{
     _selectedQuestion = -1;
 }
 
 
-//
-//  MCNearbyServiceAdvertiser
-//
 
-- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void(^)(BOOL accept, MCSession *session))invitationHandler {
-    NSLog(@"recieved invite");
-    //invitationHandler([@YES boolValue], _session);
-}
 @end

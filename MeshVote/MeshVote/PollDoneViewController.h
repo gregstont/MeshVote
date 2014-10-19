@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PollDoneViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UIImageView *checkImage;
 @property (weak, nonatomic) IBOutlet UILabel *doneText;
 

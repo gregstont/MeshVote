@@ -46,7 +46,8 @@
 }
 */
 
-- (IBAction)githubButton:(id)sender {
+- (IBAction)githubButton:(id)sender
+{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://github.com/gregstont/MeshVote"]];
 }
 @end

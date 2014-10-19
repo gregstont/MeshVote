@@ -18,4 +18,7 @@
 // Can contain only ASCII lowercase letters, numbers, and hyphens. hyphens must be single and interior
 +(NSString*)getServiceTypeFromName:(NSString*)input;
 
+// saves poll data to disk
++(void)savePollDataToPhone:(NSMutableArray*)pollSet;
+
 @end

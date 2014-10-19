@@ -15,16 +15,16 @@
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
 
-//the main session containing all peers
+// the main session containing all peers
 @property (nonatomic, strong) BigMCSession* bigSession;
 
 // list of connected peers mapping to current vote index
 @property (nonatomic, strong) NSMutableDictionary *peerList;
 
-//label hidden above table indicating how many peers are connected
+// label hidden above table indicating how many peers are connected
 @property (nonatomic, strong) UILabel *connectedPeersLabel;
 
-//the root array of QuestionSet objects
+// the root array of QuestionSet objects
 @property (nonatomic, strong) NSMutableArray *pollSet;
 
 
@@ -250,19 +250,11 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_pollSet removeObjectAtIndex:indexPath.row];
         [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self saveDataToPhone];
+        [Util savePollDataToPhone:_pollSet];
     }
     
 }
 
-// saves poll data to disk
--(void)saveDataToPhone
-{
-    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
-    NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
-    [data writeToFile:databasePath atomically:YES];
-}
 
 
 

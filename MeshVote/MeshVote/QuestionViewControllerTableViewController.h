@@ -8,26 +8,35 @@
 
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+
 #import "EditQuestionViewController.h"
+#import "RunningPollViewController.h"
+
+#import "TipTableViewCell.h"
+
 #import "BigMCSession.h"
+#import "QuestionSet.h"
+#import "Question.h"
+#import "Util.h"
 
-@interface QuestionViewControllerTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate, BigMCSessionDelegate, MCNearbyServiceAdvertiserDelegate>
 
-- (IBAction)addNewQuestion:(id)sender;
-- (IBAction)playPressed:(UIButton *)sender;
+@interface QuestionViewControllerTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, BigMCSessionDelegate>
+
+
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-//@property (weak, nonatomic) IBOutlet UILabel *createQuestionHintLabel;
-//@property (weak, nonatomic) IBOutlet UIImageView *createQuestionHintArrow;
-//@property (weak, nonatomic) IBOutlet UITextView *tipTextView;
+
+
 
 @property (nonatomic, strong) NSString* userName;
-//@property (nonatomic, NS_NONATOMIC_IOSONLY) MCSession *session;
-@property (nonatomic, strong) BigMCSession* bigSession;
 
+@property (nonatomic, strong) BigMCSession* bigSession;
 @property (nonatomic, strong) NSMutableDictionary *peerList;
 
 @property (nonatomic, strong) QuestionSet *questionSet;
-@property (nonatomic, strong) NSMutableArray *pollSet; //the root array of QuestionSet
+@property (nonatomic, strong) NSMutableArray *pollSet; // the root array of QuestionSet
 
+
+- (IBAction)addNewQuestion:(id)sender;
+- (IBAction)playPressed:(UIButton *)sender;
 
 @end

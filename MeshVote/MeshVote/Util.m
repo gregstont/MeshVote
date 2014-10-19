@@ -34,4 +34,14 @@
     new_string[newStringIndex] = '\0';
     return [NSString stringWithUTF8String:new_string];
 }
+
+
+// saves poll data to disk
++(void)savePollDataToPhone:(NSMutableArray*)pollSet
+{
+    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:pollSet];
+    NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
+    [data writeToFile:databasePath atomically:YES];
+}
 @end

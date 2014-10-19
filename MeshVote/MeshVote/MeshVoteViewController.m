@@ -7,11 +7,7 @@
 //
 
 #import "MeshVoteViewController.h"
-#import "BackgroundLayer.h"
-#import "QuestionViewControllerTableViewController.h"
-#import "JoinViewControllerTableViewController.h"
 
-#import "PollListViewController.h"
 
 @interface MeshVoteViewController ()
 
@@ -23,17 +19,16 @@
 {
     NSLog(@"viewDidLoad - MeshVoteViewController");
     [super viewDidLoad];
-    
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    // add bg gradient layer
     CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
-    //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
     bgLayer.frame = self.view.bounds;
     [self.view.layer insertSublayer:bgLayer atIndex:0];
     
-    //for keyboard exit
-    [self.nameInput setDelegate:self];
+    _nameInput.delegate = self;
     
-    //load name from disk
+    // load user name from disk
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userName = [defaults objectForKey:@"userName"];
     if(userName)
@@ -42,7 +37,8 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated
+{
     [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController setToolbarHidden:YES];
 }
@@ -61,46 +57,53 @@
     [textField resignFirstResponder];
     return YES;
 }
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    /*if([textField.text isEqualToString:@"Name"]) {
-        textField.text = @"";
-    }*/
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
     return YES;
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    //save name to disk
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    // save name to disk
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:textField.text forKey:@"userName"];
     [defaults synchronize];
 }
 
-- (IBAction)joinSession:(id)sender {
+- (IBAction)joinSession:(id)sender
+{
     NSLog(@"joinSession");
 }
 
-- (IBAction)createSession:(id)sender {
+- (IBAction)createSession:(id)sender
+{
     NSLog(@"createSession");
 }
 
-- (IBAction)showAbout:(id)sender {
+- (IBAction)showAbout:(id)sender
+{
     NSLog(@"showAbout");
-
-    
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
-    if([_nameInput.text isEqualToString:@""]) { //TODO: alert user to input name
+    
+    if([_nameInput.text isEqualToString:@""]) //TODO: alert user to input name
+    {
         _nameInput.text = [NSString stringWithFormat:@"User%d",arc4random_uniform(9999)];
     }
     
-    if([segue.identifier isEqualToString:@"showPollListSegue"]){
-        //NSLog(@"prepareForSegue");
+    if([segue.identifier isEqualToString:@"showPollListSegue"])
+    {
+        // create session
         PollListViewController *controller = (PollListViewController *)segue.destinationViewController;
         controller.userName = _nameInput.text;
     }
-    else if([segue.identifier isEqualToString:@"joinSessionSegue"]){
-        NSLog(@"prepareForSegue");
+    else if([segue.identifier isEqualToString:@"joinSessionSegue"])
+    {
+        // join session
         JoinViewControllerTableViewController *controller = (JoinViewControllerTableViewController *)segue.destinationViewController;
         controller.userName = _nameInput.text;
     }

@@ -45,7 +45,8 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [self.navigationController setToolbarHidden:YES];
 }
 
@@ -78,33 +79,41 @@
     return YES;
 }
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
     [_saveButton setTitle:@"Done"];
     return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
     [_saveButton setTitle:@"Save"];
     _tempQuestionSet.name = textField.text;
 }
 
-- (IBAction)modeControlClicked:(id)sender {
+- (IBAction)modeControlClicked:(id)sender
+{
     _tempQuestionSet.isQuiz = !_modeControl.selectedSegmentIndex;
 }
 
-- (IBAction)shareResultsControlClicked:(id)sender {
+- (IBAction)shareResultsControlClicked:(id)sender
+{
     _tempQuestionSet.showResults = !_shareResultsControl.selectedSegmentIndex;
 }
 
-- (IBAction)shareScoresSwitch:(id)sender { //not implemented
+- (IBAction)shareScoresSwitch:(id)sender  //not implemented
+{
     _tempQuestionSet.shareScores = [_shareScoresOutlet isOn];
 }
 
-- (IBAction)saveButton:(id)sender {
-    if([_saveButton.title isEqualToString:@"Done"]) {
+- (IBAction)saveButton:(id)sender
+{
+    if([_saveButton.title isEqualToString:@"Done"])
+    {
         [_pollNameTextField resignFirstResponder];
     }
-    else { // save
+    else // save
+    { 
         [_pollSet addObject:_tempQuestionSet];
         
 

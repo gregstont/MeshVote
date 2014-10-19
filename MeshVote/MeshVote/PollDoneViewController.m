@@ -29,8 +29,8 @@
 {
     [super viewDidLoad];
     
+    // bg layer
     CAGradientLayer *bgLayer = [BackgroundLayer lightBlueGradient]; //actually grey
-    //CAGradientLayer *bgLayer2 = [BackgroundLayer testGradient]; //test grey
     bgLayer.frame = self.view.bounds;
     [self.view.layer insertSublayer:bgLayer atIndex:0];
     
@@ -48,16 +48,14 @@
                      animations:^{ _doneText.alpha = 1.0;}
                      completion:nil];
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
+    {
+        // wait 5 seconds and go back
         [NSThread sleepForTimeInterval:5.0f];
 
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            
             [self.navigationController popTwoViewControllersAnimated:YES];
             [self.navigationController setNavigationBarHidden:NO];
-            //[self.navigationController popViewControllerAnimated:NO];
-            //[self.navigationController popViewControllerAnimated:YES];
         });
     });
 }

@@ -15,4 +15,6 @@
 - (UIColor*)getAlphaColor2AtIndex:(long)index;
 - (NSString*)getLetterAtIndex:(long)index;
 
++(UIColor*)getFadedColorFromPercent:(double)percent withAlpha:(double)alpha;
+
 @end

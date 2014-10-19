@@ -153,7 +153,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     NSLog(@"editWillDisappear");
     if(_viewMode == VIEWMODE_EDIT_QUESTION) {
-        [self saveDataToPhone];
+        [Util savePollDataToPhone:_pollSet];
     }
     //self.navigationController.navigationBar.barTintColor = nil;
     self.navigationController.toolbar.barTintColor = nil;
@@ -460,7 +460,7 @@
         NSLog(@"submitted:%@", _currentQuestion.questionText);
         [_questionSet addQuestion:_currentQuestion];
         
-        [self saveDataToPhone];
+        [Util savePollDataToPhone:_pollSet];
 
         //[self.delegate addQuestionToSet:_currentQuestion];
         [self.navigationController popViewControllerAnimated:YES];
@@ -813,12 +813,5 @@
     NSLog(@"check button outline pressed!");
 }
 
--(void)saveDataToPhone {
-    //dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSData* data = [NSKeyedArchiver archivedDataWithRootObject:_pollSet];
-    NSString* docsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"pollset.dat"]];
-    [data writeToFile:databasePath atomically:YES];
-}
 
 @end
