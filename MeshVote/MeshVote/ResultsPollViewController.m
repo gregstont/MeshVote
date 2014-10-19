@@ -184,7 +184,7 @@
 
     
     // update the progress bar
-    cell.answerProgress.progressTintColor = [Colors getFadedColorFromPercent:newPercent withAlpha:0.5];
+    cell.answerProgress.progressTintColor = [Colors getFadedColorFromPercent:newPercent + 0.15 withAlpha:0.9];
     [cell.answerProgress setProgress:newPercent animated:!cell.doneLoading];
     cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     
