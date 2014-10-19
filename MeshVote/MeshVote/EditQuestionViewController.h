@@ -9,10 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
+#import "ResultsPollViewController.h"
+#import "ResultsViewController.h"
+
 #import "Colors.h"
+#import "BackgroundLayer.h"
+#import "SpacedUITableViewCell.h"
+
 #import "BigMCSession.h"
 #import "QuestionSet.h"
 #import "Util.h"
+#import "Results.h"
 
 
 #define VIEWMODE_ADD_NEW_QUESTION   0
@@ -25,7 +32,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *questionTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *questionNumberLabel;
-//@property (strong, nonatomic) id <EditQuestionViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UITextField *timeTextField;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
@@ -36,17 +42,15 @@
 
 @property (nonatomic, strong) Question* currentQuestion;
 @property (nonatomic) int currentQuestionNumber;
-//@property (nonatomic, strong) Question* nextQuestion; //for pre-loading when asking
 @property (nonatomic) int viewMode;
 
 @property (nonatomic, strong) MCSession *session;
-
 @property (nonatomic, strong) MCPeerID* host;
 
 - (IBAction)doneButtonPressed:(id)sender;
-//@property (weak, nonatomic) IBOutlet UIButton *checkButtonPressed;
 - (IBAction)checkButtonPressed:(id)sender;
 - (IBAction)checkButtonOutlinePressed:(id)sender;
+
 -(void)moveToNextQuestion;
 
 

@@ -7,14 +7,10 @@
 //
 
 #import "JoinViewControllerTableViewController.h"
-#import "ConnectingViewController.h"
-#import <UIKit/UITableViewCell.h>
-#include <stdlib.h>
+
 
 @interface JoinViewControllerTableViewController ()
 
-//@property (readonly, NS_NONATOMIC_IOSONLY) MCSession *session;
-//@property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceAdvertiser *advertiser;
 @property (readonly, NS_NONATOMIC_IOSONLY) MCNearbyServiceBrowser *browser;
 
 @property (nonatomic, strong) NSMutableArray* sessionList;
@@ -49,40 +45,25 @@
     _sessionList = [[NSMutableArray alloc] init];
     
     MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:[NSString stringWithFormat:@"%@%d",_userName,arc4random_uniform(999)]]; //TODO: change this!
-    //_session = [[MCSession alloc] initWithPeer:me securityIdentity:nil encryptionPreference:MCEncryptionRequired];
-    // Set ourselves as the MCSessionDelegate
-    //_session.delegate = self;
     
-    //MCAdvertiserAssistant *myAssist = [[MCAdvertiserAssistant alloc] initWithServiceType:@"MeshVote" discoveryInfo:nil session:mySession];
-    //myAssist.delegate = self;
-    //[myAssist start];
-    
-    //start browsing for open sessions to join
+    // start browsing for open sessions to join
     _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:me serviceType:@"mesh-vote"];
     _browser.delegate = self;
     [_browser startBrowsingForPeers];
     
-    
-    /*_advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:me discoveryInfo:nil serviceType:@"mesh-vote"];
-    _advertiser.delegate = self;
-    [_advertiser startAdvertisingPeer];
-     */
-    
-    NSLog(@"end of JOIN viewDidLoad");
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     NSLog(@"dealloc join");
     [_browser stopBrowsingForPeers];
-    //[_advertiser stopAdvertisingPeer];
-    //[_session disconnect];
+
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    
+-(void)viewWillAppear:(BOOL)animated
+{
     [self.navigationController setNavigationBarHidden:NO];
     self.navigationController.navigationBar.barTintColor = nil;
-    //self.navigationController.toolbar.barTintColor = nil;
 }
 
 
@@ -103,14 +84,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return _sessionList.count + 1;
 }
@@ -118,9 +97,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"sdfdsf");
-    
-    
+
     UITableViewCell *cell;
 
     if(indexPath.row < _sessionList.count) {
@@ -134,16 +111,18 @@
         NSLog(@"nil sessionNameCell");
     }
     
-    if(indexPath.row < _sessionList.count) {
+    if(indexPath.row < _sessionList.count)
+    {
         cell.textLabel.text = [_sessionList objectAtIndex:indexPath.row];
         cell.userInteractionEnabled = YES;
     }
-    else { //animated circle thing
+    else //animated progress circle thing at end of table
+    {
         
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         cell.contentView.backgroundColor=[UIColor whiteColor];
         cell.userInteractionEnabled = NO;
-        //cell.alpha = 0.1;
+
         cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width); //hide seperator
         spinner.alpha = 0.7;
         [cell.contentView addSubview:spinner];
@@ -155,40 +134,17 @@
         [spinner startAnimating];
         [cell setAccessoryType:UITableViewCellAccessoryNone];
         
-        //return cell;
         
     }
     
-    // Configure the cell...
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
-    NSLog(@"usrname:%@", [_sessionList objectAtIndex:indexPath.row]);
-    //_selectedSessionName = [_sessionList objectAtIndex:indexPath.row];
-    //NSLog(@"selSesName: %@", _selectedSessionName);
-    
-
-    //[_browser stopBrowsingForPeers];
-    //TODO: maybe use new peerid?
-    //MCPeerID *me = [[MCPeerID alloc] initWithDisplayName:@"luigi2"];
-    
-    
-    /*
-    _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:_browser.myPeerID discoveryInfo:nil serviceType:[_sessionList objectAtIndex:indexPath.row]];
-    _advertiser.delegate = self;
-    [_advertiser startAdvertisingPeer];
-     */
-    
-    //_selectedQuestion = (int)indexPath.row;
-    
-    //[self performSegueWithIdentifier:@"showQuestion" sender:self];
-    
-    //TODO: this
-    
     
 }
 
@@ -242,10 +198,11 @@
 }
 */
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
-    if([segue.identifier isEqualToString:@"selectedSessionSegue"]){
-        //NSLog(@"prepareForSegue:%@", _selectedSessionName);
+    if([segue.identifier isEqualToString:@"selectedSessionSegue"])
+    {
         
         UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
         NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
@@ -258,40 +215,6 @@
     
 }
 
-// Remote peer changed state
-- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state {
-    
-    NSLog(@"peerDidChangeState");
-    if(state == MCSessionStateConnected) {
-        
-    }
-}
-
-// Received data from remote peer
-- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID {
-    NSLog(@"recieved data!");
-    
-    //NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    Question *recQuestion = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSLog(@"  message:%@", recQuestion.questionText);
-          
-    
-}
-
-// Received a byte stream from remote peer
-- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID {
-    
-}
-
-// Start receiving a resource from remote peer
-- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress {
-    
-}
-
-// Finished receiving a resource from remote peer and saved the content in a temporary location - the app is responsible for moving the file to a permanent location within its sandbox
-- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error {
-    
-}
 
 
 
@@ -299,31 +222,32 @@
 //  MCNearbyServiceBrowserDelegate
 //
 
-- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info {
+- (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info
+{
     
     NSString* n = [info objectForKey:@"name"];
     NSLog(@"FOUND PEER: %@", n);
     
     [_sessionList addObject:n];
     [self.tableView reloadData];
-    //[_browser invitePeer:peerID toSession:_session withContext:nil timeout:10];
     
 }
 
 // A nearby peer has stopped advertising
-- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID {
+- (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
+{
     NSLog(@"LOST PEER!! IN JOINVIEW: %@", peerID.displayName);
     NSUInteger index = [_sessionList indexOfObject:peerID.displayName];
     if(index != NSNotFound) {
         [_sessionList removeObjectAtIndex:index];
     }
-    //[_sessionList removeObject:peerID.displayName];
     [self.tableView reloadData];
 }
 
 //@optional
 // Browsing did not start due to an error
-- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error {
+- (void)browser:(MCNearbyServiceBrowser *)browser didNotStartBrowsingForPeers:(NSError *)error
+{
     NSLog(@"error starting browser");
 }
 

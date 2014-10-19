@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+
+#import "ConnectingViewController.h"
+
+#include <stdlib.h>
+
 #import "Question.h"
 
 @interface JoinViewControllerTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, MCNearbyServiceBrowserDelegate>
