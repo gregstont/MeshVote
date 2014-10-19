@@ -7,10 +7,11 @@ MeshVote is a bluetooth powered voting system for iOS 7 and above.  It enables u
 
 ## Modes of operation
 
-poll mode
+### poll mode
   - host does not supply "correct" answers
   - results will show vote percentages of each answer choice
-quiz mode
+
+### quiz mode
   - each question has a "correct" answer
   - results will show overall grade of each peer, along with overall statistics
   - results also show percentage of peers which ansered correctly per question, aloowing the host to see which questions were the toughest
@@ -47,6 +48,7 @@ MeshVote has two basic functions:
 
   <img src="screenshots/CreateQuestion.png" height="600px" />
 
+  - if you are creating a quiz, you can select which answer is correct by tapping the circle to the right
   - once you have added your questions, you can begin your poll (tip: pull down on the screen to see how many peers are currently connected)
   
   <img src="screenshots/QuestionListFull.png" height="600px" />
@@ -58,14 +60,31 @@ MeshVote has two basic functions:
   - while the poll is running, you can see live resuts, as they come in
   - when the poll is finished, you will be prompted will the results summary.  The presentation of the results depends on which mode was selected (ie. poll or quiz)
 
+### Quiz results summary
+
   <img src="screenshots/ResultsQuiz.png" height="600px" />
-  
-  Quiz results summary
+
+###  Poll results summary
   
   <img src="screenshots/ResultsPoll.png" height="600px" />
-  
-  Poll results summary
 
+
+
+
+
+
+
+
+
+
+
+### Disclaimer
+
+This software provides no warranty.
+
+### Disclaimer to employers
+
+This is my first iOS application.
 
 
 
