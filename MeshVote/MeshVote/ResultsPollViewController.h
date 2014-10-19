@@ -7,16 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "RunningAnswerTableViewCell.h"
+#import "UINavigationController+popTwice.h"
+#import "BackgroundLayer.h"
+
 #import "QuestionSet.h"
 #import "BigMCSession.h"
+#import "Colors.h"
+#import "Results.h"
 
 @interface ResultsPollViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *resultsTable;
 
-//@property (nonatomic, strong) MCSession* session;
+
 @property (nonatomic, strong) BigMCSession* bigSession;
 
 @property (nonatomic, strong) QuestionSet *questionSet;
+
+
 - (IBAction)resultsDoneButton:(id)sender;
 
 @end

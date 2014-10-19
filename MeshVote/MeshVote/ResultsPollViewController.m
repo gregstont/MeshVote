@@ -7,11 +7,6 @@
 //
 
 #import "ResultsPollViewController.h"
-#import "Colors.h"
-#import "RunningAnswerTableViewCell.h"
-#import "Results.h"
-#import "UINavigationController+popTwice.h"
-#import "BackgroundLayer.h"
 
 
 @interface ResultsPollViewController ()
@@ -44,31 +39,35 @@
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
     [[self navigationController] setToolbarHidden:YES animated:YES];
     
+    // add special done button
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@" Done" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
-    
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItem = item;
     
     _colors = [[Colors alloc] init];
     
-    [_resultsTable setDataSource:self];
-    [_resultsTable setDelegate:self];
+    _resultsTable.delegate = self;
+    _resultsTable.dataSource = self;
     
     //send out results to peers
-    if(_questionSet.showResults) {
+    if(_questionSet.showResults)
+    {
+        // gather vote count for each question
         NSMutableArray* votesArray = [[NSMutableArray alloc] initWithCapacity:[_questionSet getQuestionCount]];
-        for(Question* runner in _questionSet.questions) {
+        for(Question* runner in _questionSet.questions)
+        {
             [votesArray addObject:[runner.voteCounts copy]];
         }
         NSArray* sendArray = [votesArray copy];
         
+        // construct message containing results
         Results* results = [[Results alloc] init];
         results.messageType = MSG_POLL_RESULTS;
         results.votes = sendArray;
         [Message broadcastMessage:results inSession:_bigSession];
-        //[Message sendMessage:results toPeers:[_session connectedPeers] inSession:_session];
     }
-    else { //dont show results for peers
+    else // dont show results for peers
+    {
         NSLog(@"sending done message");
         Message* doneMessage = [[Message alloc] init];
         doneMessage.messageType = MSG_ACTION;
@@ -78,7 +77,8 @@
     
 }
 
--(void)goBack {
+-(void)goBack
+{
     [self.navigationController popTwoViewControllersAnimated:YES];
 }
 
@@ -106,33 +106,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return [_questionSet getQuestionCount];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //#warning Incomplete method implementation.
     // Return the number of rows in the section.
 
     return [_questionSet getAnswerCountAtIndex:(int)section];
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
 
-    
-    //new
-    UIView *view = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)]; //18
+    UIView *view = [[UIView alloc] init];
     [view setBackgroundColor:[UIColor clearColor]];
-    //[view setBackgroundColor:[UIColor colorWithRed:224.0/255 green:224.0/255 blue:224.0/255 alpha:1.0]];//[UIColor colorWithRed:1 green:1 blue:1 alpha:0.8]];
-    UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+    
+    UILabel *label = [[UILabel alloc] init];
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
     label.textColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.9];
-    //[label setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.8]];
     
     NSString* text = [_questionSet getQuestionTextAtIndex:(int)section];
     
+    // each cell will be sized to fit the number of lines of text
     CGSize maxSize = CGSizeMake(260, 410);
     CGRect labrect = [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:label.font} context:Nil];
     
@@ -144,20 +141,16 @@
 
     return view;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-
-    //calculate the height based on the amount of text we are going to display
-    UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    // calculate the height based on the amount of text we are going to display
+    UILabel *label = [[UILabel alloc] init];
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
     NSString *text = [_questionSet getQuestionTextAtIndex:(int)section];
 
-    
     CGSize maxSize = CGSizeMake(260, 410);
     CGRect labrect = [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:label.font} context:Nil];
     
-
-    
-    NSLog(@"get height:%d",(int)labrect.size.height + 8);
     return labrect.size.height + 25;
 }
 
@@ -165,101 +158,56 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RunningAnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"runPollCell"]; //forIndexPath:indexPath];
+    RunningAnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"runPollCell"];
     
-    //temp
-    //NSArray *tempPercent = @[@"34", @"31", @"23", @"12"];
-    // Configure the cell...
-    if (cell == nil) {
-        NSLog(@"Shouldnt be here!!!!!!!!!!!");
+    if (cell == nil)
+    {
         cell = [[RunningAnswerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"runPollCell"];
     }
-    //NSLog(@"answer:%@", [_currentQuestion.answerText objectAtIndex:indexPath.row]);
-    //cell.textLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
-    //cell.answerLabel.text = [_currentQuestion.answerText objectAtIndex:indexPath.row];
+
     cell.answerLetterLabel.text = [_colors getLetterAtIndex:indexPath.row];
 
     
-    
-    //cell.answerProgress.progressTintColor = [_colors objectAtIndex:indexPath.row];
-    //cell.answerProgress.backgroundColor = [_fadedColors objectAtIndex:indexPath.row];
-    //[cell.answerProgress.backgroundColor s]
-    
-    double newPercent = 0.5;
-    double alpha = 1.0;
-
+    // calculate the percent to show
     Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.section];
     int votes = [[cur.voteCounts objectAtIndex:indexPath.row] intValue];
+    
+    double newPercent = 0.0;
     if(cur.voteCount == 0)
         newPercent = 0.0;
     else
         newPercent = (votes + 0.0) / cur.voteCount;
+    
+    // the label will show the answer
     cell.answerLabel.text = [cur.answerText objectAtIndex:indexPath.row];
     cell.answerLabel.hidden = NO;
-    alpha = 0.5;
 
     
-    //FOR TESTING ONLY
-    //newPercent = ((double)arc4random() / 0x100000000);
-    //newPercent = 1.0 - ((indexPath.row + 0.0) / 10);
-    //newPercent =
-    double red, green;
-    if(newPercent < 0.5) {
-        red = 1.0 - (newPercent / 4);
-        green = newPercent * 2;
-    }
-    else {
-        red = (1 - newPercent) * 2;
-        green = 1.0 - ((1 - newPercent) / 4);
-    }
-    
-    
-    //
-    
-    
-    //color fades from red to green indicating how many missed
-    //high percentage  will be green and low red
-    
-    //NSLog(@"newPercent:%f and %f", newPercent, (1 - newPercent));
-    UIColor *fadedColor = [UIColor colorWithRed:red green:green blue:0.0 alpha:alpha];
-    cell.answerProgress.progressTintColor = fadedColor;
-    
+    // update the progress bar
+    cell.answerProgress.progressTintColor = [Colors getFadedColorFromPercent:newPercent withAlpha:0.5];
     [cell.answerProgress setProgress:newPercent animated:!cell.doneLoading];
     cell.answerPercentLabel.text = [NSString stringWithFormat:@"%d", (int)(newPercent * 100)];
     
+    // strecth the progress bar
     CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 10.0f);
     cell.answerProgress.transform = transform;
     cell.backgroundColor = [UIColor clearColor];
     
-    cell.doneLoading = YES;
-    //cell.answerProgress.progressTintColor
-    /*
-     cell.textLabel.font=[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0];
-     cell.textLabel.text = [_questionSet getQuestionTextAtIndex:(int)indexPath.row];//[_questions objectAtIndex:indexPath.row];
-     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-     */
     
+    cell.doneLoading = YES;
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     NSLog(@"didSelectRow: %d", (int)indexPath.row);
-    //_selectedQuestion = (int)indexPath.row;
-    
-    //[self performSegueWithIdentifier:@"showQuestion" sender:self];
-    
-    //TODO: this
-    
-    
+
 }
 
 
 - (IBAction)resultsDoneButton:(id)sender {
     NSLog(@"DONE");
-    //[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    //[self.navigationController popViewControllerAnimated:YES];
     UINavigationController *temp = (UINavigationController*)self.presentingViewController;
     [temp popViewControllerAnimated:NO];
     [self dismissViewControllerAnimated:YES completion:nil];

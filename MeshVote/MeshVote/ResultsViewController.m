@@ -51,25 +51,7 @@
     _colors = [[Colors alloc] init];
     _peerResults = [[NSMutableDictionary alloc] initWithCapacity:[[_voteHistory allKeys] count]];
     
-    //calculate the peer results from the voteHistory
-    //iterate over each peer in the history
-    for(NSString* key in _voteHistory)
-    {
-        NSMutableArray* curPeerHistory = [_voteHistory objectForKey:key];
-        
-        int numberCorrect = 0;
-        //iterate over each question
-        for(int i = 0; i < [_questionSet getQuestionCount]; ++i)
-        {
-            if([_questionSet getQuestionAtIndex:i].correctAnswer == [[curPeerHistory objectAtIndex:i] intValue])
-            {
-                ++numberCorrect;
-            }
-        }
-        
-        double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
-        [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
-    }
+    [self calculatePeerResults];
     
     [self updateStatsLabels];
     
@@ -100,6 +82,29 @@
     }
 
     
+}
+
+// calculate the peer results (ie percentage correct) from the voteHistory
+// iterate over each peer in the history
+-(void)calculatePeerResults
+{
+    for(NSString* key in _voteHistory)
+    {
+        NSMutableArray* curPeerHistory = [_voteHistory objectForKey:key];
+        
+        int numberCorrect = 0;
+        //iterate over each question
+        for(int i = 0; i < [_questionSet getQuestionCount]; ++i)
+        {
+            if([_questionSet getQuestionAtIndex:i].correctAnswer == [[curPeerHistory objectAtIndex:i] intValue])
+            {
+                ++numberCorrect;
+            }
+        }
+        
+        double score = ((double)numberCorrect) / [_questionSet getQuestionCount];
+        [_peerResults setObject:[NSNumber numberWithDouble:score] forKey:key];
+    }
 }
 
 -(void)updateStatsLabels
