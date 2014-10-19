@@ -14,7 +14,7 @@ MeshVote is a bluetooth powered voting system for iOS 7 and above.  It enables u
 ### quiz mode
   - each question has a "correct" answer
   - results will show overall grade of each peer, along with overall statistics
-  - results also show percentage of peers which ansered correctly per question, aloowing the host to see which questions were the toughest
+  - results also show percentage of peers which ansered correctly per question, allowing the host to see which questions were the toughest
 
 ## How to Use
 
@@ -23,15 +23,15 @@ MeshVote has two basic functions:
   - host a poll session, where the user will define a set of questions to be asked to other peers
 
 ### How to join a poll session
-  - enter your user name on the home screen and hit "join session". You will be brought to the "Join Session" browser where nearby poll session will appear
+  - enter your user name on the home screen and hit "join session". You will be brought to the "Join Session" browser where nearby poll sessions will appear
   
   <img src="screenshots/JoinScreen.png" width="40%" />
 
-  - from here, you may choose a session to join.  Once connected, you will be ready to tall the poll:
+  - from here, you may choose a session to join.  Once connected, you will be ready to take the poll:
   
   <img src="screenshots/ConnectedScreen.png" width="40%" />
   
-  - when the poll begings, you will be prompted with a series of questions
+  - when the poll begins, you will be prompted with a series of questions
   
   <img src="screenshots/TakingPoll.png" width="40%" />
   
@@ -43,8 +43,8 @@ MeshVote has two basic functions:
   
   <img src="screenshots/CreateSession.png" width="40%" />
 
-  - from here, you can name your poll, and also select which mode you would like, and whether you should like to share results with the poll takers
-  - next, you need to add at least one question to your poll, so click the + on the upper right hand corner, which will bring you to the following screen:
+  - from here, you can name your poll, select which mode you would like, and whether you should like to share results with the poll takers
+  - next, you need to add at least one question to your poll, so click the + on the upper right hand corner, which will bring you to a screen like the following:
 
   <img src="screenshots/CreateQuestion.png" width="40%" />
 
@@ -78,11 +78,11 @@ MeshVote has two basic functions:
 
 
 
-### Disclaimer
+## Disclaimer
 
 This software provides no warranty.
 
-### Disclaimer to employers
+### Disclaimer to potential employers
 
 This is my first iOS application.
 
