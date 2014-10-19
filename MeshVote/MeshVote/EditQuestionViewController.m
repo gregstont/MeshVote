@@ -306,6 +306,11 @@
         cell.textLabel.text = @"";
     }
     
+    // add a tag to indicate which row was clicked
+    cell.tag = indexPath.row;
+    cell.checkButton.tag = indexPath.row+7;
+    cell.answerTextField.tag = indexPath.row;
+    
     return cell;
 }
 
@@ -378,6 +383,7 @@
 -(void)moveToNextQuestion
 {
     _currentQuestion = [_questionSet getQuestionAtIndex:_currentQuestionNumber];
+    _currentQuestion.givenAnswer = -1;
     _timeRemaining = _currentQuestion.timeLimit;
     _currentAnswer = -1;
     _currentAnswerAcked = NO;
@@ -523,7 +529,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)replacementString
 {
-    if(textField.tag == 2) // time text field
+    if(textField.tag == -1) // time text field
     {
         NSString *originalNumber = textField.text;
         if([replacementString isEqualToString:@""])
@@ -551,12 +557,15 @@
     
     [_doneButton setTitle:@"Done"];
     [_doneButton setEnabled:YES];
+
     
-    if(textField.tag != 2) // if not time field
+    if(textField.tag != -1) // if not time field
     {
+        /*
         SpacedUITableViewCell *clickedCell = (SpacedUITableViewCell *)[[[textField superview] superview] superview];
         NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
-        NSLog(@"clicked:%d", (int)clickedButtonPath.row);
+        */
+        NSLog(@"clicked:%d", (int)textField.tag);
         
         //move the UI up so the keyboard doesnt hide it TODO: maybe need to max out around 5 or 6?
         [UIView beginAnimations:@"registerScroll" context:NULL];
@@ -570,7 +579,7 @@
             screenOffset = 568 - [[UIScreen mainScreen] bounds].size.height;
         
         // dont need to lift more than 5 or so cells
-        int scale = MIN((int)clickedButtonPath.row/2, 5);
+        int scale = MIN((int)textField.tag/2, 5);
         self.view.transform = CGAffineTransformMakeTranslation(0, (-34.0 * scale) - screenOffset);
         [UIView commitAnimations];
         
@@ -589,7 +598,7 @@
      _questionTextLabel.editable = YES;
     [self.navigationItem setHidesBackButton:NO animated:YES];
     
-    if(textField.tag == 2) // time field text
+    if(textField.tag == -1) // time field text
     {
         NSLog(@"text:%@", [textField.text stringByReplacingOccurrencesOfString:@":" withString:@""]);
         
@@ -619,17 +628,19 @@
         [UIView commitAnimations];
         
         
-        SpacedUITableViewCell *clickedCell = (SpacedUITableViewCell *)[[[textField superview] superview] superview];
-        NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+        //SpacedUITableViewCell *clickedCell = (SpacedUITableViewCell *)[[[textField superview] superview] superview];
+        //NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
         
-        if(clickedButtonPath.row/2 == [_currentQuestion getAnswerCount]) {
+        int indexClicked = (int)textField.tag;
+        
+        if(indexClicked/2 == [_currentQuestion getAnswerCount]) {
             NSLog(@"adding a new answer");
             [_currentQuestion addAnswer:textField.text];
 
         }
         else {
             NSLog(@"editing an existing answer");
-            [_currentQuestion.answerText setObject:textField.text atIndexedSubscript:clickedButtonPath.row/2];
+            [_currentQuestion.answerText setObject:textField.text atIndexedSubscript:indexClicked/2];
         }
         
         [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
@@ -803,20 +814,22 @@
 - (IBAction)checkButtonPressed:(id)sender
 {
     NSLog(@"check button pressed!");
-
     
-    UIView *parentCell = [[[sender superview] superview] superview];
-    UIView *parentView = [[parentCell superview] superview];
-    UITableView *tableView = (UITableView *)parentView;
-    NSIndexPath *indexPath = [tableView indexPathForCell:(UITableViewCell *)parentCell];
+    // need to get the tag of the cell to determine which answer was clicked
+    // this loop was necessary to be compatible with ios 7 and 8
+    UIView* runner = sender;
+    while(![runner isKindOfClass:[SpacedUITableViewCell class]])
+        runner = [runner superview];
     
-    NSLog(@"indexPath = %zd", indexPath.row/2);
+    int indexClicked = (int)runner.tag;
     
-    if(_currentQuestion.correctAnswer == (int)indexPath.row/2) {
+    NSLog(@"indexPath = %zd", indexClicked/2);
+    
+    if(_currentQuestion.correctAnswer == indexClicked/2) {
         _currentQuestion.correctAnswer = -1;
     }
     else {
-        _currentQuestion.correctAnswer = (int)indexPath.row/2;
+        _currentQuestion.correctAnswer = indexClicked/2;
     }
     
     //_currentQuestion.correctAnswer = (int)indexPath.row/2;

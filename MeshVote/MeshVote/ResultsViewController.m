@@ -249,6 +249,8 @@
         Question* cur = [_questionSet getQuestionAtIndex:(int)indexPath.row];
         if(cur.givenAnswer == cur.correctAnswer)
           [cell.gradeImage setImage:[UIImage imageNamed:@"check_icon128x128.png"]];
+        
+        NSLog(@"givenAnswer:%d",cur.givenAnswer);
     }
     else
         cell.gradeImage.alpha = 0.0;
