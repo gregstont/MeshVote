@@ -12,4 +12,6 @@
 
 - (IBAction)githubButton:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
 @end

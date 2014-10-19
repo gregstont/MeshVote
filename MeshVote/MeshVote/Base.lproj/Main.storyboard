@@ -806,7 +806,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.84999999999999987" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vote" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2g-F2-xJl">
-                                        <rect key="frame" x="168" y="113" width="58" height="71"/>
+                                        <rect key="frame" x="168" y="113" width="72" height="71"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="31"/>
                                         <color key="textColor" red="0.60720264668367352" green="0.46137716634844905" blue="0.28902240468095752" alpha="1" colorSpace="calibratedRGB"/>
@@ -818,6 +818,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="versionLabel" destination="Wgp-or-1c2" id="vAj-cg-ztW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2V0-Gm-3uI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
