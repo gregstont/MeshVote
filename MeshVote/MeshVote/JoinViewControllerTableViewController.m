@@ -123,7 +123,8 @@
         cell.contentView.backgroundColor=[UIColor whiteColor];
         cell.userInteractionEnabled = NO;
 
-        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width); //hide seperator
+        // hide separator
+        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width - 15);
         spinner.alpha = 0.7;
         [cell.contentView addSubview:spinner];
         spinner.tag = 123;

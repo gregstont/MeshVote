@@ -165,7 +165,7 @@
         }
         
         // hide seperator and oher things
-        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width);
+        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width - 15);
         
         cell.createQuestionHintLabel.alpha = 0.0;
         cell.createQuestionHintArrow.alpha = 0.0;
