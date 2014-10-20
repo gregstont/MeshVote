@@ -573,13 +573,19 @@
         [UIView setAnimationDuration:0.4];
         
         int screenOffset = 0;
+
+        // dont need to lift more than 5 or so cells
+        int scale = MIN((int)textField.tag/2, 5) + 1;
         
         // check if 3.5 inch screen
         if([[UIScreen mainScreen] bounds].size.height < 568)
+        {
             screenOffset = 568 - [[UIScreen mainScreen] bounds].size.height;
+            
+            // max out at 3 cells for smaller screens
+            scale = MIN((int)textField.tag/2, 3) + 1;
+        }
         
-        // dont need to lift more than 5 or so cells
-        int scale = MIN((int)textField.tag/2, 5);
         self.view.transform = CGAffineTransformMakeTranslation(0, (-34.0 * scale) - screenOffset);
         [UIView commitAnimations];
         
