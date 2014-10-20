@@ -203,10 +203,13 @@
     NSLog(@"prepareForSegue, id:%@", segue.identifier);
     if([segue.identifier isEqualToString:@"selectedSessionSegue"])
     {
+        // added this to fix ios 8 "bug"
+        UIView* runner = sender;
+        while(![runner isKindOfClass:[UITableViewCell class]])
+            runner = [runner superview];
         
-        UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+        UITableViewCell *clickedCell = (UITableViewCell *)runner;
         NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
-
         
         ConnectingViewController *controller = (ConnectingViewController *)segue.destinationViewController;
         controller.sessionName = [_sessionList objectAtIndex:clickedButtonPath.row];

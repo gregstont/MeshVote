@@ -10,6 +10,7 @@
 
 #import "RunningPollViewController.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 #define QUESTION_DELAY 1
 
@@ -470,6 +471,11 @@
     
     //stretch the progress bar
     CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 10.0f);
+    
+    // fix ios 8 bug
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+        transform = CGAffineTransformTranslate(transform, 0, 1);
+    
     cell.answerProgress.transform = transform;
     cell.backgroundColor = [UIColor clearColor];
     
