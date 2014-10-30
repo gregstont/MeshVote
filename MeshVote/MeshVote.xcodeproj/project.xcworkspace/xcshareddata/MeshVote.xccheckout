@@ -11,17 +11,17 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>4F55EEB5B686272BCDB37CD1B700AAD6AF025680</key>
-		<string>ssh://github.com/gregstont/MeshVote.git</string>
+		<string>github.com:gregstont/MeshVote.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MeshVote/MeshVote.xcodeproj/project.xcworkspace</string>
+	<string>MeshVote/MeshVote.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>4F55EEB5B686272BCDB37CD1B700AAD6AF025680</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/gregstont/MeshVote.git</string>
+	<string>github.com:gregstont/MeshVote.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
