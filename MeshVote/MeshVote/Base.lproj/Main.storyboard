@@ -972,7 +972,7 @@
                                             <segue destination="9vv-Mo-udS" kind="push" identifier="showQuestion" id="gSM-jh-RNS"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid-tip" rowHeight="300" id="0o0-y4-Udz" customClass="TipTableViewCell">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellid-tip" rowHeight="300" id="0o0-y4-Udz" customClass="TipTableViewCell">
                                         <rect key="frame" x="0.0" y="66" width="320" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0o0-y4-Udz" id="qyU-vT-mUT">
@@ -1235,7 +1235,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xDm-yi-HV8"/>
+        <segue reference="gSM-jh-RNS"/>
         <segue reference="9GP-J9-Cib"/>
         <segue reference="kRY-DZ-lG6"/>
     </inferredMetricsTieBreakers>
