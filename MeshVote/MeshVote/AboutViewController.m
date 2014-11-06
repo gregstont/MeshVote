@@ -31,7 +31,7 @@
     
     NSString* version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
     NSString* build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
-    _versionLabel.text = [NSString stringWithFormat:@"version %@.%@",version,build];
+    _versionLabel.text = [NSString stringWithFormat:@"version %@ (build %@)",version,build];
 }
 
 - (void)didReceiveMemoryWarning
