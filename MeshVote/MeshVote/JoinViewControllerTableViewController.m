@@ -32,6 +32,7 @@
 {
     [super viewDidLoad];
     
+    
     NSLog(@"in JOIN viewDidLoad");
     
     self.tableView.tableFooterView = [[UIView alloc] init];
@@ -124,7 +125,8 @@
         cell.userInteractionEnabled = NO;
 
         // hide separator
-        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width - 15);
+        cell.separatorInset = UIEdgeInsetsMake(0, 10000, 0, 0);
+        
         spinner.alpha = 0.7;
         [cell.contentView addSubview:spinner];
         spinner.tag = 123;
