@@ -758,13 +758,9 @@
                                         <color key="textColor" red="0.60720264668367352" green="0.46137716634844905" blue="0.28902240468095752" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="obl-vN-OjS">
-                                        <rect key="frame" x="17" y="24" width="52" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="page_curl.png" translatesAutoresizingMaskIntoConstraints="NO" id="3lu-ju-Dx5">
+                                        <rect key="frame" x="0.0" y="0.0" width="312" height="83"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21137595663265307" green="0.21137595663265307" blue="0.21137595663265307" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -1227,6 +1223,7 @@
         <image name="check_icon_outline130.png" width="130" height="130"/>
         <image name="i_icon_large.png" width="512" height="512"/>
         <image name="icon_new.png" width="600" height="600"/>
+        <image name="page_curl.png" width="627" height="167"/>
         <image name="x_icon128.png" width="128" height="128"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
